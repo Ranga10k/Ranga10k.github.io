@@ -36,4 +36,34 @@
 <h2 id="Google"><a href="#Google" class="headerlink" title="Google"></a>Google</h2><p>用sql注入，sql语句会先执行=号后的sql语句</p>
 ]]></content>
   </entry>
+  <entry>
+    <title>markdown使用方法</title>
+    <url>/2021/10/02/markdown/</url>
+    <content><![CDATA[<h1 id="1-标题的使用"><a href="#1-标题的使用" class="headerlink" title="1.标题的使用"></a>1.标题的使用</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">用#加空格，空格后写标题，#号越多标题等级越低</span><br><span class="line">    # <span class="number">1</span></span><br><span class="line">    ## <span class="number">2</span></span><br><span class="line">    ### <span class="number">3</span></span><br><span class="line">    #### <span class="number">4</span></span><br><span class="line">    ##### <span class="number">5</span></span><br><span class="line">    ###### <span class="number">6</span></span><br><span class="line">    共有六个等级</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+<h1 id="1"><a href="#1" class="headerlink" title="1"></a>1</h1><h2 id="2"><a href="#2" class="headerlink" title="2"></a>2</h2><h3 id="3"><a href="#3" class="headerlink" title="3"></a>3</h3><h4 id="4"><a href="#4" class="headerlink" title="4"></a>4</h4><h5 id="5"><a href="#5" class="headerlink" title="5"></a>5</h5><h6 id="6"><a href="#6" class="headerlink" title="6"></a>6</h6><h1 id="2代码块的使用"><a href="#2代码块的使用" class="headerlink" title="2代码块的使用"></a>2代码块的使用</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">用```后加代码的语言 </span><br><span class="line">    ```java   </span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong></p>
+<p>`要切换成英文</p>
+<h1 id="3加粗，高亮，删除符"><a href="#3加粗，高亮，删除符" class="headerlink" title="3加粗，高亮，删除符"></a>3加粗，高亮，删除符</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">*斜体* or _强调_</span><br><span class="line">**加粗** or __加粗__</span><br><span class="line">***粗斜体*** or ___粗斜体__</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+
+
+<p><em>斜体</em> or <em>强调</em> <strong>加粗</strong> or <strong>加粗</strong> <em><strong>粗斜体</strong></em> or _<strong>粗斜体</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">高亮</span><br><span class="line">`` `包裹起来` ``</span><br></pre></td></tr></table></figure>
+
+<p><code>包裹起来</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">~~加删除的内容~~</span><br></pre></td></tr></table></figure>
+
+<p><del>加删除的内容</del></p>
+<h1 id="4图片内嵌"><a href="#4图片内嵌" class="headerlink" title="4图片内嵌"></a>4图片内嵌</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">![替换的文字]（打开图片的url或绝对地址）</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="D:\ask.jpg" alt="asuka"></p>
+<h1 id="5link"><a href="#5link" class="headerlink" title="5link"></a>5link</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">[替换的文字]（url）</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://www.google.com.hk/">百度</a></p>
+]]></content>
+  </entry>
 </search>
