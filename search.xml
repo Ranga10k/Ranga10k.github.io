@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>a</title>
-    <url>/2021/10/02/a/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>web复写</title>
     <url>/2021/10/01/hello-world/</url>
     <content><![CDATA[<p>HTML source</p>
 <p>F12查看源码</p>
 <p>网页访问流程：客户端发请求，服务器</p>
-<h2 id="Cookies"><a href="#Cookies" class="headerlink" title="Cookies"></a>Cookies</h2><p>Cookie是储存用户信息，终端不会记录用户信息</p>
+<h2 id="Cookies"><a href="#Cookies" class="headerlink" title="Cookies"></a>Cookies</h2><p>Cookie是储存用户信息，终端不会记录用户信息，cookie保存在游览器上</p>
 <h2 id="location"><a href="#location" class="headerlink" title="location"></a>location</h2><p>网站状态码</p>
 <p>1xx请求成功</p>
 <p>2xx请求响应成功</p>
@@ -27,6 +22,7 @@
 <h2 id="ezinclude"><a href="#ezinclude" class="headerlink" title="ezinclude"></a>ezinclude</h2><p>文件包含，访问包含中的文件就会直接显示，include（）会显示不是php文件的内容，会执行符合php语法的内容</p>
 <h2 id="babyphp"><a href="#babyphp" class="headerlink" title="babyphp"></a>babyphp</h2><p>php语言的强比较和数据类型转换，intval函数的意义通过使用指定的进制 <code>base</code> 转换（默认是十进制），返回变量 <code>value</code> 的 int 数值</p>
 <h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><p>请求头的应用</p>
+<p>请求头的格式是人为规定的</p>
 <p>127.0.0.1本地请求</p>
 <p>Reffer上一个请求的ip地址</p>
 <p>User-agent 游览器</p>
