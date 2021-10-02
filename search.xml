@@ -1,21 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hello World</title>
+    <title>a</title>
+    <url>/2021/10/02/a/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>web复写</title>
     <url>/2021/10/01/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+    <content><![CDATA[<p>HTML source</p>
+<p>F12查看源码</p>
+<p>网页访问流程：客户端发请求，服务器</p>
+<h2 id="Cookies"><a href="#Cookies" class="headerlink" title="Cookies"></a>Cookies</h2><p>Cookie是储存用户信息，终端不会记录用户信息</p>
+<h2 id="location"><a href="#location" class="headerlink" title="location"></a>location</h2><p>网站状态码</p>
+<p>1xx请求成功</p>
+<p>2xx请求响应成功</p>
+<p>3xx重新定向</p>
+<p>4xx客户端问题</p>
+<p>5xx服务器问题</p>
+<p>用burp抓包</p>
+<h2 id="Get-Post"><a href="#Get-Post" class="headerlink" title="Get_Post"></a>Get_Post</h2><p>Get post的不同，post比较安全</p>
+<p>Get写在url要用？赋值</p>
+<p>Post写在body</p>
+<h2 id="babyrce"><a href="#babyrce" class="headerlink" title="babyrce"></a>babyrce</h2><p>@eveal函数漏洞可以执行（）中文件的php代码，不是php就显示内容</p>
+<p>通过给（）内的变量赋值执行</p>
+<h2 id="ezinclude"><a href="#ezinclude" class="headerlink" title="ezinclude"></a>ezinclude</h2><p>文件包含，访问包含中的文件就会直接显示，include（）会显示不是php文件的内容，会执行符合php语法的内容</p>
+<h2 id="babyphp"><a href="#babyphp" class="headerlink" title="babyphp"></a>babyphp</h2><p>php语言的强比较和数据类型转换，intval函数的意义通过使用指定的进制 <code>base</code> 转换（默认是十进制），返回变量 <code>value</code> 的 int 数值</p>
+<h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><p>请求头的应用</p>
+<p>127.0.0.1本地请求</p>
+<p>Reffer上一个请求的ip地址</p>
+<p>User-agent 游览器</p>
+<h2 id="babyupload"><a href="#babyupload" class="headerlink" title="babyupload"></a>babyupload</h2><p>文件上传</p>
+<p>用php写一句话木马（用@evaal），用网站的上传功能上传到服务器，用burp伪造文件格式绕过，通过访问上传的文件控制网站</p>
+<h2 id="babyssrf"><a href="#babyssrf" class="headerlink" title="babyssrf"></a>babyssrf</h2><p>可以执行？url=后的代码，网址就显示网址的内容，若是本地文件就直接显示，</p>
+<h2 id="Google"><a href="#Google" class="headerlink" title="Google"></a>Google</h2><p>用sql注入，sql语句会先执行=号后的sql语句</p>
 ]]></content>
   </entry>
 </search>
