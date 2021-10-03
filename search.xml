@@ -30,6 +30,7 @@
 <p>用php写一句话木马（用@evaal），用网站的上传功能上传到服务器，用burp伪造文件格式绕过，通过访问上传的文件控制网站</p>
 <h2 id="babyssrf"><a href="#babyssrf" class="headerlink" title="babyssrf"></a>babyssrf</h2><p>可以执行？url=后的代码，网址就显示网址的内容，若是本地文件就直接显示，</p>
 <h2 id="Google"><a href="#Google" class="headerlink" title="Google"></a>Google</h2><p>用sql注入，sql语句会先执行=号后的sql语句</p>
+<h1 id="babyphp2"><a href="#babyphp2" class="headerlink" title="babyphp2"></a>babyphp2</h1><p>md5值，用哈希算法加密，哈希算法不能逆推，但有极少数数据的哈希值是相同的，可以md5碰撞，md5无法识别数组会返回false，可以用两个数组让MD5值相同</p>
 ]]></content>
   </entry>
   <entry>
