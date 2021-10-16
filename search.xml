@@ -63,4 +63,24 @@
 <p><a href="https://www.google.com.hk/">百度</a></p>
 ]]></content>
   </entry>
+  <entry>
+    <title>phpstorm debug</title>
+    <url>/2021/10/11/php/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>用的是phpstudy的集成环境，直接在phpstudy里打开php配置项配置debug</p>
+<p>端口接听默认为9000我改成了9001</p>
+<p><img src="D:\g.jpg"></p>
+<p>打开php.ini添加debug配置idekey</p>
+<p><img src="D:\j.jpg"></p>
+<p>打开phpstorm文件打开设置</p>
+<p><img src="D:\k.jpg"></p>
+<p>选择服务器</p>
+<p>名称自定义写什么都没关系</p>
+<p>主机写你的本地php网址，或者本地ip127.0.0.1</p>
+<p><img src="D:\ii.jpg"></p>
+<p>点开右上角的运行调试配置，新建一个phpweb配置项</p>
+<p><img src="C:\Users\rangaork\AppData\Roaming\Typora\typora-user-images\image-20211016204431247.png" alt="image-20211016204431247"></p>
+<p>把服务器设置成之前配置的</p>
+<p>然后点右上角的📞图样，打开监听，在点旁边的绿色肥甲虫，debug</p>
+]]></content>
+  </entry>
 </search>
