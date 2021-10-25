@@ -210,4 +210,31 @@
 <p>成功.</p>
 ]]></content>
   </entry>
+  <entry>
+    <title>sqlilab17</title>
+    <url>/2021/10/25/sqlilab17/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="updata报错注入"><a href="#updata报错注入" class="headerlink" title="updata报错注入"></a>updata报错注入</h1><p>![](.\picture\屏幕截图 2021-10-25 214004.png)</p>
+<p>看都题目passwor reset，重置密码，在输对用户名的正确的情况下会把用户名的密码更改为我们输入的密码</p>
+<p>![](.\picture\屏幕截图 2021-10-25 214449.png)</p>
+<p>![](.\picture\屏幕截图 2021-10-25 214501.png)</p>
+<p>再来康康源码</p>
+<p>![](.\picture\屏幕截图 2021-10-25 214805.png)</p>
+<p>我们看到他先用select查出了用户名密码然后再用了updata把新的密码上传</p>
+<p>password=’$password‘说明这里要用’闭合</p>
+<p>再来看返回的值</p>
+<p>![](.\picture\屏幕截图 2021-10-25 214501.png)</p>
+<p>没有回显点，也不是布朗类型的返回，看看会不会报错</p>
+<p>![](.\picture\屏幕截图 2021-10-25 215546.png)</p>
+<p>有报错那就用报错注入</p>
+<p>构造playload</p>
+<p>1’ and updatexml(1,concat(0x76,(select group_concat(password) from users),0x76),2)#</p>
+<p>![](.\picture\屏幕截图 2021-10-25 220011.png)</p>
+<p>报错了，意思是不能在要updata的表里查数据，那么我们套一层子查询，间接查询</p>
+<p>重新构造playload</p>
+<p>重新构造playload</p>
+<p>1’ and updatexml(1,concat(0x7e,(select group_concat(password) from (select password from users) as a),0x7e),1)#</p>
+<p>![](.\picture\屏幕截图 2021-10-25 221120.png)</p>
+<p>updatexml()的报错原理和groupby差不多，在updatexml的三个参数中输入不符合xml语法的内容就会报错并执行输入的语句</p>
+]]></content>
+  </entry>
 </search>
