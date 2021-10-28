@@ -237,4 +237,58 @@
 <p>updatexml()的报错原理和groupby差不多，在updatexml的三个参数中输入不符合xml语法的内容就会报错并执行输入的语句</p>
 ]]></content>
   </entry>
+  <entry>
+    <title>sqli_lab1819</title>
+    <url>/2021/10/26/ssqlilab1819/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="sql注入之header报错注入"><a href="#sql注入之header报错注入" class="headerlink" title="sql注入之header报错注入"></a>sql注入之header报错注入</h1><h3 id="首先要知道什么是header头"><a href="#首先要知道什么是header头" class="headerlink" title="首先要知道什么是header头"></a>首先要知道什么是header头</h3><p>header是发送请求时携带的头部信息。通常一些鉴权的信息：authentication/cookie、响应的数据格式：content-type等等的设置。当然响应的数据也会返回一些头部信息。</p>
+<p>格式是 域名 ：域值</p>
+<h1 id="18"><a href="#18" class="headerlink" title="18"></a>18</h1><p>![](.\picture\屏幕截图 2021-10-26 120723.png)</p>
+<p>输入用户名和密码，在第17关改过的</p>
+<p>![](.\picture\屏幕截图 2021-10-26 120949.png)</p>
+<p>登入成功，并把User Agent的内容显示出来了</p>
+<p>这个头是显示用户信息的头</p>
+<p>所以就可在这个头进行注入</p>
+<p>![](.\picture\屏幕截图 2021-10-26 121622.png)</p>
+<p>因为该题没有回显点，所以用报错注入</p>
+<p>playload: ‘ or uodate(1,concat(‘#’,(select group_concat(password) from users),’#’ ),2)#</p>
+<h1 id="19"><a href="#19" class="headerlink" title="19"></a>19</h1><p>在来看看19的</p>
+<p>![](.\picture\屏幕截图 2021-10-26 171745.png)</p>
+<p>输出的是Referer的值，说以把Referer的值改成我们的sql注入语句，19也没有回显点，也用报错注入，</p>
+<p>![](.\picture\屏幕截图 2021-10-26 172953.png)</p>
+<p>报错，这句话的意思是列的数量不匹配</p>
+<p>将or改成，</p>
+<p>1’,updatexml(1,concat(‘<del>‘,(select group_concat(password) from users),’</del>‘),1))#</p>
+<p>![](.\picture\屏幕截图 2021-10-26 195738.png)</p>
+<p>成功</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>sqlilab_24</title>
+    <url>/2021/10/27/sqlilab-24/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="二次注入"><a href="#二次注入" class="headerlink" title="二次注入"></a>二次注入</h1><p>在对第一次插入数据的时候对插入的数据进行了过滤，但如果只是对特殊字符添加/进行转译，但由于用于转译/不会被写入数据库中，插入数据库中的还是我们输入的语句，在再次调用数据库中我们插入的数据的时候，如果完全信任了数据库中的数据不加过滤的话就会，引起二次注入</p>
+<h1 id="sqlilab-24"><a href="#sqlilab-24" class="headerlink" title="sqlilab_24"></a>sqlilab_24</h1><p>![](./picture/屏幕截图 2021-10-27 110239.png)</p>
+<p>先试试在登入界面注入</p>
+<p>Dhakkan’#</p>
+<p>![](./picture/屏幕截图 2021-10-27 110705.png)</p>
+<p>失败了</p>
+<p>查看源码</p>
+<p>![](./picture/屏幕截图 2021-10-27 113114.png)</p>
+<p>发现添加了过滤</p>
+<p>在看看创建新用户的源码</p>
+<p>![](./picture/屏幕截图 2021-10-27 113445.png)</p>
+<p>还是添加了过滤</p>
+<p>在看看更改密码的源码</p>
+<p>![](./picture/屏幕截图 2021-10-27 113909.png)</p>
+<p>没有对username进行过滤，并且查询语句中还用上username</p>
+<p>那我们就对新建一个username，对username进行构造</p>
+<p>新建一个用户名为Dhakkan’#密码为123</p>
+<p>![](.\picture\屏幕截图 2021-10-27 210433.png)</p>
+<p>然后在进行改密码操作将密码改成321</p>
+<p>![](.\picture\屏幕截图 2021-10-27 210651.png)</p>
+<p>此时更改密码的语句就会变为username=’Dhakkan’#’and password=’321’</p>
+<p>这样就形成了一个sql注入语句变成了更改了Dhakkan的密码这样我们就能用321登入账号Dhakkan了</p>
+<p>![](.\picture\屏幕截图 2021-10-27 211541.png)</p>
+<p>成功用321登入改账号</p>
+]]></content>
+  </entry>
 </search>
