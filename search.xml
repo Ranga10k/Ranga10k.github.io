@@ -86,12 +86,12 @@
   <entry>
     <title>sqlilab 1-5</title>
     <url>/2021/10/19/sqlilab/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="一"><a href="#一" class="headerlink" title="一"></a>一</h1><p>![](./picture/屏幕截图 2021-10-19 191622.png)</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="一"><a href="#一" class="headerlink" title="一"></a>一</h1><p>![picture](./picture/屏幕截图 2021-10-19 191622.png)</p>
 <p>题目提示让我们给id一个数字的值，那就让id=1</p>
-<p>![](./picture/屏幕截图 2021-10-19 191848.png)</p>
+<p>![picture](./picture/屏幕截图 2021-10-19 191848.png)</p>
 <p>能成功查询，接下来就是判断注点</p>
 <p>尝试id=1‘</p>
-<p>![](./picture/屏幕截图 2021-10-19 192146.png)</p>
+<p>![picture](./picture/屏幕截图 2021-10-19 192146.png)</p>
 <p>报错了很好，说明找到了注点，用’闭合后 报错 ，知道where id=’’，是字符类型的注入</p>
 <p>用union联合注入，但前提条件是联合的两个表列数相同，所以先用order by</p>
 <p>判断列数</p>
@@ -99,19 +99,19 @@
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">?id=<span class="number">1</span><span class="string">&#x27; order by 1...--+ /*为什么要用--+（也就是-- ），在输入？id=1&#x27;</span></span><br><span class="line">    后php中的sql查询语句会变成where id = <span class="string">&#x27;1&#x27;</span><span class="string">&#x27;,有一个&#x27;</span>会都出导致报错，这时我们在<span class="number">1</span>’的后面添加sql查询语句会被都出的<span class="string">&#x27;注释为id的值:where id=&#x27;</span><span class="number">1</span><span class="string">&#x27;sql语句&#x27;</span>，所以要用注释符把多出的<span class="string">&#x27;注释掉，php就能正确识别sql查询语句了</span></span><br></pre></td></tr></table></figure>
 
 <p>order by 后面的数字不断增加直到报错为止</p>
-<p>![](./picture/屏幕截图 2021-10-19 195701.png)</p>
+<p>![picture](./picture/屏幕截图 2021-10-19 195701.png)</p>
 <p>到4报错了，说明列数有3列</p>
 <p>接下来就是判断回显点</p>
 <p>构造playload</p>
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">?id=-<span class="number">1</span><span class="string">&#x27; union select 1,2,3 --+</span></span><br></pre></td></tr></table></figure>
 
-<p>![](./picture/屏幕截图 2021-10-19 201147.png)</p>
+<p>![picture](./picture/屏幕截图 2021-10-19 201147.png)</p>
 <p>发现显示了2和3，说明回显点在2，3号位</p>
 <p>接下来就是爆数据库名，要用到databa（）sql的元数据</p>
 <p>构造playload</p>
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">?id=-<span class="number">1</span><span class="string">&#x27; union select 1,2,database()--+； //database（）位置在2，3都没关系</span></span><br></pre></td></tr></table></figure>
 
-<p>![](./picture/屏幕截图 2021-10-19 201754.png)</p>
+<p>![picture](./picture/屏幕截图 2021-10-19 201754.png)</p>
 <p>这样就得到了数据库名为security</p>
 <p>接着就是爆表名</p>
 <p>首先得知道mysql自带的表</p>
@@ -119,7 +119,7 @@
 <p>构造playload</p>
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">?id=-<span class="number">1</span><span class="string">&#x27; union seclect 1,2,gruop_concat(table.name) from information_schema.tables where table_schema=&#x27;</span>security<span class="string">&#x27;|database()--+//sql查询语句的意思是在记录表名信息的表中查询当前数据库下的所有表，group_concat的作用是去除冗余的数据并合并成一行输出，因为这道只有一行的回显点</span></span><br></pre></td></tr></table></figure>
 
-<p>![](./picture/屏幕截图 2021-10-19 203543.png)</p>
+<p>![picture](./picture/屏幕截图 2021-10-19 203543.png)</p>
 <p>查到了表名，用户的账号密码肯定是在users的表里，但我们要查询还需要知道</p>
 <p>表里有什么字段所以接下是爆字段</p>
 <p>构造playload</p>
@@ -127,22 +127,22 @@
 
 
 
-<p>![](./picture/屏幕截图 2021-10-19 205422.png)</p>
+<p>![picture](./picture/屏幕截图 2021-10-19 205422.png)</p>
 <p>找到列username，password</p>
 <p>接着用sql语句查询他们的值</p>
 <p>构造playload</p>
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">?id=-<span class="number">1</span><span class="string">&#x27; union select 1,2,group_concat(password,username) from users--+</span></span><br></pre></td></tr></table></figure>
 
-<p>![](./picture/屏幕截图 2021-10-19 210030.png)</p>
+<p>![picture](./picture/屏幕截图 2021-10-19 210030.png)</p>
 <p>查询成功</p>
-<h1 id="二"><a href="#二" class="headerlink" title="二"></a>二</h1><p>![](./picture/屏幕截图 2021-10-19 210153.png)</p>
+<h1 id="二"><a href="#二" class="headerlink" title="二"></a>二</h1><p>![picture](./picture/屏幕截图 2021-10-19 210153.png)</p>
 <p>题目要求和第一题一样</p>
 <p>首先找注点</p>
 <p>尝试id=1</p>
-<p>![](./picture/屏幕截图 2021-10-19 210418.png)</p>
+<p>![picture](./picture/屏幕截图 2021-10-19 210418.png)</p>
 <p>成功</p>
 <p>再尝试?id=1’</p>
-<p>![](./picture/屏幕截图 2021-10-19 210615.png)</p>
+<p>![picture](./picture/屏幕截图 2021-10-19 210615.png)</p>
 <p>从报错中看出php中的sql语句是where id=</p>
 <p>说明是数字型的注入因为用的是同一张表所以playload只是注点不同，其他都相同</p>
 <p>构造playload</p>
@@ -151,47 +151,47 @@
 
 
 <p>后面不加注释因为没有需要被注释的字符</p>
-<p><img src="./picture/image-20211019211519081.png" alt="image-20211019211519081"></p>
+<p><img src="/.com//image-20211019211519081.png" alt="picture"></p>
 <p>查询成功</p>
-<h1 id="三"><a href="#三" class="headerlink" title="三"></a>三</h1><p><img src="./picture/image-20211019211708416.png" alt="image-20211019211708416"></p>
+<h1 id="三"><a href="#三" class="headerlink" title="三"></a>三</h1><p><img src="/.com//image-20211019211708416.png" alt="picture"></p>
 <p>同样先尝试id=1</p>
-<p><img src="./picture/image-20211019211853243.png" alt="image-20211019211853243"></p>
+<p><img src="/.com//image-20211019211853243.png" alt="picture"></p>
 <p>成功</p>
 <p>接着尝试id=1’</p>
-<p><img src="./picture/image-20211019212026044.png" alt="image-20211019212026044"></p>
+<p><img src="/.com//image-20211019212026044.png" alt="picture"></p>
 <p>发现报错的和第一题很相似，尝试用第一题的playload试一下</p>
-<p><img src="./picture/image-20211019212238414.png" alt="image-20211019212238414"></p>
+<p><img src="/.com//image-20211019212238414.png" alt="picture"></p>
 <p>寄了</p>
 <p>再仔细看下报错信息</p>
-<p><img src="C:\Users\rangaork\AppData\Roaming\Typora\typora-user-images\image-20211019212355663.png" alt="image-20211019212355663"></p>
+<p><img src="/.com//Users\rangaork\AppData\Roaming\Typora\typora-user-images\image-20211019212355663.png" alt="image-20211019212355663"></p>
 <p>发现问题了，比第一题多了一个）也就是说多了一个（）的闭合，而我们只闭合**’**</p>
 <p>所以注点要变成id=-1‘）尝试一下</p>
-<p><img src="./picture/image-20211019212805821.png" alt="image-20211019212805821"></p>
+<p><img src="/.com//image-20211019212805821.png" alt="picture"></p>
 <p>やったぜ</p>
-<h1 id="四"><a href="#四" class="headerlink" title="四"></a>四</h1><p><img src="./picture/image-20211019213234858.png" alt="image-20211019213234858"></p>
+<h1 id="四"><a href="#四" class="headerlink" title="四"></a>四</h1><p><img src="/.com//image-20211019213234858.png" alt="picture"></p>
 <p>一样先尝试id=1</p>
-<p><img src="./picture/image-20211019213352241.png" alt="image-20211019213352241"></p>
+<p><img src="/.com//image-20211019213352241.png" alt="image-20211019213352241"></p>
 <p>成功</p>
 <p>再尝试id=1’</p>
-<p><img src="./picture/image-20211019213538450.png" alt="image-20211019213538450"></p>
+<p><img src="/.com//image-20211019213538450.png" alt="image-20211019213538450"></p>
 <p>居然成功了</p>
 <p>再试试id=1“</p>
-<p><img src="./picture/image-20211019213814592.png" alt="image-20211019213814592"></p>
+<p><img src="/.com//image-20211019213814592.png" alt="image-20211019213814592"></p>
 <p>成功报错了，看来这次是”“闭合</p>
 <p>构造playload</p>
 <p>等一下</p>
-<p><img src="./picture/image-20211019213955043.png" alt="image-20211019213955043"></p>
+<p><img src="/.com//image-20211019213955043.png" alt="image-20211019213955043"></p>
 <p>还有一个）</p>
 <p>那就和第三题差不多</p>
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">?id=-<span class="number">1</span><span class="string">&quot;)  union select 1,2,group_concat(password,username) from users--+</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="./picture/image-20211019214257823.png" alt="image-20211019214257823"></p>
+<p><img src="/.com//image-20211019214257823.png" alt="image-20211019214257823"></p>
 <p>ok</p>
-<h1 id="五"><a href="#五" class="headerlink" title="五"></a>五</h1><p><img src="./picture/image-20211019214406388.png" alt="image-20211019214406388"></p>
+<h1 id="五"><a href="#五" class="headerlink" title="五"></a>五</h1><p><img src="/.com//image-20211019214406388.png" alt="image-20211019214406388"></p>
 <p>老套路</p>
-<p><img src="./picture/image-20211019214532459.png" alt="image-20211019214532459"></p>
+<p><img src="/.com//image-20211019214532459.png" alt="image-20211019214532459"></p>
 <p>有点不太一样，不管先试试id=1’</p>
-<p><img src="./picture/image-20211019214733943.png" alt="image-20211019214733943"></p>
+<p><img src="/.com//image-20211019214733943.png" alt="image-20211019214733943"></p>
 <p>报错能显示出来</p>
 <p>看的注入点是字符’闭合</p>
 <p>但没有写回</p>
@@ -206,7 +206,7 @@
 
 
 
-<p><img src="./picture/image-20211019220805119.png" alt="image-20211019220805119"></p>
+<p><img src="/.com//image-20211019220805119.png" alt="image-20211019220805119"></p>
 <p>成功.</p>
 ]]></content>
   </entry>
@@ -289,6 +289,42 @@
 <p>这样就形成了一个sql注入语句变成了更改了Dhakkan的密码这样我们就能用321登入账号Dhakkan了</p>
 <p>![](.\picture\屏幕截图 2021-10-27 211541.png)</p>
 <p>成功用321登入改账号</p>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2021/10/29/sqlizj/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="堆叠注入"><a href="#堆叠注入" class="headerlink" title="堆叠注入"></a>堆叠注入</h1><p>在两个select注入语句之间用可用；隔开，</p>
+<p>如果在php中用来mysqli_mulit_qurry()函数来执行sql注入语句的时候，可以使用堆叠注入，堆叠注入可以做到对数据库的改增删操作，</p>
+<h1 id="过滤绕过"><a href="#过滤绕过" class="headerlink" title="过滤绕过"></a>过滤绕过</h1><p>在php中对单词的过滤，一般可以用双写，大写来绕过</p>
+<p>![picture](.\picture\屏幕截图 2021-10-29 204544.png)</p>
+<p>在sql的25关对or和and进行了过滤，所以我们输入了or但显示我们的输入为空，</p>
+<p>用双写</p>
+<p>![picture](.\picture\屏幕截图 2021-10-29 205014.png)</p>
+<p>id=oorr</p>
+<p>因为正则表达式匹配了or并把or过滤了oorr中or被过滤了就剩下了or说以可以用双写绕过</p>
+<p>大写绕过</p>
+<p>![picture](.\picture\屏幕截图 2021-10-29 205601.png)</p>
+<p>27题过滤了union所以我们输了union被过滤了</p>
+<p>前提mysql语句是对大写不敏感的所以我们在写语句的时候就可以随意大写</p>
+<p>因为正则表达式并没有完全匹配所以的大写组合，那我们一个一个试</p>
+<p>尝试uniON</p>
+<p>![picture](.\picture\屏幕截图 2021-10-29 210052.png)</p>
+<p>成功了</p>
+<p>我认为短单词适合用双写，因为短字母的大写组合少比较好过滤，而且双写也比较好认，长单词相反，不过怎么绕过还是要看后端是怎么过滤的</p>
+<p>如果后端的正则用了/m修饰符（换行匹配）那么双写绕过就会失效，换行匹配会把双写被匹配完的带空格的字符串也匹配，所以只能用双写，</p>
+<p>![picture](.\picture\屏幕截图 2021-10-29 211346.png)</p>
+<p>在27关中–+也被过滤掉了sql语句就会剩下一个‘，这时就要用and ’1‘=’1来闭合</p>
+<p>因为‘1’=‘1’是恒为真</p>
+<p>![picture](.\picture\屏幕截图 2021-10-29 212058.png)</p>
+<p>在27题中空格也被过滤了，用%0a来绕过过滤</p>
+<p>![picture](.\picture\屏幕截图 2021-10-29 212437.png)</p>
+<h1 id="注释绕过"><a href="#注释绕过" class="headerlink" title="注释绕过"></a>注释绕过</h1><p>![picture](.\picture\屏幕截图 2021-10-29 212834.png)</p>
+<p>在32关中‘被/注释掉了，这时候就要加%df，或其他大与128的16进制数，在gbk编码中两个16进制数来表示一个中文字符，该方法叫宽字符注入</p>
+<p>![picture](.\picture\屏幕截图 2021-10-29 213336.png)</p>
+<p>%df与%5c被认为是一个中文字符，而%27被剩下来被解释成了’</p>
+<h1 id="orderby注入"><a href="#orderby注入" class="headerlink" title="orderby注入"></a>orderby注入</h1><p>和联合注入没什么区别，就是写语句的方式变了</p>
+<p>盲注可以用rand（）在为真和为假时排列的顺序会不一样</p>
 ]]></content>
   </entry>
 </search>
