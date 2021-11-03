@@ -327,4 +327,31 @@
 <p>盲注可以用rand（）在为真和为假时排列的顺序会不一样</p>
 ]]></content>
   </entry>
+  <entry>
+    <title>无列名注入</title>
+    <url>/2021/11/02/sqlno/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id><a href="#" class="headerlink" title></a></h1><h1 id="替换列名"><a href="#替换列名" class="headerlink" title="替换列名"></a>替换列名</h1><p>在information_schema被ban的情况下使用无列名注入</p>
+<p>表名可以用</p>
+<h2 id="sys-schema-auto-increment-columns（）"><a href="#sys-schema-auto-increment-columns（）" class="headerlink" title="sys.schema_auto_increment_columns（）"></a>sys.schema_auto_increment_columns（）</h2><h2 id="sys-schema-table-statistics-with-buffer"><a href="#sys-schema-table-statistics-with-buffer" class="headerlink" title="sys.schema_table_statistics_with_buffer"></a>sys.schema_table_statistics_with_buffer</h2><p>在sql语句中可以用select和union组合可以替换列名</p>
+<p>select 1,2,3 union select*from table</p>
+<p>table中的列名会被替换成1，2，3</p>
+<p>select `1`from(select1,2,3 union select *from table)a</p>
+<p>这样就可查出table表第一列的内容，实际上替换列名只是创建了一张临时表，所以在后面加了a给这个临时表命名</p>
+<h1 id="字符串比较"><a href="#字符串比较" class="headerlink" title="字符串比较"></a>字符串比较</h1><p>在union和报错都被过滤的情况下，用字符串比较进行盲注</p>
+<p>在sql中字符串比较会取出要对比的第一个字符，先进行对比，如错误就直接返回false，正确才会进行下一位的比较</p>
+<p>基本的playload</p>
+<p>select 1,’a’ &gt;select*from table</p>
+<h1 id="join报错"><a href="#join报错" class="headerlink" title="join报错"></a>join报错</h1><h1 id="输出flag时有其他字符干扰，且输出长度受限"><a href="#输出flag时有其他字符干扰，且输出长度受限" class="headerlink" title="输出flag时有其他字符干扰，且输出长度受限"></a>输出flag时有其他字符干扰，且输出长度受限</h1><p>在sql注入的语句的末尾添加regexp函数进行对输出字符串的正则匹配，基本用【^f】匹配以f开头的字符</p>
+<p>用right，left函数让字符串从左右输出</p>
+<p>用substr输出任意位置任意长度的字符</p>
+<p>用reverse倒叙输出字符</p>
+<p>配合python的切片-1，来正序</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">y=<span class="string">&#x27;&#x27;</span></span><br><span class="line">y=y[::-<span class="number">1</span>]</span><br><span class="line"><span class="built_in">print</span>(y)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+]]></content>
+  </entry>
 </search>
