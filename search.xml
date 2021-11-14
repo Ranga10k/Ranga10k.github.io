@@ -354,4 +354,35 @@
 
 ]]></content>
   </entry>
+  <entry>
+    <title>变量覆盖</title>
+    <url>/2021/11/12/bianliangfugai/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在php中不正确的使用extract()、parse_str()以及import_request_variables()</p>
+<p>函数会导致用户输入的变量值覆盖程序中原有的变量。例如更改黑名单</p>
+<h2 id="extract（）函数"><a href="#extract（）函数" class="headerlink" title="extract（）函数"></a>extract（）函数</h2><p>该函数是接受一个数组并把该数组解析成变量，键名为变量名，键值为变量值，</p>
+<p>此函数可以接受3个值，第二个值该函数的配置，第三个值是在开启不覆盖原变量的情况下将变量的值附给第三个值</p>
+<h2 id="pars-str（）函数"><a href="#pars-str（）函数" class="headerlink" title="pars_str（）函数"></a>pars_str（）函数</h2><p>该函数是把字符串解析成变量例如“a=1”会被解析成$a=1，如果变量a之前存在，就会被覆盖，还可以加第二值为数组，这样解析出的变量就会存在数组中。</p>
+<h2 id="import-request-variables"><a href="#import-request-variables" class="headerlink" title="import_request_variables()"></a>import_request_variables()</h2><p>该函数会接收POST,COOKIE,GET的值并把他们转化从变量并会覆盖原有的变量可以用GPC代替</p>
+<h2 id="变量覆盖"><a href="#变量覆盖" class="headerlink" title="$$变量覆盖"></a>$$变量覆盖</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="variable">$a</span>=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">foreach</span>(<span class="keyword">array</span>(<span class="string">&#x27;_COOKIE&#x27;</span>, <span class="string">&#x27;_POST&#x27;</span>, <span class="string">&#x27;_GET&#x27;</span>) <span class="keyword">as</span> <span class="variable">$_request</span>)&#123;</span><br><span class="line">    		<span class="keyword">foreach</span>(<span class="variable">$$_request</span> <span class="keyword">as</span> <span class="variable">$_key</span> =&gt; <span class="variable">$_value</span>)&#123;</span><br><span class="line">        		<span class="keyword">echo</span> <span class="variable">$_key</span>.<span class="string">&#x27;&lt;br /&gt;&#x27;</span>;</span><br><span class="line">        		<span class="variable">$$_key</span> = addslashes(<span class="variable">$_value</span>);</span><br><span class="line">    		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">echo</span> <span class="variable">$a</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在输入?a=1的时候$key=a</p>
+<p>所以$$_key就是$a就成了给a赋值的语句</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>ssti</title>
+    <url>/2021/11/11/ssti/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="flask框架"><a href="#flask框架" class="headerlink" title="flask框架"></a>flask框架</h1><p>flask框架是使用python编写的模板，所以我们注入的语句要符合python的语法。</p>
+<p>ssti注入的目的是让读取flag，所以要找到一个类能执行读取flag的代码</p>
+<p>__class__ #返回type类型，查看对象的类型<br>__bases__ #返回tuple类型，列出该类的基类<br>__mro__   #返回tuple类型，给出解析方法调用的顺序<br>__subclasses__() #返回内建方法builtin_function_or_method，获取一个类的子类<br>_<em>globals</em>_ #返回dict类型，对函数进行操作，获取当前空间下能使用的模块、方法、变量</p>
+<p>用上方列出的魔术方法找到能执行os或eval的类</p>
+<p>然后用__init __魔术方法在该类被调用的时候执行读flag的代码</p>
+<h1 id="smarty模板"><a href="#smarty模板" class="headerlink" title="smarty模板"></a>smarty模板</h1><p>smarty模板是基于php的模板并且能直接用system函数执行系统命令</p>
+<p>smarty中可以用if来快速读取flag语法</p>
+<p>{if readfile(/flag)}{/if}</p>
+<h1 id="twig模板"><a href="#twig模板" class="headerlink" title="twig模板"></a>twig模板</h1><p>twig模板也是基于php的一个模板，与smarty不同他不能直接使用函数</p>
+<p>详情参考</p>
+<p><a href="https://xz.aliyun.com/t/10056">https://xz.aliyun.com/t/10056</a></p>
+]]></content>
+  </entry>
 </search>
