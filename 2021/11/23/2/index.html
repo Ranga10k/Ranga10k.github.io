@@ -5,13 +5,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>sqlzj - Hexo</title>
+    <title>markdown - Hexo</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Fechin,"> 
-    <meta name="description" content="堆叠注入在两个select注入语句之间用可用；隔开，
-如果在php中用来mysqli_mulit_qurry()函数来执行sql注入语句的时候，可以使用堆叠注入，堆叠注入可以做到对数据库的改增删操作,"> 
+    <meta name="description" content="1.标题的使用123456789用#加空格，空格后写标题，#号越多标题等级越低    # 1    ## 2    ### 3    #### 4    ##### 5    ###### 6   ,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -29,7 +28,7 @@
     <div class="bar" style="width: 0;"></div>
     <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
     <div title="播放/暂停" class="iconfont icon-play"></div>
-    <h3 class="subtitle">sqlzj</h3>
+    <h3 class="subtitle">markdown</h3>
     <div class="social">
         <div>
             <div class="share">
@@ -44,44 +43,38 @@
     <div class="section">
         <div class="article">
     <div class='main'>
-        <h1 class="title">sqlzj</h1>
+        <h1 class="title">markdown</h1>
         <div class="stuff">
             <span>十一月 23, 2021</span>
             
 
         </div>
         <div class="content markdown">
-            <h1 id="堆叠注入"><a href="#堆叠注入" class="headerlink" title="堆叠注入"></a>堆叠注入</h1><p>在两个select注入语句之间用可用；隔开，</p>
-<p>如果在php中用来mysqli_mulit_qurry()函数来执行sql注入语句的时候，可以使用堆叠注入，堆叠注入可以做到对数据库的改增删操作，</p>
-<h1 id="过滤绕过"><a href="#过滤绕过" class="headerlink" title="过滤绕过"></a>过滤绕过</h1><p>在php中对单词的过滤，一般可以用双写，大写来绕过</p>
-<p>![picture](D:\p\picture\屏幕截图 2021-10-29 204544.png)</p>
-<p>在sql的25关对or和and进行了过滤，所以我们输入了or但显示我们的输入为空，</p>
-<p>用双写</p>
-<p>![picture](D:\p\picture\屏幕截图 2021-10-29 205014.png)</p>
-<p>id=oorr</p>
-<p>因为正则表达式匹配了or并把or过滤了oorr中or被过滤了就剩下了or说以可以用双写绕过</p>
-<p>大写绕过</p>
-<p>![picture](D:\p\picture\屏幕截图 2021-10-29 205601.png)</p>
-<p>27题过滤了union所以我们输了union被过滤了</p>
-<p>前提mysql语句是对大写不敏感的所以我们在写语句的时候就可以随意大写</p>
-<p>因为正则表达式并没有完全匹配所以的大写组合，那我们一个一个试</p>
-<p>尝试uniON</p>
-<p>![picture](D:\p\picture\屏幕截图 2021-10-29 210052.png)</p>
-<p>成功了</p>
-<p>我认为短单词适合用双写，因为短字母的大写组合少比较好过滤，而且双写也比较好认，长单词相反，不过怎么绕过还是要看后端是怎么过滤的</p>
-<p>如果后端的正则用了/m修饰符（换行匹配）那么双写绕过就会失效，换行匹配会把双写被匹配完的带空格的字符串也匹配，所以只能用双写，</p>
-<p>![picture](D:\p\picture\屏幕截图 2021-10-29 211346.png)</p>
-<p>在27关中–+也被过滤掉了sql语句就会剩下一个‘，这时就要用and ’1‘=’1来闭合</p>
-<p>因为‘1’=‘1’是恒为真</p>
-<p>![picture](D:\p\picture\屏幕截图 2021-10-29 212058.png)</p>
-<p>在27题中空格也被过滤了，用%0a来绕过过滤</p>
-<p>![picture](D:\p\picture\屏幕截图 2021-10-29 212437.png)</p>
-<h1 id="注释绕过"><a href="#注释绕过" class="headerlink" title="注释绕过"></a>注释绕过</h1><p>![picture](D:\p\picture\屏幕截图 2021-10-29 212834.png)</p>
-<p>在32关中‘被/注释掉了，这时候就要加%df，或其他大与128的16进制数，在gbk编码中两个16进制数来表示一个中文字符，该方法叫宽字符注入</p>
-<p>![picture](D:\p\picture\屏幕截图 2021-10-29 213336.png)</p>
-<p>%df与%5c被认为是一个中文字符，而%27被剩下来被解释成了’</p>
-<h1 id="orderby注入"><a href="#orderby注入" class="headerlink" title="orderby注入"></a>orderby注入</h1><p>和联合注入没什么区别，就是写语句的方式变了</p>
-<p>盲注可以用rand（）在为真和为假时排列的顺序会不一样</p>
+            <h1 id="1-标题的使用"><a href="#1-标题的使用" class="headerlink" title="1.标题的使用"></a>1.标题的使用</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">用#加空格，空格后写标题，#号越多标题等级越低</span><br><span class="line">    # <span class="number">1</span></span><br><span class="line">    ## <span class="number">2</span></span><br><span class="line">    ### <span class="number">3</span></span><br><span class="line">    #### <span class="number">4</span></span><br><span class="line">    ##### <span class="number">5</span></span><br><span class="line">    ###### <span class="number">6</span></span><br><span class="line">    共有六个等级</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+<h1 id="1"><a href="#1" class="headerlink" title="1"></a>1</h1><h2 id="2"><a href="#2" class="headerlink" title="2"></a>2</h2><h3 id="3"><a href="#3" class="headerlink" title="3"></a>3</h3><h4 id="4"><a href="#4" class="headerlink" title="4"></a>4</h4><h5 id="5"><a href="#5" class="headerlink" title="5"></a>5</h5><h6 id="6"><a href="#6" class="headerlink" title="6"></a>6</h6><h1 id="2代码块的使用"><a href="#2代码块的使用" class="headerlink" title="2代码块的使用"></a>2代码块的使用</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">用```后加代码的语言 </span><br><span class="line">    ```java   </span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong></p>
+<p>`要切换成英文</p>
+<h1 id="3加粗，高亮，删除符"><a href="#3加粗，高亮，删除符" class="headerlink" title="3加粗，高亮，删除符"></a>3加粗，高亮，删除符</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">*斜体* or _强调_</span><br><span class="line">**加粗** or __加粗__</span><br><span class="line">***粗斜体*** or ___粗斜体__</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+
+
+<p><em>斜体</em> or <em>强调</em> <strong>加粗</strong> or <strong>加粗</strong> <em><strong>粗斜体</strong></em> or _<strong>粗斜体</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">高亮</span><br><span class="line">`` `包裹起来` ``</span><br></pre></td></tr></table></figure>
+
+<p><code>包裹起来</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~~加删除的内容~~</span><br></pre></td></tr></table></figure>
+
+<p><del>加删除的内容</del></p>
+<h1 id="4图片内嵌"><a href="#4图片内嵌" class="headerlink" title="4图片内嵌"></a>4图片内嵌</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![替换的文字]（打开图片的url或绝对地址）</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/.com//ask.jpg" alt="asuka"></p>
+<h1 id="5link"><a href="#5link" class="headerlink" title="5link"></a>5link</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[替换的文字]（url）</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.google.com.hk/">百度</a></p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">

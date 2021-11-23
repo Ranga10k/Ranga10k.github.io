@@ -5,13 +5,14 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>sqlzj - Hexo</title>
+    <title>无列名注入 - Hexo</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Fechin,"> 
-    <meta name="description" content="堆叠注入在两个select注入语句之间用可用；隔开，
-如果在php中用来mysqli_mulit_qurry()函数来执行sql注入语句的时候，可以使用堆叠注入，堆叠注入可以做到对数据库的改增删操作,"> 
+    <meta name="description" content="替换列名在information_schema被ban的情况下使用无列名注入
+表名可以用
+sys.schema_auto_increment_columns（）sys.schema_table_st,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -29,7 +30,7 @@
     <div class="bar" style="width: 0;"></div>
     <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
     <div title="播放/暂停" class="iconfont icon-play"></div>
-    <h3 class="subtitle">sqlzj</h3>
+    <h3 class="subtitle">无列名注入</h3>
     <div class="social">
         <div>
             <div class="share">
@@ -44,44 +45,35 @@
     <div class="section">
         <div class="article">
     <div class='main'>
-        <h1 class="title">sqlzj</h1>
+        <h1 class="title">无列名注入</h1>
         <div class="stuff">
             <span>十一月 23, 2021</span>
             
 
         </div>
         <div class="content markdown">
-            <h1 id="堆叠注入"><a href="#堆叠注入" class="headerlink" title="堆叠注入"></a>堆叠注入</h1><p>在两个select注入语句之间用可用；隔开，</p>
-<p>如果在php中用来mysqli_mulit_qurry()函数来执行sql注入语句的时候，可以使用堆叠注入，堆叠注入可以做到对数据库的改增删操作，</p>
-<h1 id="过滤绕过"><a href="#过滤绕过" class="headerlink" title="过滤绕过"></a>过滤绕过</h1><p>在php中对单词的过滤，一般可以用双写，大写来绕过</p>
-<p>![picture](D:\p\picture\屏幕截图 2021-10-29 204544.png)</p>
-<p>在sql的25关对or和and进行了过滤，所以我们输入了or但显示我们的输入为空，</p>
-<p>用双写</p>
-<p>![picture](D:\p\picture\屏幕截图 2021-10-29 205014.png)</p>
-<p>id=oorr</p>
-<p>因为正则表达式匹配了or并把or过滤了oorr中or被过滤了就剩下了or说以可以用双写绕过</p>
-<p>大写绕过</p>
-<p>![picture](D:\p\picture\屏幕截图 2021-10-29 205601.png)</p>
-<p>27题过滤了union所以我们输了union被过滤了</p>
-<p>前提mysql语句是对大写不敏感的所以我们在写语句的时候就可以随意大写</p>
-<p>因为正则表达式并没有完全匹配所以的大写组合，那我们一个一个试</p>
-<p>尝试uniON</p>
-<p>![picture](D:\p\picture\屏幕截图 2021-10-29 210052.png)</p>
-<p>成功了</p>
-<p>我认为短单词适合用双写，因为短字母的大写组合少比较好过滤，而且双写也比较好认，长单词相反，不过怎么绕过还是要看后端是怎么过滤的</p>
-<p>如果后端的正则用了/m修饰符（换行匹配）那么双写绕过就会失效，换行匹配会把双写被匹配完的带空格的字符串也匹配，所以只能用双写，</p>
-<p>![picture](D:\p\picture\屏幕截图 2021-10-29 211346.png)</p>
-<p>在27关中–+也被过滤掉了sql语句就会剩下一个‘，这时就要用and ’1‘=’1来闭合</p>
-<p>因为‘1’=‘1’是恒为真</p>
-<p>![picture](D:\p\picture\屏幕截图 2021-10-29 212058.png)</p>
-<p>在27题中空格也被过滤了，用%0a来绕过过滤</p>
-<p>![picture](D:\p\picture\屏幕截图 2021-10-29 212437.png)</p>
-<h1 id="注释绕过"><a href="#注释绕过" class="headerlink" title="注释绕过"></a>注释绕过</h1><p>![picture](D:\p\picture\屏幕截图 2021-10-29 212834.png)</p>
-<p>在32关中‘被/注释掉了，这时候就要加%df，或其他大与128的16进制数，在gbk编码中两个16进制数来表示一个中文字符，该方法叫宽字符注入</p>
-<p>![picture](D:\p\picture\屏幕截图 2021-10-29 213336.png)</p>
-<p>%df与%5c被认为是一个中文字符，而%27被剩下来被解释成了’</p>
-<h1 id="orderby注入"><a href="#orderby注入" class="headerlink" title="orderby注入"></a>orderby注入</h1><p>和联合注入没什么区别，就是写语句的方式变了</p>
-<p>盲注可以用rand（）在为真和为假时排列的顺序会不一样</p>
+            <h1 id="替换列名"><a href="#替换列名" class="headerlink" title="替换列名"></a>替换列名</h1><p>在information_schema被ban的情况下使用无列名注入</p>
+<p>表名可以用</p>
+<h2 id="sys-schema-auto-increment-columns（）"><a href="#sys-schema-auto-increment-columns（）" class="headerlink" title="sys.schema_auto_increment_columns（）"></a>sys.schema_auto_increment_columns（）</h2><h2 id="sys-schema-table-statistics-with-buffer"><a href="#sys-schema-table-statistics-with-buffer" class="headerlink" title="sys.schema_table_statistics_with_buffer"></a>sys.schema_table_statistics_with_buffer</h2><p>在sql语句中可以用select和union组合可以替换列名</p>
+<p>select 1,2,3 union select*from table</p>
+<p>table中的列名会被替换成1，2，3</p>
+<p>select `1`from(select1,2,3 union select *from table)a</p>
+<p>这样就可查出table表第一列的内容，实际上替换列名只是创建了一张临时表，所以在后面加了a给这个临时表命名</p>
+<h1 id="字符串比较"><a href="#字符串比较" class="headerlink" title="字符串比较"></a>字符串比较</h1><p>在union和报错都被过滤的情况下，用字符串比较进行盲注</p>
+<p>在sql中字符串比较会取出要对比的第一个字符，先进行对比，如错误就直接返回false，正确才会进行下一位的比较</p>
+<p>基本的playload</p>
+<p>select 1,’a’ &gt;select*from table</p>
+<h1 id="join报错"><a href="#join报错" class="headerlink" title="join报错"></a>join报错</h1><h1 id="输出flag时有其他字符干扰，且输出长度受限"><a href="#输出flag时有其他字符干扰，且输出长度受限" class="headerlink" title="输出flag时有其他字符干扰，且输出长度受限"></a>输出flag时有其他字符干扰，且输出长度受限</h1><p>在sql注入的语句的末尾添加regexp函数进行对输出字符串的正则匹配，基本用【^f】匹配以f开头的字符</p>
+<p>用right，left函数让字符串从左右输出</p>
+<p>用substr输出任意位置任意长度的字符</p>
+<p>用reverse倒叙输出字符</p>
+<p>配合python的切片-1，来正序</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">y=<span class="string">&#x27;&#x27;</span></span><br><span class="line">y=y[::-<span class="number">1</span>]</span><br><span class="line"><span class="built_in">print</span>(y)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">

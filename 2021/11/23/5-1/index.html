@@ -5,13 +5,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>sqlzj - Hexo</title>
+    <title>sqlilab_24 - Hexo</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Fechin,"> 
-    <meta name="description" content="堆叠注入在两个select注入语句之间用可用；隔开，
-如果在php中用来mysqli_mulit_qurry()函数来执行sql注入语句的时候，可以使用堆叠注入，堆叠注入可以做到对数据库的改增删操作,"> 
+    <meta name="description" content="二次注入在对第一次插入数据的时候对插入的数据进行了过滤，但如果只是对特殊字符添加/进行转译，但由于用于转译/不会被写入数据库中，插入数据库中的还是我们输入的语句，在再次调用数据库中我们插入的数据的时,"> 
     <meta name="author" content="John Doe"> 
     <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -29,7 +28,7 @@
     <div class="bar" style="width: 0;"></div>
     <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
     <div title="播放/暂停" class="iconfont icon-play"></div>
-    <h3 class="subtitle">sqlzj</h3>
+    <h3 class="subtitle">sqlilab_24</h3>
     <div class="social">
         <div>
             <div class="share">
@@ -44,44 +43,37 @@
     <div class="section">
         <div class="article">
     <div class='main'>
-        <h1 class="title">sqlzj</h1>
+        <h1 class="title">sqlilab_24</h1>
         <div class="stuff">
             <span>十一月 23, 2021</span>
             
 
         </div>
         <div class="content markdown">
-            <h1 id="堆叠注入"><a href="#堆叠注入" class="headerlink" title="堆叠注入"></a>堆叠注入</h1><p>在两个select注入语句之间用可用；隔开，</p>
-<p>如果在php中用来mysqli_mulit_qurry()函数来执行sql注入语句的时候，可以使用堆叠注入，堆叠注入可以做到对数据库的改增删操作，</p>
-<h1 id="过滤绕过"><a href="#过滤绕过" class="headerlink" title="过滤绕过"></a>过滤绕过</h1><p>在php中对单词的过滤，一般可以用双写，大写来绕过</p>
-<p>![picture](D:\p\picture\屏幕截图 2021-10-29 204544.png)</p>
-<p>在sql的25关对or和and进行了过滤，所以我们输入了or但显示我们的输入为空，</p>
-<p>用双写</p>
-<p>![picture](D:\p\picture\屏幕截图 2021-10-29 205014.png)</p>
-<p>id=oorr</p>
-<p>因为正则表达式匹配了or并把or过滤了oorr中or被过滤了就剩下了or说以可以用双写绕过</p>
-<p>大写绕过</p>
-<p>![picture](D:\p\picture\屏幕截图 2021-10-29 205601.png)</p>
-<p>27题过滤了union所以我们输了union被过滤了</p>
-<p>前提mysql语句是对大写不敏感的所以我们在写语句的时候就可以随意大写</p>
-<p>因为正则表达式并没有完全匹配所以的大写组合，那我们一个一个试</p>
-<p>尝试uniON</p>
-<p>![picture](D:\p\picture\屏幕截图 2021-10-29 210052.png)</p>
-<p>成功了</p>
-<p>我认为短单词适合用双写，因为短字母的大写组合少比较好过滤，而且双写也比较好认，长单词相反，不过怎么绕过还是要看后端是怎么过滤的</p>
-<p>如果后端的正则用了/m修饰符（换行匹配）那么双写绕过就会失效，换行匹配会把双写被匹配完的带空格的字符串也匹配，所以只能用双写，</p>
-<p>![picture](D:\p\picture\屏幕截图 2021-10-29 211346.png)</p>
-<p>在27关中–+也被过滤掉了sql语句就会剩下一个‘，这时就要用and ’1‘=’1来闭合</p>
-<p>因为‘1’=‘1’是恒为真</p>
-<p>![picture](D:\p\picture\屏幕截图 2021-10-29 212058.png)</p>
-<p>在27题中空格也被过滤了，用%0a来绕过过滤</p>
-<p>![picture](D:\p\picture\屏幕截图 2021-10-29 212437.png)</p>
-<h1 id="注释绕过"><a href="#注释绕过" class="headerlink" title="注释绕过"></a>注释绕过</h1><p>![picture](D:\p\picture\屏幕截图 2021-10-29 212834.png)</p>
-<p>在32关中‘被/注释掉了，这时候就要加%df，或其他大与128的16进制数，在gbk编码中两个16进制数来表示一个中文字符，该方法叫宽字符注入</p>
-<p>![picture](D:\p\picture\屏幕截图 2021-10-29 213336.png)</p>
-<p>%df与%5c被认为是一个中文字符，而%27被剩下来被解释成了’</p>
-<h1 id="orderby注入"><a href="#orderby注入" class="headerlink" title="orderby注入"></a>orderby注入</h1><p>和联合注入没什么区别，就是写语句的方式变了</p>
-<p>盲注可以用rand（）在为真和为假时排列的顺序会不一样</p>
+            <h1 id="二次注入"><a href="#二次注入" class="headerlink" title="二次注入"></a>二次注入</h1><p>在对第一次插入数据的时候对插入的数据进行了过滤，但如果只是对特殊字符添加/进行转译，但由于用于转译/不会被写入数据库中，插入数据库中的还是我们输入的语句，在再次调用数据库中我们插入的数据的时候，如果完全信任了数据库中的数据不加过滤的话就会，引起二次注入</p>
+<h1 id="sqlilab-24"><a href="#sqlilab-24" class="headerlink" title="sqlilab_24"></a>sqlilab_24</h1><p>![](D:\p\picture\屏幕截图 2021-10-27 110239.png)</p>
+<p>先试试在登入界面注入</p>
+<p>Dhakkan’#</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-27 110705.png)</p>
+<p>失败了</p>
+<p>查看源码</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-27 113114.png)</p>
+<p>发现添加了过滤</p>
+<p>在看看创建新用户的源码</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-27 113445.png)</p>
+<p>还是添加了过滤</p>
+<p>在看看更改密码的源码</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-27 113909.png)</p>
+<p>没有对username进行过滤，并且查询语句中还用上username</p>
+<p>那我们就对新建一个username，对username进行构造</p>
+<p>新建一个用户名为Dhakkan’#密码为123</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-27 210433.png)</p>
+<p>然后在进行改密码操作将密码改成321</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-27 210651.png)</p>
+<p>此时更改密码的语句就会变为username=’Dhakkan’#’and password=’321’</p>
+<p>这样就形成了一个sql注入语句变成了更改了Dhakkan的密码这样我们就能用321登入账号Dhakkan了</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-27 211541.png)</p>
+<p>成功用321登入改账号</p>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
