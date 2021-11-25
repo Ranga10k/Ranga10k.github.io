@@ -494,37 +494,37 @@ $\_($\$\__\_[$\_]);
     <title>Flask Message Board</title>
     <url>/2021/11/25/web4-1/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="刷题记录"><a href="#刷题记录" class="headerlink" title="刷题记录"></a>刷题记录</h1><p>题目说了是flask框架那就是ssti</p>
-<p>![](web4-1/屏幕截图 2021-11-25 121236.png)</p>
+<p>![](屏幕截图 2021-11-25 121236.png)</p>
 <p>可以在title，author，content中尝试</p>
-<p>![](web4-1/屏幕截图 2021-11-25 122120.png)</p>
+<p>![](屏幕截图 2021-11-25 122120.png)</p>
 <p>发现注入点在author</p>
 <p>尝试ssti</p>
-<p>![](web4-1/屏幕截图 2021-11-25 122247.png)</p>
+<p>![](屏幕截图 2021-11-25 122247.png)</p>
 <p>![](web4-1/屏幕截图 2021-11-25 122431.png)</p>
 <p>报错</p>
 <p>看到下面</p>
-<p>![](web4-1/屏幕截图 2021-11-25 122602.png)</p>
+<p>![](屏幕截图 2021-11-25 122602.png)</p>
 <p>有个过滤模型,所以想在author处ssti就很难，但是天无绝人之路，在最底下发现了admin页面,进入页面发现自己不是admin用户，而且识别是否为admin是用session进行的</p>
-<p>![](web4-1/屏幕截图 2021-11-25 123107.png)</p>
+<p>![](屏幕截图 2021-11-25 123107.png)</p>
 <p>flask有自己的一套session的生成方法,需要一个密钥来生成，我们伪造session也需要密钥，看看密钥在不在配置文件里</p>
-<p>![](web4-1/屏幕截图 2021-11-25 163440.png)</p>
+<p>![](屏幕截图 2021-11-25 163440.png)</p>
 <p>找到了密钥</p>
 <p>接下来写我们的伪造session脚本</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">import</span> re,sys</span><br><span class="line"><span class="keyword">from</span> flask.sessions <span class="keyword">import</span> SecureCookieSessionInterface</span><br><span class="line">secretkey=<span class="string">&#x27;||li1|l|llliIl1Ii1Ii|1I|I|I|iI11|I|1i|I|&#x27;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.secret_key=<span class="literal">None</span></span><br><span class="line">app=App()</span><br><span class="line">app.secret_key=secretkey</span><br><span class="line">s=SecureCookieSessionInterface()</span><br><span class="line">se=s.get_signing_serializer(app)</span><br><span class="line">session=se.dumps(&#123;<span class="string">&#x27;admin&#x27;</span>:<span class="string">&#x27;true&#x27;</span>&#125;)</span><br><span class="line"><span class="built_in">print</span>(session)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>运行结果</p>
-<p>![](web4-1/屏幕截图 2021-11-25 165257.png)</p>
+<p>![](屏幕截图 2021-11-25 165257.png)</p>
 <p>将cookie中的session换成该值</p>
 <p>访问成功</p>
-<p>![](web4-1/屏幕截图 2021-11-25 165710.png)</p>
+<p>![](屏幕截图 2021-11-25 165710.png)</p>
 <p>看到有上传文件的功能，试下能不能文件上传</p>
-<p>![](web4-1/屏幕截图 2021-11-25 170143.png)</p>
+<p>![](屏幕截图 2021-11-25 170143.png)</p>
 <p>但是没有回显，不知道有没有上传成功，就算上传成功了也不知道文件的位置</p>
 <p>查看网页源码</p>
-<p>![](web4-1/屏幕截图 2021-11-25 170558.png)</p>
-<p>![](web4-1/屏幕截图 2021-11-25 170635.png)</p>
+<p>![](屏幕截图 2021-11-25 170558.png)</p>
+<p>![](屏幕截图 2021-11-25 170635.png)</p>
 <p>访问给出的路由得到源码和模型</p>
-<p>![](web4-1/屏幕截图 2021-11-25 171050.png)</p>
+<p>![](屏幕截图 2021-11-25 171050.png)</p>
 <p>实在是看不懂了去找了官方wp</p>
 <p>因为这样那样，在connet输入1024个字节就能拿到flag</p>
 ]]></content>
