@@ -529,4 +529,152 @@ $\_($\$\__\_[$\_]);
 <p>因为这样那样，在connet输入1024个字节就能拿到flag</p>
 ]]></content>
   </entry>
+  <entry>
+    <title>css</title>
+    <url>/2021/11/29/css/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="层叠与继承"><a href="#层叠与继承" class="headerlink" title="层叠与继承"></a>层叠与继承</h1><h2 id="冲突规则"><a href="#冲突规则" class="headerlink" title="冲突规则"></a>冲突规则</h2><p>在css中对一相同元素的样式的规则会写在最后的会覆盖前面的规则。</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">p</span>&#123;</span><br><span class="line">    <span class="attribute">color</span>: red</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">p</span>&#123;</span><br><span class="line">    <span class="attribute">color</span>: blue</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>wsnd<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>上代码的渲染结果是蓝色，因为蓝色在后面，把前面的红色覆盖了</p>
+<p>如果有更精准的定位，就会用有精准定位的规则</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.hui</span>&#123;</span><br><span class="line">    <span class="attribute">color</span>: red</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">p</span>&#123;</span><br><span class="line">    <span class="attribute">color</span>: blue</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">&quot;hui&quot;</span>&gt;</span>wsnd<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>结果是红色</p>
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>在父类的属性会被子类继承</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">body</span>&#123;</span><br><span class="line">    <span class="attribute">color</span>: red</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>df<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>sd<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>df和sd都为红色</p>
+<p>但不是去全部的属性都能被继承</p>
+<h3 id="控制继承"><a href="#控制继承" class="headerlink" title="控制继承"></a>控制继承</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/inherit"><code>inherit</code></a></p>
+<p>设置该属性会使子元素属性和父元素相同。实际上，就是 “开启继承”.</p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/initial"><code>initial</code></a></p>
+<p>设置属性值和浏览器默认样式相同。如果浏览器默认样式中未设置且该属性是自然继承的，那么会设置为 <code>inherit</code> 。</p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/unset"><code>unset</code></a></p>
+<p>将属性重置为自然值，也就是如果属性是自然继承那么就是 <code>inherit</code>，否则和 <code>initial</code>一样</p>
+<p>用上面的值来控制是否继承</p>
+<h2 id="层叠规则"><a href="#层叠规则" class="headerlink" title="层叠规则"></a>层叠规则</h2><p>有3个因素</p>
+<ol>
+<li>重要程度</li>
+<li>优先级</li>
+<li>资源顺序</li>
+</ol>
+<p>现在让我们来看看浏览器如何计算优先级。我们已经知道一个元素选择器比类选择器的优先级更低会被其覆盖。本质上，不同类型的选择器有不同的分数值，把这些分数相加就得到特定选择器的权重，然后就可以进行匹配。</p>
+<p>一个选择器的优先级可以说是由四个部分相加 (分量)，可以认为是个十百千 — 四位数的四个位数：</p>
+<ol>
+<li><strong>千位</strong>： 如果声明在 <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes#attr-style"><code>style</code></a> 的属性（内联样式）则该位得一分。这样的声明没有选择器，所以它得分总是1000。</li>
+<li><strong>百位</strong>： 选择器中包含ID选择器则该位得一分。</li>
+<li><strong>十位</strong>： 选择器中包含类选择器、属性选择器或者伪类则该位得一分。</li>
+<li><strong>个位</strong>：选择器中包含元素、伪元素选择器则该位得一分。</li>
+</ol>
+]]></content>
+  </entry>
+  <entry>
+    <title>js基本函数</title>
+    <url>/2021/12/02/js/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="document-querySelector"><a href="#document-querySelector" class="headerlink" title="document.querySelector()"></a>document.querySelector()</h1><p>该方法为dom的内置方法，用于将html中的元素储存到一个变量中，让html和js产生联系，该变量有该标签的属性，用变量名加.加属性名来访问。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> html=docment.queruSelector(<span class="string">&#x27;html&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>上述代码就是把html中的html标签存放在常量html中</p>
+<h1 id="document-createElement"><a href="#document-createElement" class="headerlink" title="document.createElement()"></a>document.createElement()</h1><p>该方法也是dom方法，用于创建一个新元素并放在储存在一个变量中</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> div=<span class="built_in">document</span>.creatElement(<span class="string">&#x27;div&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>上述代码创建了div元素并放在常量div中</p>
+<h1 id="document-setAttribute"><a href="#document-setAttribute" class="headerlink" title="document.setAttribute()"></a>document.setAttribute()</h1><p>该方法用来给js创建的元素添加属性</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">div.setAttribute(<span class="string">&#x27;class&#x27;</span>,<span class="string">&#x27;ff&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>上述代码就给div添加了class为ff</p>
+<h1 id="appendChild"><a href="#appendChild" class="headerlink" title="appendChild"></a>appendChild</h1><p>给一个元素添加子元素</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">html.appendChild(div)</span><br></pre></td></tr></table></figure>
+
+<p>给html元素中添加了div元素</p>
+<h1 id="removeChlid"><a href="#removeChlid" class="headerlink" title="removeChlid"></a>removeChlid</h1><p>用于移除子元素</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">html.remove(div)</span><br></pre></td></tr></table></figure>
+
+<p>上述代码就移除了html的div元素</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>js_object</title>
+    <url>/2021/12/02/object/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="对象定义"><a href="#对象定义" class="headerlink" title="对象定义"></a>对象定义</h1><p>在js中用{}来定义一个对象</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">hh=&#123;</span><br><span class="line">    <span class="attr">age</span>:<span class="string">&#x27;dd&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="访问对象成员"><a href="#访问对象成员" class="headerlink" title="访问对象成员"></a>访问对象成员</h2><p>age是值的名，在：后加值，与python中的字典相似，访问age要用对象名加.加要访问的值</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">hh.age</span><br></pre></td></tr></table></figure>
+
+<p>该表示方法叫点表示法</p>
+<p>还有一种表示法叫括号表示法</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">hh[<span class="string">&#x27;age&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置对象成员"><a href="#设置对象成员" class="headerlink" title="设置对象成员"></a>设置对象成员</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">hh.age=<span class="number">45</span></span><br></pre></td></tr></table></figure>
+
+<p>把age的值设置成了45</p>
+<p>还可以添加成员</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hh[&#x27;name&#x27;]=&#x27;ming&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>添加了一个新成员name值为ming</p>
+<h2 id="this变量"><a href="#this变量" class="headerlink" title="this变量"></a>this变量</h2><p>与php中的this变量差不多，用与指代对象本身</p>
+<h2 id="对象函数"><a href="#对象函数" class="headerlink" title="对象函数"></a>对象函数</h2><p>与普通函数定义没什么区别，但是为了区分对象函数与普通函数，对象函数名第一个字母大写</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">We</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.name=<span class="string">&#x27;ming&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> h=<span class="keyword">new</span> We();</span><br><span class="line">h.name</span><br></pre></td></tr></table></figure>
+
+<p>实列化对象也与php中类的实例化相似，用new来实例化。</p>
+<h2 id="create"><a href="#create" class="headerlink" title="create()"></a>create()</h2><p>create函数可以基于现有对象中创建对象</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> hhh=<span class="built_in">Object</span>.create(h);</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="对象继承"><a href="#对象继承" class="headerlink" title="对象继承"></a>对象继承</h1><p>每一个函数都有一个原型，js是一门基于原型的语言</p>
+<p>可以用函数名加prototype来访问到原型，</p>
+<p>还可以在原型中添加函数，每个从该原型中衍生的函数都能访问到该方法</p>
+<p>在一个构造函数中继承其他构造函数</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params">x</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.x=x</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params">x,y</span>)</span>&#123;</span><br><span class="line">    a.call(<span class="built_in">this</span>,x)</span><br><span class="line">    <span class="built_in">this</span>.y=y</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="json"><a href="#json" class="headerlink" title="json"></a>json</h1><p>与php中的序列化差不多。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>odd_upload</title>
+    <url>/2021/12/11/odd-upload/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="odd-upload"><a href="#odd-upload" class="headerlink" title="odd_upload"></a>odd_upload</h1><p><img src="https://s2.loli.net/2021/12/11/vWMlJdckbo9weL6.png"></p>
+<p>题目提示与官方目录的examle相同</p>
+<p>点进题目</p>
+<p><img src="https://s2.loli.net/2021/12/11/5PqabH79Tj8OshA.png"></p>
+<p>看到是smarty框架</p>
+<p><img src="https://s2.loli.net/2021/12/11/mPQMe5jkr71lqYT.png"></p>
+<p>有个文件上传功能，我们第一时间想到文件上传漏洞上传个一句话木马，但是这道题的过滤很死更本传不上去，看到保存路径可以我们自行更改，加上前面的提示，我们去翻看smarty的官方文档</p>
+<p><img src="https://s2.loli.net/2021/12/11/fDcopS1XZUn9rEC.png"></p>
+<p>在template目录下有个渲染模板index.tpl</p>
+<p>这个文件是用来渲染主页的index.php</p>
+<p>这样思路就有了，我们可以上传一个自己的index.tpl。去覆盖原来的index.tpl，从而拿到flag</p>
+<h1 id="playload"><a href="#playload" class="headerlink" title="playload"></a>playload</h1><p>在原来tpl的后面加</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;</span><br><span class="line">	&#123;<span class="keyword">eval</span> <span class="keyword">var</span>=system(<span class="string">&#x27;cat /flag&#x27;</span>)&#125;</span><br><span class="line">&lt;/p&gt;  </span><br></pre></td></tr></table></figure>
+
+<p>就行了然后上传刷新</p>
+<p><img src="https://s2.loli.net/2021/12/11/jQSJ8l1PfaH9Wg7.png"></p>
+<p>拿到flag</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>xxe</title>
+    <url>/2021/12/08/xee/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>源于xml语法的外部引用可以支持file流读取外部文件，xml可以有参数形体进行传参</p>
+<h1 id="playload模板"><a href="#playload模板" class="headerlink" title="playload模板"></a>playload模板</h1><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&#x27;1.0&#x27;?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">note</span>[</span></span><br><span class="line"><span class="meta"><span class="meta">&lt;!ENTITY a <span class="meta-keyword">SYSTRM</span> <span class="meta-string">&quot;flie:要读的文件位置&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta">]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">c</span>&gt;</span><span class="symbol">&amp;a;</span><span class="tag">&lt;/<span class="name">c</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="xpath注入"><a href="#xpath注入" class="headerlink" title="xpath注入"></a>xpath注入</h1><p>与sql注入差不多，但是xpath没有注释所以要直接的闭合语句</p>
+<p>查询的是节点中的内容，节点与url相似用来定位数据的位置。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">//users/user[loginID/text()=’abc’ and password/text()=’test123’] </span><br></pre></td></tr></table></figure>
+
+<p>查询在users节点下的loginID=abc,password=test123的user节点的全部数据</p>
+]]></content>
+  </entry>
 </search>
