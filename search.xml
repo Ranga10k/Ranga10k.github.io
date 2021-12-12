@@ -677,4 +677,18 @@ $\_($\$\__\_[$\_]);
 <p>查询在users节点下的loginID=abc,password=test123的user节点的全部数据</p>
 ]]></content>
   </entry>
+  <entry>
+    <title>xss</title>
+    <url>/2021/12/11/xss/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="xss原理"><a href="#xss原理" class="headerlink" title="xss原理"></a>xss原理</h1><p>人为插入js代码，在游览该界面的时候，游览器就会解析并执行该代码，从而获取到用户信息。</p>
+<h2 id="利用条件"><a href="#利用条件" class="headerlink" title="利用条件"></a>利用条件</h2><p>用户输入是数据会在前端显示</p>
+<h1 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h1>]]></content>
+  </entry>
+  <entry>
+    <title>oooo</title>
+    <url>/2021/12/12/oooo/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE message [</span><br><span class="line">&lt;!ELEMENT message (#PCDATA)&gt;</span><br><span class="line">&lt;!ENTITY aaa &quot;135601360123502401401250&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;h1&gt;&amp;aaa;&lt;/h1&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+  </entry>
 </search>
