@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hans" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>329 - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="[HITCON 2016]Leakingnode沙盒逃逸
+12345678910111213141516171819202122232425262728293031&amp;quot;use strict&amp;,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    <link rel="icon" href="/img/p.png"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">329</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">329</h1>
+        <div class="stuff">
+            <span>三月 29, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h1 id="HITCON-2016-Leaking"><a href="#HITCON-2016-Leaking" class="headerlink" title="[HITCON 2016]Leaking"></a>[HITCON 2016]Leaking</h1><p>node沙盒逃逸</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&quot;use strict&quot;;</span><br><span class="line"></span><br><span class="line">var randomstring = require(&quot;randomstring&quot;);</span><br><span class="line">var express = require(&quot;express&quot;);</span><br><span class="line">var &#123;</span><br><span class="line">    VM</span><br><span class="line">&#125; = require(&quot;vm2&quot;);</span><br><span class="line">var fs = require(&quot;fs&quot;);</span><br><span class="line"></span><br><span class="line">var app = express();</span><br><span class="line">var flag = require(&quot;./config.js&quot;).flag</span><br><span class="line"></span><br><span class="line">app.get(&quot;/&quot;, function(req, res) &#123;</span><br><span class="line">    res.header(&quot;Content-Type&quot;, &quot;text/plain&quot;);</span><br><span class="line"></span><br><span class="line">    /*    Orange is so kind so he put the flag here. But if you can guess correctly :P    */</span><br><span class="line">    eval(&quot;var flag_&quot; + randomstring.generate(64) + &quot; = \&quot;hitcon&#123;&quot; + flag + &quot;&#125;\&quot;;&quot;)</span><br><span class="line">    if (req.query.data &amp;&amp; req.query.data.length &lt;= 12) &#123;</span><br><span class="line">        var vm = new VM(&#123;</span><br><span class="line">            timeout: 1000</span><br><span class="line">        &#125;);</span><br><span class="line">        console.log(req.query.data);</span><br><span class="line">        res.send(&quot;eval -&gt;&quot; + vm.run(req.query.data));</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        res.send(fs.readFileSync(__filename).toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(3000, function() &#123;</span><br><span class="line">    console.log(&quot;listening on port 3000!&quot;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>在node.js里</p>
+<h1 id="GYCTF2020-Node-Game"><a href="#GYCTF2020-Node-Game" class="headerlink" title="[GYCTF2020]Node Game"></a>[GYCTF2020]Node Game</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">var express = require(&#x27;express&#x27;);</span><br><span class="line">var app = express();</span><br><span class="line">var fs = require(&#x27;fs&#x27;);</span><br><span class="line">var path = require(&#x27;path&#x27;);</span><br><span class="line">var http = require(&#x27;http&#x27;);</span><br><span class="line">var pug = require(&#x27;pug&#x27;);</span><br><span class="line">var morgan = require(&#x27;morgan&#x27;);</span><br><span class="line">const multer = require(&#x27;multer&#x27;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.use(multer(&#123;dest: &#x27;./dist&#x27;&#125;).array(&#x27;file&#x27;));</span><br><span class="line">app.use(morgan(&#x27;short&#x27;));</span><br><span class="line">app.use(&quot;/uploads&quot;,express.static(path.join(__dirname, &#x27;/uploads&#x27;)))</span><br><span class="line">app.use(&quot;/template&quot;,express.static(path.join(__dirname, &#x27;/template&#x27;)))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.get(&#x27;/&#x27;, function(req, res) &#123;</span><br><span class="line">    var action = req.query.action?req.query.action:&quot;index&quot;;</span><br><span class="line">    if( action.includes(&quot;/&quot;) || action.includes(&quot;\\&quot;) )&#123;</span><br><span class="line">        res.send(&quot;Errrrr, You have been Blocked&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    file = path.join(__dirname + &#x27;/template/&#x27;+ action +&#x27;.pug&#x27;);</span><br><span class="line">    var html = pug.renderFile(file);</span><br><span class="line">    res.send(html);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.post(&#x27;/file_upload&#x27;, function(req, res)&#123;</span><br><span class="line">    var ip = req.connection.remoteAddress;</span><br><span class="line">    var obj = &#123;</span><br><span class="line">        msg: &#x27;&#x27;,</span><br><span class="line">    &#125;</span><br><span class="line">    if (!ip.includes(&#x27;127.0.0.1&#x27;)) &#123;</span><br><span class="line">        obj.msg=&quot;only admin&#x27;s ip can use it&quot;</span><br><span class="line">        res.send(JSON.stringify(obj));</span><br><span class="line">        return </span><br><span class="line">    &#125;</span><br><span class="line">    fs.readFile(req.files[0].path, function(err, data)&#123;</span><br><span class="line">        if(err)&#123;</span><br><span class="line">            obj.msg = &#x27;upload failed&#x27;;</span><br><span class="line">            res.send(JSON.stringify(obj));</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            var file_path = &#x27;/uploads/&#x27; + req.files[0].mimetype +&quot;/&quot;;</span><br><span class="line">            var file_name = req.files[0].originalname</span><br><span class="line">            var dir_file = __dirname + file_path + file_name</span><br><span class="line">            if(!fs.existsSync(__dirname + file_path))&#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    fs.mkdirSync(__dirname + file_path)</span><br><span class="line">                &#125; catch (error) &#123;</span><br><span class="line">                    obj.msg = &quot;file type error&quot;;</span><br><span class="line">                    res.send(JSON.stringify(obj));</span><br><span class="line">                    return</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            try &#123;</span><br><span class="line">                fs.writeFileSync(dir_file,data)</span><br><span class="line">                obj = &#123;</span><br><span class="line">                    msg: &#x27;upload success&#x27;,</span><br><span class="line">                    filename: file_path + file_name</span><br><span class="line">                &#125; </span><br><span class="line">            &#125; catch (error) &#123;</span><br><span class="line">                obj.msg = &#x27;upload failed&#x27;;</span><br><span class="line">            &#125;</span><br><span class="line">            res.send(JSON.stringify(obj));    </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.get(&#x27;/source&#x27;, function(req, res) &#123;</span><br><span class="line">    res.sendFile(path.join(__dirname + &#x27;/template/source.txt&#x27;));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.get(&#x27;/core&#x27;, function(req, res) &#123;</span><br><span class="line">    var q = req.query.q;</span><br><span class="line">    var resp = &quot;&quot;;</span><br><span class="line">    if (q) &#123;</span><br><span class="line">        var url = &#x27;http://localhost:8081/source?&#x27; + q</span><br><span class="line">        console.log(url)</span><br><span class="line">        var trigger = blacklist(url);</span><br><span class="line">        if (trigger === true) &#123;</span><br><span class="line">            res.send(&quot;&lt;p&gt;error occurs!&lt;/p&gt;&quot;);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                http.get(url, function(resp) &#123;</span><br><span class="line">                    resp.setEncoding(&#x27;utf8&#x27;);</span><br><span class="line">                    resp.on(&#x27;error&#x27;, function(err) &#123;</span><br><span class="line">                    if (err.code === &quot;ECONNRESET&quot;) &#123;</span><br><span class="line">                     console.log(&quot;Timeout occurs&quot;);</span><br><span class="line">                     return;</span><br><span class="line">                    &#125;</span><br><span class="line">                   &#125;);</span><br><span class="line"></span><br><span class="line">                    resp.on(&#x27;data&#x27;, function(chunk) &#123;</span><br><span class="line">                        try &#123;</span><br><span class="line">                         resps = chunk.toString();</span><br><span class="line">                         res.send(resps);</span><br><span class="line">                        &#125;catch (e) &#123;</span><br><span class="line">                           res.send(e.message);</span><br><span class="line">                        &#125;</span><br><span class="line"> </span><br><span class="line">                    &#125;).on(&#x27;error&#x27;, (e) =&gt; &#123;</span><br><span class="line">                         res.send(e.message);&#125;);</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125; catch (error) &#123;</span><br><span class="line">                console.log(error);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        res.send(&quot;search param &#x27;q&#x27; missing!&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">function blacklist(url) &#123;</span><br><span class="line">    var evilwords = [&quot;global&quot;, &quot;process&quot;,&quot;mainModule&quot;,&quot;require&quot;,&quot;root&quot;,&quot;child_process&quot;,&quot;exec&quot;,&quot;\&quot;&quot;,&quot;&#x27;&quot;,&quot;!&quot;];</span><br><span class="line">    var arrayLen = evilwords.length;</span><br><span class="line">    for (var i = 0; i &lt; arrayLen; i++) &#123;</span><br><span class="line">        const trigger = url.includes(evilwords[i]);</span><br><span class="line">        if (trigger === true) &#123;</span><br><span class="line">            return true</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var server = app.listen(8081, function() &#123;</span><br><span class="line">    var host = server.address().address</span><br><span class="line">    var port = server.address().port</span><br><span class="line">    console.log(&quot;Example app listening at http://%s:%s&quot;, host, port)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>题目给了源码</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='false'
+        data-ci=''
+        data-cs=''
+        data-r=''
+        data-o=''
+        data-a=''
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

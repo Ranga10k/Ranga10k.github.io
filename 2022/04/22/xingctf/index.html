@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hans" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title> - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="[CISCN2021 Quals]upload12345678910111213141516171819202122232425262728293031&amp;lt;?phpif (!isset($_GE,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    <link rel="icon" href="/img/p.png"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle"></h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title"></h1>
+        <div class="stuff">
+            <span>四月 22, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h2 id="CISCN2021-Quals-upload"><a href="#CISCN2021-Quals-upload" class="headerlink" title="[CISCN2021 Quals]upload"></a>[CISCN2021 Quals]upload</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&quot;ctf&quot;</span>])) &#123;</span><br><span class="line">    highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">    <span class="keyword">die</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&quot;ctf&quot;</span>]))</span><br><span class="line">    <span class="variable">$ctf</span> = <span class="variable">$_GET</span>[<span class="string">&quot;ctf&quot;</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$ctf</span>==<span class="string">&quot;upload&quot;</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$_FILES</span>[<span class="string">&#x27;postedFile&#x27;</span>][<span class="string">&#x27;size&#x27;</span>] &gt; <span class="number">1024</span>*<span class="number">512</span>) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;这么大个的东西你是想d我吗？&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable">$imageinfo</span> = getimagesize(<span class="variable">$_FILES</span>[<span class="string">&#x27;postedFile&#x27;</span>][<span class="string">&#x27;tmp_name&#x27;</span>]);</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$imageinfo</span> === <span class="literal">FALSE</span>) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;如果不能好好传图片的话就还是不要来打扰我了&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$imageinfo</span>[<span class="number">0</span>] !== <span class="number">1</span> &amp;&amp; <span class="variable">$imageinfo</span>[<span class="number">1</span>] !== <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;东西不能方方正正的话就很讨厌&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable">$fileName</span>=urldecode(<span class="variable">$_FILES</span>[<span class="string">&#x27;postedFile&#x27;</span>][<span class="string">&#x27;name&#x27;</span>]);</span><br><span class="line">    <span class="keyword">if</span>(stristr(<span class="variable">$fileName</span>,<span class="string">&quot;c&quot;</span>) || stristr(<span class="variable">$fileName</span>,<span class="string">&quot;i&quot;</span>) || stristr(<span class="variable">$fileName</span>,<span class="string">&quot;h&quot;</span>) || stristr(<span class="variable">$fileName</span>,<span class="string">&quot;ph&quot;</span>)) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;有些东西让你传上去的话那可不得了&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable">$imagePath</span> = <span class="string">&quot;image/&quot;</span> . mb_strtolower(<span class="variable">$fileName</span>);</span><br><span class="line">    <span class="keyword">if</span>(move_uploaded_file(<span class="variable">$_FILES</span>[<span class="string">&quot;postedFile&quot;</span>][<span class="string">&quot;tmp_name&quot;</span>], <span class="variable">$imagePath</span>)) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;upload success, image at <span class="subst">$imagePath</span>&quot;</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;传都没有传上去&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>题目给了源码，可以上传文件但是有过滤传不上php</p>
+<p><img src="https://raw.githubusercontent.com/Ranga10k/picture.jpg/main/20220425151022.png"></p>
+<p>扫码发现example.php有源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&quot;ctf&quot;</span>])) &#123;</span><br><span class="line">    highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">    <span class="keyword">die</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&quot;ctf&quot;</span>]))</span><br><span class="line">    <span class="variable">$ctf</span> = <span class="variable">$_GET</span>[<span class="string">&quot;ctf&quot;</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$ctf</span>==<span class="string">&quot;poc&quot;</span>) &#123;</span><br><span class="line">    <span class="variable">$zip</span> = <span class="keyword">new</span> \ZipArchive();</span><br><span class="line">    <span class="variable">$name_for_zip</span> = <span class="string">&quot;example/&quot;</span> . <span class="variable">$_POST</span>[<span class="string">&quot;file&quot;</span>];</span><br><span class="line">    <span class="keyword">if</span>(explode(<span class="string">&quot;.&quot;</span>,<span class="variable">$name_for_zip</span>)[count(explode(<span class="string">&quot;.&quot;</span>,<span class="variable">$name_for_zip</span>))-<span class="number">1</span>]!==<span class="string">&quot;zip&quot;</span>) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">&quot;要不咱们再看看？&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$zip</span>-&gt;open(<span class="variable">$name_for_zip</span>) !== <span class="literal">TRUE</span>) &#123;</span><br><span class="line">        <span class="keyword">die</span> (<span class="string">&quot;都不能解压呢&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;可以解压，我想想存哪里&quot;</span>;</span><br><span class="line">    <span class="variable">$pos_for_zip</span> = <span class="string">&quot;/tmp/example/&quot;</span> . md5(<span class="variable">$_SERVER</span>[<span class="string">&quot;REMOTE_ADDR&quot;</span>]);</span><br><span class="line">    <span class="variable">$zip</span>-&gt;extractTo(<span class="variable">$pos_for_zip</span>);</span><br><span class="line">    <span class="variable">$zip</span>-&gt;close();</span><br><span class="line">    unlink(<span class="variable">$name_for_zip</span>);</span><br><span class="line">    <span class="variable">$files</span> = glob(<span class="string">&quot;<span class="subst">$pos_for_zip</span>/*&quot;</span>);</span><br><span class="line">    <span class="keyword">foreach</span>(<span class="variable">$files</span> <span class="keyword">as</span> <span class="variable">$file</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span> (is_dir(<span class="variable">$file</span>)) &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="variable">$first</span> = imagecreatefrompng(<span class="variable">$file</span>);</span><br><span class="line">        <span class="variable">$size</span> = min(imagesx(<span class="variable">$first</span>), imagesy(<span class="variable">$first</span>));</span><br><span class="line">        <span class="variable">$second</span> = imagecrop(<span class="variable">$first</span>, [<span class="string">&#x27;x&#x27;</span> =&gt; <span class="number">0</span>, <span class="string">&#x27;y&#x27;</span> =&gt; <span class="number">0</span>, <span class="string">&#x27;width&#x27;</span> =&gt; <span class="variable">$size</span>, <span class="string">&#x27;height&#x27;</span> =&gt; <span class="variable">$size</span>]);</span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$second</span> !== <span class="literal">FALSE</span>) &#123;</span><br><span class="line">            <span class="variable">$final_name</span> = pathinfo(<span class="variable">$file</span>)[<span class="string">&quot;basename&quot;</span>];</span><br><span class="line">            imagepng(<span class="variable">$second</span>, <span class="string">&#x27;example/&#x27;</span>.<span class="variable">$final_name</span>);</span><br><span class="line">            imagedestroy(<span class="variable">$second</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        imagedestroy(<span class="variable">$first</span>);</span><br><span class="line">        unlink(<span class="variable">$file</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该路由可以解压一个压缩包，但是只能是zip，而i在index.php被过滤了</p>
+<p>但是</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$fileName</span>=urldecode(<span class="variable">$_FILES</span>[<span class="string">&#x27;postedFile&#x27;</span>][<span class="string">&#x27;name&#x27;</span>]);</span><br></pre></td></tr></table></figure>
+
+<p>这里对上传的名字做了一个url的解码，我们就可以以用unicode编码绕过</p>
+<p><img src="https://raw.githubusercontent.com/Ranga10k/picture.jpg/main/20220425154635.png"></p>
+<p>可以看到这两个值是不一样的</p>
+<h1 id="网刃杯复现"><a href="#网刃杯复现" class="headerlink" title="网刃杯复现"></a>网刃杯复现</h1><h2 id="signup"><a href="#signup" class="headerlink" title="signup"></a>signup</h2><p><img src="https://raw.githubusercontent.com/Ranga10k/picture.jpg/main/20220426123141.png"></p>
+<p>curl任意文件读取,之前做的时候读不到flag，以为是要用curl写shell，后来看了wp才知道是要打内网</p>
+<p><img src="https://raw.githubusercontent.com/Ranga10k/picture.jpg/main/20220426124641.png"></p>
+<p><img src="https://raw.githubusercontent.com/Ranga10k/picture.jpg/main/20220426130038.png"></p>
+<p>发现100有东西</p>
+<p><img src="https://raw.githubusercontent.com/Ranga10k/picture.jpg/main/20220426150520.png"></p>
+<p>用gopher协议传post b 在加上本地的ip</p>
+<p><img src="https://raw.githubusercontent.com/Ranga10k/picture.jpg/main/20220426153801.png"></p>
+<p>加上从bolean.club</p>
+<p><img src="https://raw.githubusercontent.com/Ranga10k/picture.jpg/main/20220426153714.png"></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='false'
+        data-ci=''
+        data-cs=''
+        data-r=''
+        data-o=''
+        data-a=''
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
