@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hans" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>buu刷题 - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="[网鼎杯 2020 青龙组]notes给了源码
+123456789101112131415161718192021222324252627282930313233343536373839404142,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    <link rel="icon" href="/img/p.png"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">buu刷题</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">buu刷题</h1>
+        <div class="stuff">
+            <span>八月 23, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h2 id="网鼎杯-2020-青龙组-notes"><a href="#网鼎杯-2020-青龙组-notes" class="headerlink" title="[网鼎杯 2020 青龙组]notes"></a>[网鼎杯 2020 青龙组]notes</h2><p>给了源码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> undefsafe = <span class="built_in">require</span>(<span class="string">&#x27;undefsafe&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; exec &#125; = <span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Notes</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.owner = <span class="string">&quot;whoknows&quot;</span>;</span><br><span class="line">        <span class="built_in">this</span>.num = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">this</span>.note_list = &#123;&#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">write_note</span>(<span class="params">author, raw_note</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.note_list[(<span class="built_in">this</span>.num++).toString()] = &#123;<span class="string">&quot;author&quot;</span>: author,<span class="string">&quot;raw_note&quot;</span>:raw_note&#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">get_note</span>(<span class="params">id</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> r = &#123;&#125;</span><br><span class="line">        undefsafe(r, id, undefsafe(<span class="built_in">this</span>.note_list, id));</span><br><span class="line">        <span class="keyword">return</span> r;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">edit_note</span>(<span class="params">id, author, raw</span>)</span> &#123;</span><br><span class="line">        undefsafe(<span class="built_in">this</span>.note_list, id + <span class="string">&#x27;.author&#x27;</span>, author);</span><br><span class="line">        undefsafe(<span class="built_in">this</span>.note_list, id + <span class="string">&#x27;.raw_note&#x27;</span>, raw);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">get_all_notes</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.note_list;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">remove_note</span>(<span class="params">id</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">delete</span> <span class="built_in">this</span>.note_list[id];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> notes = <span class="keyword">new</span> Notes();</span><br><span class="line">notes.write_note(<span class="string">&quot;nobody&quot;</span>, <span class="string">&quot;this is nobody&#x27;s first note&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.set(<span class="string">&#x27;views&#x27;</span>, path.join(__dirname, <span class="string">&#x27;views&#x27;</span>));</span><br><span class="line">app.set(<span class="string">&#x27;view engine&#x27;</span>, <span class="string">&#x27;pug&#x27;</span>);</span><br><span class="line"></span><br><span class="line">app.use(express.json());</span><br><span class="line">app.use(express.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">false</span> &#125;));</span><br><span class="line">app.use(express.static(path.join(__dirname, <span class="string">&#x27;public&#x27;</span>)));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.get(<span class="string">&#x27;/&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  res.render(<span class="string">&#x27;index&#x27;</span>, &#123; <span class="attr">title</span>: <span class="string">&#x27;Notebook&#x27;</span> &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.route(<span class="string">&#x27;/add_note&#x27;</span>)</span><br><span class="line">    .get(<span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">        res.render(<span class="string">&#x27;mess&#x27;</span>, &#123;<span class="attr">message</span>: <span class="string">&#x27;please use POST to add a note&#x27;</span>&#125;);</span><br><span class="line">    &#125;)</span><br><span class="line">    .post(<span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> author = req.body.author;</span><br><span class="line">        <span class="keyword">let</span> raw = req.body.raw;</span><br><span class="line">        <span class="keyword">if</span> (author &amp;&amp; raw) &#123;</span><br><span class="line">            notes.write_note(author, raw);</span><br><span class="line">            res.render(<span class="string">&#x27;mess&#x27;</span>, &#123;<span class="attr">message</span>: <span class="string">&quot;add note sucess&quot;</span>&#125;);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            res.render(<span class="string">&#x27;mess&#x27;</span>, &#123;<span class="attr">message</span>: <span class="string">&quot;did not add note&quot;</span>&#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">app.route(<span class="string">&#x27;/edit_note&#x27;</span>)</span><br><span class="line">    .get(<span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">        res.render(<span class="string">&#x27;mess&#x27;</span>, &#123;<span class="attr">message</span>: <span class="string">&quot;please use POST to edit a note&quot;</span>&#125;);</span><br><span class="line">    &#125;)</span><br><span class="line">    .post(<span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> id = req.body.id;</span><br><span class="line">        <span class="keyword">let</span> author = req.body.author;</span><br><span class="line">        <span class="keyword">let</span> enote = req.body.raw;</span><br><span class="line">        <span class="keyword">if</span> (id &amp;&amp; author &amp;&amp; enote) &#123;</span><br><span class="line">            notes.edit_note(id, author, enote);</span><br><span class="line">            res.render(<span class="string">&#x27;mess&#x27;</span>, &#123;<span class="attr">message</span>: <span class="string">&quot;edit note sucess&quot;</span>&#125;);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            res.render(<span class="string">&#x27;mess&#x27;</span>, &#123;<span class="attr">message</span>: <span class="string">&quot;edit note failed&quot;</span>&#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">app.route(<span class="string">&#x27;/delete_note&#x27;</span>)</span><br><span class="line">    .get(<span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">        res.render(<span class="string">&#x27;mess&#x27;</span>, &#123;<span class="attr">message</span>: <span class="string">&quot;please use POST to delete a note&quot;</span>&#125;);</span><br><span class="line">    &#125;)</span><br><span class="line">    .post(<span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> id = req.body.id;</span><br><span class="line">        <span class="keyword">if</span> (id) &#123;</span><br><span class="line">            notes.remove_note(id);</span><br><span class="line">            res.render(<span class="string">&#x27;mess&#x27;</span>, &#123;<span class="attr">message</span>: <span class="string">&quot;delete done&quot;</span>&#125;);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            res.render(<span class="string">&#x27;mess&#x27;</span>, &#123;<span class="attr">message</span>: <span class="string">&quot;delete failed&quot;</span>&#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">app.route(<span class="string">&#x27;/notes&#x27;</span>)</span><br><span class="line">    .get(<span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> q = req.query.q;</span><br><span class="line">        <span class="keyword">let</span> a_note;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span>(q) === <span class="string">&quot;undefined&quot;</span>) &#123;</span><br><span class="line">            a_note = notes.get_all_notes();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            a_note = notes.get_note(q);</span><br><span class="line">        &#125;</span><br><span class="line">        res.render(<span class="string">&#x27;note&#x27;</span>, &#123;<span class="attr">list</span>: a_note&#125;);</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">app.route(<span class="string">&#x27;/status&#x27;</span>)</span><br><span class="line">    .get(<span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> commands = &#123;</span><br><span class="line">            <span class="string">&quot;script-1&quot;</span>: <span class="string">&quot;uptime&quot;</span>,</span><br><span class="line">            <span class="string">&quot;script-2&quot;</span>: <span class="string">&quot;free -m&quot;</span></span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> index <span class="keyword">in</span> commands) &#123;</span><br><span class="line">            exec(commands[index], &#123;<span class="attr">shell</span>:<span class="string">&#x27;/bin/bash&#x27;</span>&#125;, <span class="function">(<span class="params">err, stdout, stderr</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (err) &#123;</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">`stdout: <span class="subst">$&#123;stdout&#125;</span>`</span>);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        res.send(<span class="string">&#x27;OK&#x27;</span>);</span><br><span class="line">        res.end();</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.use(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  res.status(<span class="number">404</span>).send(<span class="string">&#x27;Sorry cant find that!&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.use(<span class="function"><span class="keyword">function</span>(<span class="params">err, req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.error(err.stack);</span><br><span class="line">  res.status(<span class="number">500</span>).send(<span class="string">&#x27;Something broke!&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> port = <span class="number">8080</span>;</span><br><span class="line">app.listen(port, <span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="string">`Example app listening at http://localhost:<span class="subst">$&#123;port&#125;</span>`</span>))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在status路由可以执行命令</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">app.route(<span class="string">&#x27;/status&#x27;</span>)</span><br><span class="line">    .get(<span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> commands = &#123;</span><br><span class="line">            <span class="string">&quot;script-1&quot;</span>: <span class="string">&quot;uptime&quot;</span>,</span><br><span class="line">            <span class="string">&quot;script-2&quot;</span>: <span class="string">&quot;free -m&quot;</span></span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> index <span class="keyword">in</span> commands) &#123;</span><br><span class="line">            exec(commands[index], &#123;<span class="attr">shell</span>:<span class="string">&#x27;/bin/bash&#x27;</span>&#125;, <span class="function">(<span class="params">err, stdout, stderr</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (err) &#123;</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">`stdout: <span class="subst">$&#123;stdout&#125;</span>`</span>);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        res.send(<span class="string">&#x27;OK&#x27;</span>);</span><br><span class="line">        res.end();</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='false'
+        data-ci=''
+        data-cs=''
+        data-r=''
+        data-o=''
+        data-a=''
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

